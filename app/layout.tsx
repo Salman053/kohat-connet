@@ -4,6 +4,10 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 import { keywords } from "@/lib/keywords";
+import { NoiseTexture } from "@/components/shared/noise-texture";
+import { Button } from "@/components/ui/button";
+import { ArrowUp } from "lucide-react";
+import ScrollToTopButton from "@/components/shared/scroll-to-top-button";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
@@ -59,7 +63,14 @@ export default function RootLayout({
       lang="en"
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable)}
     >
-      <body className="min-h-full flex flex-col select-none">{children}</body>
+      <body className="min-h-full flex flex-col select-none">
+        {/* <NoiseTexture /> */}
+
+
+        {children}
+
+<ScrollToTopButton/>
+      </body>
     </html>
   );
 }

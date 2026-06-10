@@ -90,15 +90,14 @@ const Header = () => {
       </div>
 
       <nav className={cn(
-        "sticky mx-auto container top-0 z-50 w-full transition-all duration-300 ",
+        "sticky mx-auto container top-0 z-50 w-full b transition-all duration-300 ",
         scrolled 
           ? "bg-background/80 backdrop-blur-xl h-14" 
           : "bg-background h-16 md:h-20"
       )}>
         {/* Animated Background Gradient Line */}
-        <div className="absolute bottom-[-1px] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent animate-pulse" />
         
-        <div className=" mx-auto px-7 h-full">
+        <div className=" bg-transparent mx-auto px-7 h-full">
           <div className="flex h-full items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2">
