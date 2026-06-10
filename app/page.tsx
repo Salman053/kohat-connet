@@ -12,6 +12,7 @@ import RealEstateHub from "@/components/sections/real-estate";
 import BusinessDirectory from "@/components/sections/directory";
 import DonateBlood from "@/components/sections/donate-blood";
 import Footer from "@/components/shared/footer";
+import KineticScrollGallery from "@/components/landing/kinetic-gallery";
 
 export default function Home() {
   return (
@@ -33,6 +34,7 @@ export default function Home() {
         <RealEstateHub />
         <BusinessDirectory />
         <DonateBlood />
+        <KineticScrollGallery/>
       </main>
       <Footer />
     </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Store, ArrowRight, Star, ShoppingBag, TrendingUp, Users, Zap, CheckCircle2, Sparkles, Building2 } from 'lucide-react'
+import { Store, ArrowRight, Star, ShoppingBag, TrendingUp, Users, Zap, CheckCircle2, Sparkles, Building2, Eye, MessageSquare, Award, Activity } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
@@ -54,6 +54,65 @@ const benefits = [
   { icon: Users, text: "Reach 10,000+ monthly local customers" },
   { icon: TrendingUp, text: "Grow your business with verified leads" },
   { icon: Zap, text: "Free listing with premium upgrade options" },
+];
+
+const marketplaceStats = [
+  {
+    icon: Store,
+    value: "500+",
+    label: "Active Businesses",
+    change: "+12%",
+    color: "text-blue-600",
+    bgColor: "bg-blue-50"
+  },
+  {
+    icon: Eye,
+    value: "50K+",
+    label: "Monthly Views",
+    change: "+28%",
+    color: "text-green-600",
+    bgColor: "bg-green-50"
+  },
+  {
+    icon: MessageSquare,
+    value: "2.4K",
+    label: "Customer Reviews",
+    change: "+15%",
+    color: "text-purple-600",
+    bgColor: "bg-purple-50"
+  },
+  {
+    icon: Award,
+    value: "4.8",
+    label: "Avg Rating",
+    change: "+0.2",
+    color: "text-yellow-600",
+    bgColor: "bg-yellow-50"
+  }
+];
+
+const topPerformers = [
+  {
+    name: "Al-Noor Electronics",
+    category: "Electronics",
+    views: "12.4K",
+    growth: "+34%",
+    image: "https://images.unsplash.com/photo-1740803292814-13d2e35924c3?q=80&w=200&auto=format&fit=crop"
+  },
+  {
+    name: "Green Grocery",
+    category: "Groceries",
+    views: "8.9K",
+    growth: "+28%",
+    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=200&q=80"
+  },
+  {
+    name: "Kohat Fashion House",
+    category: "Clothing",
+    views: "7.2K",
+    growth: "+22%",
+    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=200&q=80"
+  }
 ];
 
 const Shops = () => {
@@ -143,7 +202,122 @@ const Shops = () => {
         </div>
 
         {/* ============================================ */}
-        {/* BUSINESS OWNER CTA SECTION - REPLACES PLACEHOLDER */}
+        {/* MARKETPLACE AT A GLANCE SECTION */}
+        {/* ============================================ */}
+        <div className="mt-16">
+          {/* Section Header */}
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                <Activity className="w-5 h-5 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-2xl md:text-3xl font-black tracking-tight text-foreground">
+                  Marketplace at a Glance
+                </h3>
+                <p className="text-sm text-muted-foreground">Real-time insights into our thriving community</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Stats Grid */}
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            {marketplaceStats.map((stat, idx) => (
+              <div
+                key={idx}
+                className="relative group bg-card border border-border rounded-2xl p-6 hover:shadow-lg transition-all duration-300 overflow-hidden"
+              >
+                {/* Background decoration */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-primary/5 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
+                
+                <div className="relative">
+                  {/* Icon */}
+                  <div className={cn("w-12 h-12 rounded-xl flex items-center justify-center mb-4", stat.bgColor)}>
+                    <stat.icon className={cn("w-6 h-6", stat.color)} />
+                  </div>
+
+                  {/* Value */}
+                  <div className="flex items-baseline gap-2 mb-1">
+                    <span className="text-3xl font-black text-foreground">{stat.value}</span>
+                    <span className="text-xs font-bold text-green-600 bg-green-50 px-2 py-0.5 rounded-full">
+                      {stat.change}
+                    </span>
+                  </div>
+
+                  {/* Label */}
+                  <p className="text-sm text-muted-foreground font-medium">{stat.label}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Top Performers Section */}
+          <div className="bg-gradient-to-br from-muted/50 to-background border border-border rounded-2xl p-6 md:p-8">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-2">
+                <Award className="w-5 h-5 text-yellow-600" />
+                <h4 className="text-lg font-bold text-foreground">Top Performers This Week</h4>
+              </div>
+              <Link href="/analytics" className="text-sm font-semibold text-primary hover:text-primary/80 transition-colors flex items-center gap-1">
+                View Analytics <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {topPerformers.map((performer, idx) => (
+                <div
+                  key={idx}
+                  className="group bg-card border border-border rounded-xl p-4 hover:shadow-md transition-all duration-300"
+                >
+                  <div className="flex items-start gap-3">
+                    {/* Rank Badge */}
+                    <div className={cn(
+                      "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm",
+                      idx === 0 ? "bg-yellow-100 text-yellow-700" :
+                      idx === 1 ? "bg-gray-100 text-gray-700" :
+                      "bg-orange-100 text-orange-700"
+                    )}>
+                      #{idx + 1}
+                    </div>
+
+                    {/* Image */}
+                    <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
+                      <img
+                        src={performer.image}
+                        alt={performer.name}
+                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 min-w-0">
+                      <h5 className="font-bold text-sm text-foreground truncate mb-0.5">{performer.name}</h5>
+                      <p className="text-xs text-muted-foreground mb-2">{performer.category}</p>
+                      
+                      {/* Stats */}
+                      <div className="flex items-center gap-3">
+                        <div className="flex items-center gap-1">
+                          <Eye className="w-3 h-3 text-muted-foreground" />
+                          <span className="text-xs font-bold text-foreground">{performer.views}</span>
+                        </div>
+                        <div className="flex items-center gap-1 text-green-600">
+                          <TrendingUp className="w-3 h-3" />
+                          <span className="text-xs font-bold">{performer.growth}</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+        {/* ============================================ */}
+        {/* END OF MARKETPLACE GLANCE SECTION */}
+        {/* ============================================ */}
+
+        {/* ============================================ */}
+        {/* BUSINESS OWNER CTA SECTION */}
         {/* ============================================ */}
         <div className="mt-16 relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary/70 to-primary/80 border border-primary/20 shadow-2xl shadow-primary/20">
           {/* Decorative background elements */}
