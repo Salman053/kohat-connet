@@ -18,6 +18,7 @@ export const site = {
 
 
 }
+
 export const categories = [
     {
         name: "Beauty & Wellness",
@@ -365,16 +366,20 @@ export const navigationLinks = [
         href: "/"
     },
     {
-        name: "About",
-        href: "/about"
-    },
-    {
         name: "Explore",
         href: "/explore"
     },
     {
         name: "Categories",
         href: "/categories"
+    },
+    {
+        name: "Services",
+        href: "/categories/services"
+    },
+    {
+        name: "Professionals",
+        href: "/categories/local-business"
     },
     {
         name: "Blog",
