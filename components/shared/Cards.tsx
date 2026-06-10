@@ -30,7 +30,7 @@ const GenericCard = React.forwardRef<HTMLAnchorElement, GenericCardProps>(({ ite
   <motion.a
     ref={ref}
     href={item.href}
-    className="relative flex-shrink-0 w-[300px]   max-h-min   rounded-2xl overflow-hidden group snap-start bg-card border border-border"
+    className="relative flex-shrink-0 w-[300px] max-h-min rounded-2xl overflow-hidden group snap-start bg-card border border-border"
     whileHover={{ y: -8 }}
     transition={{ type: "spring", stiffness: 300, damping: 20 }}
     style={{ perspective: "1000px" }}
@@ -101,53 +101,100 @@ GenericCard.displayName = "GenericCard";
 // Props for the CardsCarousel component
 export interface CardsCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   items: CardItem[];
+  autoScroll?: boolean;
+  autoScrollSpeed?: number; // pixels per second
+  infinite?: boolean;
 }
 
-// The main carousel component with scroll functionality
+// The main carousel component with infinite scroll functionality
 const CardsCarousel = React.forwardRef<HTMLDivElement, CardsCarouselProps>(
-  ({ items, className, ...props }, ref) => {
+  ({ items, className, autoScroll = true, autoScrollSpeed = 50, infinite = true, ...props }, ref) => {
     const scrollContainerRef = React.useRef<HTMLDivElement>(null);
     const [isHovered, setIsHovered] = React.useState(false);
+    const [displayedItems, setDisplayedItems] = React.useState<CardItem[]>([]);
+
+    // Create infinite loop by duplicating items
+    React.useEffect(() => {
+      if (infinite && items.length > 0) {
+        // Duplicate items 3 times for seamless infinite scroll
+        setDisplayedItems([...items, ...items, ...items]);
+      } else {
+        setDisplayedItems(items);
+      }
+    }, [items, infinite]);
+
+    // Auto-scroll functionality
+    React.useEffect(() => {
+      const scrollContainer = scrollContainerRef.current;
+      if (!scrollContainer || !autoScroll || isHovered) return;
+
+      let animationFrameId: number;
+      let lastTimestamp: number;
+      let scrollPosition = scrollContainer.scrollLeft;
+
+      const scroll = (timestamp: number) => {
+        if (!lastTimestamp) {
+          lastTimestamp = timestamp;
+          animationFrameId = requestAnimationFrame(scroll);
+          return;
+        }
+
+        const deltaTime = timestamp - lastTimestamp;
+        const moveDistance = (autoScrollSpeed * deltaTime) / 1000; // Convert to pixels per second
+        
+        scrollPosition += moveDistance;
+        
+        // Handle infinite loop reset
+        if (infinite && scrollContainer.scrollWidth > 0) {
+          const itemWidth = scrollContainer.children[0]?.clientWidth || 300;
+          const gap = 24; // gap between items (space-x-6 = 24px)
+          const singleSetWidth = (items.length * (itemWidth + gap)) - gap;
+          
+          // Reset to beginning when reaching the end of first duplicate set
+          if (scrollPosition >= singleSetWidth * 2) {
+            scrollPosition = scrollPosition - singleSetWidth;
+            scrollContainer.scrollLeft = scrollPosition;
+          }
+        }
+        
+        scrollContainer.scrollLeft = scrollPosition;
+        lastTimestamp = timestamp;
+        animationFrameId = requestAnimationFrame(scroll);
+      };
+
+      animationFrameId = requestAnimationFrame(scroll);
+      
+      return () => {
+        if (animationFrameId) {
+          cancelAnimationFrame(animationFrameId);
+        }
+      };
+    }, [autoScroll, autoScrollSpeed, isHovered, infinite, items.length]);
 
     const scroll = (direction: "left" | "right") => {
       if (scrollContainerRef.current) {
         const { current } = scrollContainerRef;
         const scrollAmount = current.clientWidth * 0.8;
-        current.scrollBy({
-          left: direction === "left" ? -scrollAmount : scrollAmount,
+        const newScrollLeft = direction === "left" 
+          ? current.scrollLeft - scrollAmount 
+          : current.scrollLeft + scrollAmount;
+        
+        current.scrollTo({
+          left: newScrollLeft,
           behavior: "smooth",
         });
       }
     };
 
+    // Reset scroll position when items change
     React.useEffect(() => {
-      const scrollContainer = scrollContainerRef.current;
-      if (!scrollContainer || isHovered) return;
-
-      let animationFrameId: number;
-      let lastTime: number;
-      const speed = 0.5; // Pixels per frame
-
-      const step = (time: number) => {
-        if (lastTime !== undefined) {
-          const deltaTime = time - lastTime;
-          // Normalize speed to 60fps (16.67ms per frame)
-          const moveAmount = speed * (deltaTime / 16.67);
-          
-          scrollContainer.scrollLeft += moveAmount;
-
-          // Loop back to start
-          if (scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth - 1) {
-            scrollContainer.scrollLeft = 0;
-          }
-        }
-        lastTime = time;
-        animationFrameId = requestAnimationFrame(step);
-      };
-
-      animationFrameId = requestAnimationFrame(step);
-      return () => cancelAnimationFrame(animationFrameId);
-    }, [isHovered]);
+      if (scrollContainerRef.current && infinite) {
+        const itemWidth = scrollContainerRef.current.children[0]?.clientWidth || 300;
+        const gap = 24;
+        const singleSetWidth = (items.length * (itemWidth + gap)) - gap;
+        scrollContainerRef.current.scrollLeft = singleSetWidth;
+      }
+    }, [displayedItems, infinite, items.length]);
 
     return (
       <div 
@@ -171,11 +218,14 @@ const CardsCarousel = React.forwardRef<HTMLDivElement, CardsCarouselProps>(
           ref={scrollContainerRef}
           className={cn(
             "flex space-x-6 no-scrollbar overflow-x-auto pb-6 pt-2 px-2 scrollbar-hide",
-            isHovered ? "snap-x snap-mandatory" : "snap-none"
+            !autoScroll && "snap-x snap-mandatory"
           )}
+          style={{
+            scrollBehavior: autoScroll ? "auto" : "smooth",
+          }}
         >
-          {items.map((item) => (
-            <GenericCard key={item.id} item={item} />
+          {displayedItems.map((item, index) => (
+            <GenericCard key={`${item.id}-${index}`} item={item} />
           ))}
         </div>
         
