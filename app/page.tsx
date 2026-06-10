@@ -21,7 +21,7 @@ export default function Home() {
       <main>
         <Hero />
         <Emergency />
-        <div className="md:grid grid-cols-12  container  mx-auto px-4 ">
+        <div className="md:grid grid-cols-12 gap-12  container  mx-auto px-4 ">
           <Trending />
         </div>
         <DealsBanner />

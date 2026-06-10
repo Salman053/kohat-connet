@@ -101,7 +101,7 @@ const trendingItems: CardItem[] = [
     id: 8,
     title: "Special Sindhi Biryani - Chef's Special",
     description: "Famous Sindhi Biryani with aromatic spices, tender chicken, and premium basmati rice. Served with raita and salad.",
-    imageSrc: "https://images.unsplash.com/photo-1563379091339-03b21a4f29f5?auto=format&fit=crop&w=800&q=80",
+    imageSrc: "https://foodaazz.com/wp-content/uploads/2023/03/Sindhi-Chicken-Biryani.jpeg",
     imageAlt: "Delicious Sindhi Biryani served in traditional copper pot",
     tag: "Food",
     price: "From Rs. 350",
