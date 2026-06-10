@@ -2,6 +2,8 @@ import Header from "@/components/shared/header";
 import Hero from "@/components/landing/hero";
 import Emergency from "@/components/sections/emergency";
 import Trending from "@/components/sections/trending";
+import DealsBanner from "@/components/sections/deals";
+import PromotedListings from "@/components/sections/promoted";
 import Shops from "@/components/sections/shops";
 import Services from "@/components/sections/services";
 import Jobs from "@/components/sections/jobs";
@@ -19,6 +21,8 @@ export default function Home() {
         <div className="md:grid grid-cols-12  container  mx-auto px-4 ">
           <Trending />
         </div>
+        <DealsBanner />
+        <PromotedListings />
 
         <Shops />
         <Services />
