@@ -8,6 +8,8 @@ import Shops from "@/components/sections/shops";
 import Services from "@/components/sections/services";
 import Jobs from "@/components/sections/jobs";
 import Community from "@/components/sections/community";
+import RealEstateHub from "@/components/sections/real-estate";
+import BusinessDirectory from "@/components/sections/directory";
 import DonateBlood from "@/components/sections/donate-blood";
 import Footer from "@/components/shared/footer";
 
@@ -28,6 +30,8 @@ export default function Home() {
         <Services />
         <Jobs />
         <Community />
+        <RealEstateHub />
+        <BusinessDirectory />
         <DonateBlood />
       </main>
       <Footer />

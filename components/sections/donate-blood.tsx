@@ -25,7 +25,7 @@ const DonateBlood = () => {
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter uppercase">Blood Donor Network</h2>
             <p className="text-muted-foreground text-lg italic mt-2">Connecting donors and recipients in Kohat.</p>
           </div>
-          <Button size="lg" className="rounded-full">
+          <Button variant={"destructive"}  size="lg" >
             <Plus className="w-4 h-4 mr-2" /> Register as a Donor
           </Button>
         </div>
@@ -34,7 +34,7 @@ const DonateBlood = () => {
            {/* Donor Grid (8 Columns) */}
            <div className="lg:col-span-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
               {donors.map(donor => (
-                <div key={donor.id} className="bg-card border border-border p-5 rounded-3xl shadow-sm hover:border-primary/50 transition-colors">
+                <div key={donor.id} className="bg-card h-fit border border-border p-5  rounded-3xl shadow-sm hover:border-primary/50 transition-colors">
                   <div className='flex items-center gap-3 mb-4'>
                     <div className='w-12 h-12 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center font-black text-lg'>{donor.bloodType}</div>
                     <div>
@@ -42,7 +42,7 @@ const DonateBlood = () => {
                       <div className='text-xs text-muted-foreground flex items-center gap-1 mt-0.5'><MapPin className='w-3 h-3'/> {donor.location}</div>
                     </div>
                   </div>
-                  <div className='text-sm font-semibold text-primary flex items-center gap-2 bg-muted/50 p-2 rounded-xl'>
+                  <div className='text-sm self-end font-semibold text-primary flex items-center gap-2 bg-muted/50 p-2 rounded-xl'>
                     <Phone className='w-4 h-4'/> {donor.contact}
                   </div>
                 </div>
