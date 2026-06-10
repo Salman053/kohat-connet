@@ -90,7 +90,7 @@ const Header = () => {
       </div>
 
       <nav className={cn(
-        "sticky top-0 z-50 w-full transition-all duration-300 ",
+        "sticky mx-auto container top-0 z-50 w-full transition-all duration-300 ",
         scrolled 
           ? "bg-background/80 backdrop-blur-xl h-14" 
           : "bg-background h-16 md:h-20"
@@ -127,11 +127,11 @@ const Header = () => {
                     if (link.name === "Categories") {
                       return (
                         <NavigationMenuItem key={link.name} value="categories">
-                          <NavigationMenuTrigger className='text-[11px] font-semibold' value="categories">
+                          <NavigationMenuTrigger className='text-[11px] bg-transparent font-semibold' value="categories">
                             Categories
                           </NavigationMenuTrigger>
                           <NavigationMenuContent value="categories">
-                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 p-5 w-[800px] max-w-[90vw] bg-popover rounded-xl border shadow-2xl">
+                            <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-3 p-5 w-[800px] max-w-[90vw] bg-popover rounded-xl border shadow-2xl">
                               {categories.map((category) => (
                                 <div key={category.name} className="group/cat">
                                   <Link
@@ -178,7 +178,7 @@ const Header = () => {
                       const servicesCategory = categories.find(c => c.name === "Services");
                       return (
                         <NavigationMenuItem key={link.name} value="services">
-                          <NavigationMenuTrigger className='text-[11px] font-semibold' value="services">
+                          <NavigationMenuTrigger className='text-[11px] bg-transparent font-semibold' value="services">
                             Services
                           </NavigationMenuTrigger>
                           <NavigationMenuContent value="services">
@@ -208,7 +208,7 @@ const Header = () => {
                       const businessCategory = categories.find(c => c.name === "Local Business");
                       return (
                         <NavigationMenuItem key={link.name} value="professionals">
-                          <NavigationMenuTrigger className='text-[11px] font-semibold' value="professionals">
+                          <NavigationMenuTrigger className='text-[11px] bg-transparent font-semibold' value="professionals">
                             Professionals
                           </NavigationMenuTrigger>
                           <NavigationMenuContent value="professionals">

@@ -115,8 +115,8 @@ const Trending = async () => {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      <section className="py-12 px-7 col-span-12 lg:col-span-8" aria-labelledby="trending-title">
-        <div className="mx-auto px-4">
+      <section className="py-12 col-span-12 lg:col-span-8" aria-labelledby="trending-title">
+        <div className="  ">
           <div className="flex flex-col mb-8">
             <h2 id="trending-title" className="text-3xl font-bold tracking-tight text-foreground">
               Trending in Kohat

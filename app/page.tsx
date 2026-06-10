@@ -1,6 +1,11 @@
 import Header from "@/components/shared/header";
 import Hero from "@/components/landing/hero";
 import Trending from "@/components/sections/trending";
+import Shops from "@/components/sections/shops";
+import Services from "@/components/sections/services";
+import Jobs from "@/components/sections/jobs";
+import Community from "@/components/sections/community";
+import Footer from "@/components/shared/footer";
 
 export default function Home() {
   return (
@@ -8,12 +13,16 @@ export default function Home() {
       <Header />
       <main>
         <Hero />
-        <div className="md:grid grid-cols-12">
+        <div className="md:grid grid-cols-12  container  mx-auto px-4 ">
           <Trending />
-          {/* <BreakingNews/> */}
-         
         </div>
+
+        <Shops />
+        <Services />
+        <Jobs />
+        <Community />
       </main>
+      <Footer />
     </div>
   );
 }
