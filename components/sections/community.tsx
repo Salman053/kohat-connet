@@ -1,38 +1,16 @@
 import React from 'react'
 import Link from 'next/link'
-import { MessageSquare, Megaphone, Search, Heart, ArrowRight, Plus, Users2, ShieldAlert } from 'lucide-react'
+import { MessageSquare, Megaphone, Search, ArrowRight, Plus, Calendar } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const announcements = [
-  {
-    id: 1,
-    title: "Water Supply Notice",
-    description: "Scheduled maintenance in KDA Phase 1 this Sunday.",
-    time: "3h ago",
-    priority: "low"
-  },
-  {
-    id: 2,
-    title: "Blood Needed (O-)",
-    description: "Urgent O- blood donor required at DHQ Hospital.",
-    time: "45m ago",
-    priority: "high"
-  }
+  { id: 1, title: "Water Supply Notice", description: "Scheduled maintenance in KDA Phase 1 this Sunday.", time: "3h ago", priority: "low" },
+  { id: 2, title: "Blood Needed (O-)", description: "Urgent O- blood donor required at DHQ Hospital.", time: "45m ago", priority: "high" }
 ]
 
-const lostFound = [
-  {
-    id: 1,
-    title: "Black Wallet",
-    location: "Main Bazaar",
-    type: "Lost"
-  },
-  {
-    id: 2,
-    title: "Car Keys",
-    location: "KDA Park",
-    type: "Found"
-  }
+const upcomingEvents = [
+  { title: "Kohat Tech Summit", date: "Oct 20, 2026" },
+  { title: "Local Bazaar Fair", date: "Oct 25, 2026" }
 ]
 
 const Community = () => {
@@ -45,9 +23,8 @@ const Community = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* Main Social / Forum Block */}
           <div className="lg:col-span-8 space-y-8">
-            <div className="bg-card border border-border rounded-[2rem] overflow-hidden shadow-sm">
+            <div className="bg-card border border-border  overflow-hidden shadow-sm">
               <div className="p-8 border-b border-border flex items-center justify-between bg-muted/50">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center text-primary">
@@ -72,13 +49,6 @@ const Community = () => {
                         <h4 className="font-bold text-lg mb-1 group-hover:text-primary transition-colors">
                           {i === 1 ? "Best fiber internet provider in Satellite Town?" : i === 2 ? "Registration process for Kohat Cricket League?" : "Historical places to visit in Kohat this weekend?"}
                         </h4>
-                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
-                          <span className="font-bold text-foreground">Sami Ullah</span>
-                          <span>•</span>
-                          <span>{i * 2} hours ago</span>
-                          <span>•</span>
-                          <span className="bg-muted px-2 py-0.5 rounded font-medium">{i === 1 ? "Tech" : i === 2 ? "Sports" : "Travel"}</span>
-                        </div>
                       </div>
                       <div className="flex flex-col items-end gap-1 shrink-0">
                         <div className="text-sm font-bold text-foreground">{i * 12 + 5}</div>
@@ -88,15 +58,25 @@ const Community = () => {
                   </div>
                 ))}
               </div>
-
-              <Link href="/forum" className="block p-4 text-center text-sm font-bold text-primary hover:bg-primary/5 transition-colors">
-                View All Community Discussions
-              </Link>
             </div>
           </div>
 
-          {/* Sidebar / Sidebar Dashboard */}
           <div className="lg:col-span-4 space-y-8">
+            {/* Upcoming Events */}
+            <div className="bg-card border border-border p-6 rounded-3xl">
+              <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
+                <Calendar className="w-5 h-5 text-primary" /> Upcoming Events
+              </h3>
+              <div className="space-y-3">
+                {upcomingEvents.map((event, i) => (
+                  <div key={i} className="flex items-center justify-between bg-muted/50 p-4 rounded-2xl">
+                    <span className="text-sm font-semibold">{event.title}</span>
+                    <span className="text-xs text-muted-foreground">{event.date}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
             {/* Announcements */}
             <div className=" bg-zinc-900 text-background  p-8 shadow-xl relative overflow-hidden group">
               <Megaphone className="absolute -top-6 -right-6 w-32 h-32 text-white/20 -rotate-12 transition-transform group-hover:rotate-0 duration-700" />
@@ -121,33 +101,6 @@ const Community = () => {
                   </div>
                 ))}
               </div>
-            </div>
-
-            {/* Lost & Found */}
-            <div className="bg-card border border-border rounded-[2rem] p-8">
-              <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-foreground">
-                <Search className="w-5 h-5 text-orange-500" /> Lost & Found
-              </h3>
-              <div className="space-y-3">
-                {lostFound.map((item) => (
-                  <div key={item.id} className="flex items-center justify-between p-4 rounded-2xl bg-muted/50 border border-border/50 group cursor-pointer hover:border-orange-500/30 transition-all">
-                    <div className="flex items-center gap-3">
-                      <div className={cn(
-                        "w-8 h-8 rounded-lg flex items-center justify-center text-xs font-black",
-                        item.type === 'Lost' ? "bg-orange-500/10 text-orange-600" : "bg-green-500/10 text-green-600"
-                      )}>{item.type[0]}</div>
-                      <div>
-                        <h4 className="text-sm font-bold leading-none mb-1">{item.title}</h4>
-                        <p className="text-[10px] text-muted-foreground">{item.location}</p>
-                      </div>
-                    </div>
-                    <ArrowRight className="w-4 h-4 text-muted-foreground group-hover:translate-x-1 group-hover:text-orange-500 transition-all" />
-                  </div>
-                ))}
-              </div>
-              <button className="w-full mt-6 py-3 border-2 border-dashed border-border rounded-2xl text-xs font-bold text-muted-foreground hover:bg-muted hover:text-foreground transition-all">
-                + Report Something
-              </button>
             </div>
           </div>
         </div>

@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { Store, ArrowRight, Star, ShoppingBag } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
+const categories = ["All", "Electronics", "Clothing", "Home", "Groceries", "Sports", "Beauty"];
+
 const shops = [
   {
     id: 1,
@@ -51,7 +53,7 @@ const Shops = () => {
   return (
     <section className="py-20 bg-background overflow-hidden">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-12 gap-6">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-8 gap-6">
           <div className="max-w-2xl">
             <h2 className="text-4xl md:text-5xl font-black tracking-tighter text-foreground mb-4">
               KOHAT <span className="text-primary">MARKETPLACE</span>
@@ -63,6 +65,15 @@ const Shops = () => {
           <Link href="/shops" className="group flex items-center gap-2 font-bold text-primary hover:text-primary/80 transition-colors">
             Browse All Shops <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
           </Link>
+        </div>
+
+        {/* Quick Filter Bar */}
+        <div className="flex gap-2 mb-10 overflow-x-auto pb-2 scrollbar-hide">
+          {categories.map((cat, i) => (
+            <button key={cat} className={cn("px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all", i === 0 ? "bg-primary text-primary-foreground" : "bg-muted hover:bg-muted/80 text-muted-foreground")}>
+              {cat}
+            </button>
+          ))}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -122,25 +133,6 @@ const Shops = () => {
               </div>
             </Link>
           ))}
-
-          {/* Special Action Block */}
-          <div className="lg:col-span-2 p-8 rounded-3xl bg-primary text-primary-foreground flex flex-col justify-between group cursor-pointer relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4 opacity-10">
-              <ShoppingBag className="w-32 h-32 rotate-12" />
-            </div>
-            <div className="relative z-10">
-              <h3 className="text-2xl font-black mb-4 uppercase tracking-tighter">Are you a shop owner?</h3>
-              <p className="text-primary-foreground/80 mb-6 max-w-xs">
-                Reach thousands of local customers in Kohat. List your business today and grow with us.
-              </p>
-            </div>
-            <Link 
-              href="/register-business"
-              className="relative z-10 w-fit px-6 py-3 bg-white text-primary rounded-xl font-black text-sm uppercase tracking-tighter hover:bg-white/90 transition-all flex items-center gap-2 group/btn"
-            >
-              Get Started Now <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
-            </Link>
-          </div>
         </div>
       </div>
     </section>

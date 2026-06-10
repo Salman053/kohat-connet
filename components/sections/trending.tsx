@@ -1,8 +1,10 @@
 import React from 'react'
-import { CardsCarousel, CardItem } from '../shared/Cards'
-import NewsSection, { NewsItem } from '../shared/news'
+import Link from 'next/link'
+import { CardItem } from '../shared/Cards'
+import NewsSection from '../shared/news'
 import { fetchNews } from '@/lib/news'
 import { site } from '@/lib/site'
+import { ArrowRight, Search, TrendingUp } from 'lucide-react'
 
 const trendingItems: CardItem[] = [
   {
@@ -56,77 +58,58 @@ const trendingItems: CardItem[] = [
     authorName: "Kohat Adventure Club",
     authorLogo: "https://images.unsplash.com/photo-1501503060443-ef4ed87d00ba?auto=format&fit=crop&w=100&q=80",
     href: "/events/hiking-miranzai"
-  },
-  {
-    id: 5,
-    title: "Traditional Handmade Kohat Chappal",
-    description: "Purchase authentic, high-quality leather Kohat Chappals handcrafted by local master artisans in the Main Bazaar.",
-    imageSrc: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80",
-    imageAlt: "Detailed view of handcrafted traditional leather Kohat Chappals",
-    tag: "Shopping",
-    price: "Rs. 3,500",
-    location: "Main Bazaar, Kohat",
-    authorName: "Artisan Leather Crafts",
-    authorLogo: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80",
-    href: "/listings/kohat-chappal"
   }
+];
+
+const popularSearches = [
+  "best restaurant in kohat",
+  "kohat jobs",
+  "real estate in kohat",
+  "best hospital in kohat",
+  "kohat university",
+  "best clothing store in kohat",
+  "mobile repair in kohat"
 ];
 
 const Trending = async () => {
   const newsItems = await fetchNews();
 
-  // JSON-LD Structured Data for SEO
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "name": "Trending Events and Places in Kohat",
-    "description": "Discover the most popular cultural events, dining spots, and travel destinations in Kohat, KPK.",
-    "itemListElement": trendingItems.map((item, index) => ({
-      "@type": "ListItem",
-      "position": index + 1,
-      "item": {
-        "@type": item.tag === 'Event' ? 'Event' : 'LocalBusiness',
-        "name": item.title,
-        "description": item.description,
-        "image": item.imageSrc,
-        "url": `${site.url}${item.href}`,
-        ...(item.tag === 'Event' ? {
-          "startDate": "2026-06-15", // Ideal to have actual date objects
-          "location": {
-            "@type": "Place",
-            "name": item.location,
-            "address": {
-              "@type": "PostalAddress",
-              "addressLocality": "Kohat",
-              "addressRegion": "KPK",
-              "addressCountry": "PK"
-            }
-          }
-        } : {})
-      }
-    }))
-  };
-
   return (
     <>
-      {/* Structured Data for Search Engines */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-
       <section className="py-12 col-span-12 lg:col-span-8" aria-labelledby="trending-title">
-        <div className="  ">
-          <div className="flex flex-col mb-8">
-            <h2 id="trending-title" className="text-3xl font-bold tracking-tight text-foreground">
-              Trending in Kohat
-            </h2>
-            <p className="text-muted-foreground mt-2 max-w-2xl">
-              Stay updated with the latest happenings, premium stays, and authentic experiences in the heart of Kohat, Khyber Pakhtunkhwa.
-            </p>
-          </div>
+        <div className="flex flex-col mb-8">
+          <h2 id="trending-title" className="text-3xl font-bold tracking-tight text-foreground">
+            Trending in Kohat
+          </h2>
+          <p className="text-muted-foreground mt-2 max-w-2xl">
+            Stay updated with the latest happenings, premium stays, and authentic experiences in the heart of Kohat, Khyber Pakhtunkhwa.
+          </p>
+        </div>
 
-          <CardsCarousel items={trendingItems} />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {trendingItems.map((item) => (
+            <Link href={item.href} key={item.id} className="group bg-card border border-border p-4 rounded-3xl flex gap-4 hover:border-primary/50 transition-colors">
+              <img src={item.imageSrc} alt={item.imageAlt} className="w-24 h-24 rounded-2xl object-cover" />
+              <div className='flex-1'>
+                <span className='text-[10px] font-black uppercase text-primary'>{item.tag}</span>
+                <h4 className='font-bold text-sm leading-tight mt-1'>{item.title}</h4>
+                <p className='text-xs text-muted-foreground mt-1 line-clamp-2'>{item.description}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
+
+        <div className="mt-12 bg-muted/50 p-8 rounded-3xl">
+          <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
+            <TrendingUp className="w-5 h-5 text-primary" /> Popular Searches
+          </h3>
+          <div className="flex flex-wrap gap-2">
+            {popularSearches.map((search, i) => (
+              <Link key={i} href={`/search?q=${encodeURIComponent(search)}`} className="bg-background px-4 py-2 rounded-full text-sm font-semibold text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 border border-border">
+                <Search className='w-3 h-3'/> {search}
+              </Link>
+            ))}
+          </div>
         </div>
       </section>
       
