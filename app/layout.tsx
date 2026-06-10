@@ -66,7 +66,7 @@ export default function RootLayout({
 
         {children}
 
-<ScrollToTopButton/>
+        <ScrollToTopButton />
       </body>
     </html>
   );
