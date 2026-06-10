@@ -1,18 +1,19 @@
 "use client";
 
 import { WordsPullUp } from "./words-pull-up";
-import { HeroCarousel } from "./hero-carousel";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Search, MapPin } from "lucide-react";
+import { HeroCollage } from "./hero-collage";
 
 export default function Hero() {
   return (
     <section className="relative w-full py-20 md:py-32 lg:py-48 overflow-hidden">
-      {/* Background Carousel */}
-      <HeroCarousel />
+      {/* Background Collage (z-0 to z-20) */}
+      <HeroCollage />
 
-      <div className="container mx-auto px-4 relative">
+      {/* 4. CRITICAL FIX: Add z-30 here so text sits ON TOP of the overlay */}
+      <div className="container mx-auto px-4 relative z-30">
         <div className="flex flex-col items-center text-center space-y-10">
           <div className="space-y-6 max-w-5xl text-center">
             <WordsPullUp
@@ -26,8 +27,8 @@ export default function Hero() {
           </div>
 
           {/* Search Box */}
-          <div className="w-full max-w-4xl p-2 bg-background/60 backdrop-blur-2xl border border-white/20  shadow-2xl flex flex-col md:flex-row gap-2 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-1000 fill-mode-both">
-            <div className="flex-1 flex items-center px-6 py-4 gap-4 bg-background/40  border border-white/10">
+          <div className="w-full max-w-4xl p-2 bg-background/40 backdrop-blur-2xl border border-white/20 shadow-2xl flex flex-col md:flex-row gap-2 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-1000 fill-mode-both">
+            <div className="flex-1 flex items-center px-4 py-4 gap-4 bg-background/20 border border-white/10">
               <Search className="h-6 w-6 text-primary" />
               <input 
                 type="text" 
@@ -36,7 +37,7 @@ export default function Hero() {
               />
             </div>
             <div className="h-px md:h-10 w-full md:w-px bg-white/10 my-auto hidden md:block" />
-            <div className="flex-1 flex items-center px-6 py-4 gap-4 bg-background/40  border border-white/10">
+            <div className="flex-1 flex items-center px-4 py-4 gap-4 bg-background/20 border border-white/10">
               <MapPin className="h-6 w-6 text-primary" />
               <input 
                 type="text" 
@@ -44,19 +45,19 @@ export default function Hero() {
                 className="w-full bg-transparent outline-none text-base font-semibold placeholder:text-muted-foreground/60"
               />
             </div>
-            <Button size="sm" className="  h-auto px-5 font-bold text-sm shadow-xl shadow-primary/20  transition-all">
+            <Button size="sm" className="h-auto  px-5 font-bold text-sm shadow-xl shadow-primary/20 transition-all">
               Search Now
             </Button>
           </div>
 
           <div className="flex flex-wrap justify-center gap-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-[1200ms] fill-mode-both">
             <Link href="/explore">
-              <Button variant="ghost" size="lg" className="px-10 h-14 text-base font-bold bg-background/20  backdrop-blur-md border-white/20 hover:bg-background/40">
+              <Button variant="ghost" size="lg" className="px-10 h-14 text-base font-bold bg-background/80 backdrop-blur-md border-white/20 ">
                 Explore Categories
               </Button>
             </Link>
             <Link href="/request-listing">
-              <Button size="lg" className="px-10 h-14 text-base font-bold shadow-xl shadow-primary/20  transition-all">
+              <Button size="lg" className="px-10 h-14 text-base font-bold shadow-xl shadow-primary/20 transition-all">
                 List Your Business
               </Button>
             </Link>
