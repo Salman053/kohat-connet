@@ -81,7 +81,7 @@ const LanguageSwitcher = () => {
       
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5 rounded-full border border-border bg-background hover:bg-muted transition-all text-xs font-semibold shadow-sm active:scale-95"
+        className="flex items-center gap-2 px-3 py-1.5  border border-border bg-background hover:bg-muted transition-all text-xs font-semibold shadow-sm active:scale-95"
         aria-haspopup="true"
         aria-expanded={isOpen}
       >

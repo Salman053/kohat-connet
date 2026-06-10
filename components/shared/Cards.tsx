@@ -126,7 +126,7 @@ const CardsCarousel = React.forwardRef<HTMLDivElement, CardsCarouselProps>(
 
       let animationFrameId: number;
       let lastTime: number;
-      const speed = 0.1; // Pixels per frame
+      const speed = 0.5; // Pixels per frame
 
       const step = (time: number) => {
         if (lastTime !== undefined) {

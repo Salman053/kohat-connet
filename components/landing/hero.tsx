@@ -27,7 +27,7 @@ export default function Hero() {
           </div>
 
           {/* Search Box */}
-          <div className="w-full max-w-4xl p-2 bg-background/40 backdrop-blur-2xl border border-white/20 shadow-2xl flex flex-col md:flex-row gap-2 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-1000 fill-mode-both">
+          <div className="w-full max-w-4xl p-2 bg-background/40 backdrop-blur-2xl border border-white/20 shadow-xl flex flex-col md:flex-row gap-2 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-1000 fill-mode-both">
             <div className="flex-1 flex items-center px-4 py-4 gap-4 bg-background/20 border border-white/10">
               <Search className="h-6 w-6 text-primary" />
               <input 
