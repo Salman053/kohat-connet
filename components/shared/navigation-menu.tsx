@@ -78,7 +78,7 @@ const navigationMenuTriggerStyle = cva(
 const NavigationMenuTrigger = React.forwardRef<
   HTMLButtonElement,
   React.ButtonHTMLAttributes<HTMLButtonElement> & { "data-state"?: string, value?: string }
->(({ className, children, "data-state": _dataState, value, ...props }, ref) => {
+>(({ className, children, value, ...props }, ref) => {
   const { activeItem, setActiveItem } = React.useContext(NavigationMenuContext)
   const isOpen = activeItem === value
 
