@@ -8,7 +8,7 @@ const collageImages = [
     id: 1,
     src: "https://images.unsplash.com/photo-1515694346937-94d85e41e6f0?w=400&h=400&fit=crop",
     alt: "Colorful umbrellas",
-    className: "w-44 h-44 md:w-56 md:h-56 rounded-2xl object-cover shadow-2xl",
+    className: "w-44 h-44 md:w-56 md:h-56 rounded-2xl object-cover shadow-2xl ",
     position: "left-[4%] top-[30%] md:left-[6%] md:top-[32%]",
     rotate: "rotate-[-2deg]",
   },
@@ -73,7 +73,7 @@ export function HeroCollage() {
           key={img.id}
           animate={{ opacity: [0, 1], scale: [0.95, 1],repeatCount: Infinity,}}
           transition={{ duration: 0.8, delay: img.id * 0.3 }}
-          className={`absolute ${img.position} ${img.rotate} z-10 transition-transform duration-700 hover:scale-105 hover:z-50`}
+          className={`absolute ${img.position} ${img.rotate} z-10 overflow-hidden transition-transform duration-700 hover:scale-105 hover:z-50`}
         >
           <Image
             src={img.src}

@@ -10,7 +10,7 @@ export default function Hero() {
   return (
     <section className="relative w-full py-20 md:py-32 lg:py-48 overflow-hidden">
       {/* Background Collage (z-0 to z-20) */}
-      <HeroCollage />
+      {/* <HeroCollage /> */}
 
       {/* 4. CRITICAL FIX: Add z-30 here so text sits ON TOP of the overlay */}
       <div className="container mx-auto px-4 relative z-30">

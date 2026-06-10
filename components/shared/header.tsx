@@ -7,6 +7,7 @@ import { navigationLinks, categories, site } from '@/lib/site'
 import { Menu, X, MapPin, Phone, Mail} from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
+import LanguageSwitcher from './language-switcher'
 
 const announcements = [
   "Welcome to Kohat Connect - Your local city guide",
@@ -97,7 +98,7 @@ const Header = () => {
         {/* Animated Background Gradient Line */}
         <div className="absolute bottom-[-1px] left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-primary/50 to-transparent animate-pulse" />
         
-        <div className="container mx-auto px-4 h-full">
+        <div className=" mx-auto px-7 h-full">
           <div className="flex h-full items-center justify-between">
             {/* Logo */}
             <div className="flex items-center gap-2">
@@ -110,7 +111,7 @@ const Header = () => {
                     {site.name.split(' ')[0]}
                     <span className="text-primary">{site.name.split(' ')[1]}</span>
                   </span>
-                  <span className="text-[8px] md:text-[10px] text-muted-foreground font-medium tracking-widest uppercase">
+                  <span className="text-[8px] md:text-[10px]  font-medium tracking-widest uppercase">
                     Connect • Discover • Grow
                   </span>
                 </div>
@@ -140,14 +141,14 @@ const Header = () => {
                                     <div className="font-bold text-foreground mb-1 text-xs group-hover/cat:text-primary">
                                       {category.name}
                                     </div>
-                                    <div className="text-[10px] text-muted-foreground mb-2 line-clamp-1">
+                                    <div className="text-[10px]  mb-2 line-clamp-1">
                                       {category.description}
                                     </div>
                                     <div className="flex flex-wrap gap-1">
                                       {category.subcategories.slice(0, 3).map((sub, idx) => (
                                         <span
                                           key={sub.name}
-                                          className="text-[9px] text-muted-foreground/70"
+                                          className="text-[9px] "
                                         >
                                           {sub.name}
                                           {idx < Math.min(category.subcategories.length, 3) - 1 && " • "}
@@ -159,7 +160,7 @@ const Header = () => {
                               ))}
                             </div>
                             <div className="border-t p-3 bg-muted/30 rounded-b-xl flex justify-between items-center px-6">
-                              <span className="text-[10px] text-muted-foreground italic">Find what you need in Kohat</span>
+                              <span className="text-[10px]  italic">Find what you need in Kohat</span>
                               <Link
                                 href="/categories"
                                 className="text-[11px] font-bold text-primary hover:underline flex items-center gap-1"
@@ -191,7 +192,7 @@ const Header = () => {
                                   <div className="font-bold text-foreground text-[11px] group-hover/sub:text-primary">
                                     {sub.name}
                                   </div>
-                                  <div className="text-[9px] text-muted-foreground line-clamp-1">
+                                  <div className="text-[9px]  line-clamp-1">
                                     {sub.description}
                                   </div>
                                 </Link>
@@ -221,7 +222,7 @@ const Header = () => {
                                   <div className="font-bold text-foreground text-[11px] group-hover/sub:text-primary">
                                     {sub.name}
                                   </div>
-                                  <div className="text-[9px] text-muted-foreground line-clamp-1">
+                                  <div className="text-[9px]  line-clamp-1">
                                     {sub.description}
                                   </div>
                                 </Link>
@@ -248,6 +249,7 @@ const Header = () => {
             {/* Action Buttons */}
             <div className="flex items-center gap-2">
               <div className="hidden sm:flex items-center space-x-2">
+                <LanguageSwitcher />
                 <Link href="/request-listing">
                   <button className="inline-flex items-center justify-center rounded-lg text-[10px] md:text-xs font-bold border-2 border-primary/20 hover:border-primary/40 transition-all h-8 md:h-9 px-4">
                     List Business
@@ -261,7 +263,7 @@ const Header = () => {
               {/* Mobile Menu Button */}
               <button
                 onClick={toggleMobileMenu}
-                className="lg:hidden inline-flex items-center justify-center rounded-lg p-1.5 text-muted-foreground hover:bg-accent transition-colors z-50 border"
+                className="lg:hidden inline-flex items-center justify-center rounded-lg p-1.5  hover:bg-accent transition-colors z-50 border"
               >
                 {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
               </button>
@@ -291,9 +293,12 @@ const Header = () => {
               </div>
               <span className="font-bold text-sm tracking-tight">{site.name}</span>
             </div>
-            <button onClick={toggleMobileMenu} className="p-2 border rounded-lg hover:bg-accent transition-colors">
-              <X className="h-4 w-4" />
-            </button>
+            <div className="flex items-center gap-2">
+              <LanguageSwitcher />
+              <button onClick={toggleMobileMenu} className="p-2 border rounded-lg hover:bg-accent transition-colors">
+                <X className="h-4 w-4" />
+              </button>
+            </div>
           </div>
           
           <div className="flex-1 overflow-y-auto px-6 py-6 space-y-2">
@@ -328,7 +333,7 @@ const Header = () => {
                                 <Link
                                   key={sub.name}
                                   href={`/category/${sub.slug}`}
-                                  className="text-[10px] text-muted-foreground hover:text-primary transition-colors truncate"
+                                  className="text-[10px]  hover:text-primary transition-colors truncate"
                                   onClick={toggleMobileMenu}
                                 >
                                   • {sub.name}
@@ -363,7 +368,7 @@ const Header = () => {
                           <Link
                             key={sub.name}
                             href={`/category/${sub.slug}`}
-                            className="block py-1.5 text-[11px] font-medium text-muted-foreground hover:text-primary transition-colors"
+                            className="block py-1.5 text-[11px] font-medium  hover:text-primary transition-colors"
                             onClick={toggleMobileMenu}
                           >
                             • {sub.name}
@@ -395,7 +400,7 @@ const Header = () => {
                           <Link
                             key={sub.name}
                             href={`/category/${sub.slug}`}
-                            className="block py-1.5 text-[11px] font-medium text-muted-foreground hover:text-primary transition-colors"
+                            className="block py-1.5 text-[11px] font-medium  hover:text-primary transition-colors"
                             onClick={toggleMobileMenu}
                           >
                             • {sub.name}

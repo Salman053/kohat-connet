@@ -64,7 +64,7 @@ const NavigationMenuItem = React.forwardRef<
     <li 
       ref={ref} 
       className={cn("relative", className)} 
-      onMouseEnter={() => value && setActiveItem(value)}
+      onMouseEnter={() => setActiveItem(value || null)}
       {...props} 
     />
   )
@@ -119,13 +119,15 @@ const NavigationMenuContent = React.forwardRef<
     <div
       ref={ref}
       className={cn(
-        "absolute left-0 top-full mt-2 w-full md:w-auto z-50",
+        "absolute left-0 top-full w-full md:w-auto z-50",
         "animate-in fade-in zoom-in-95 duration-200",
         className
       )}
       {...props}
     >
-      {children}
+      <div className="pt-2"> {/* Added padding to create visual space without a dead zone */}
+        {children}
+      </div>
     </div>
   )
 })

@@ -443,4 +443,4 @@ export const footerLinks = [
 ]
 
 
-// export con
+// news dummy data
