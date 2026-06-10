@@ -1,5 +1,5 @@
 import React from 'react'
-import { BadgeInfo, ArrowRight, Star } from 'lucide-react'
+import { BadgeInfo, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const ads = [

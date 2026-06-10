@@ -6,14 +6,46 @@ import { cn } from '@/lib/utils';
 
 declare global {
   interface Window {
-    google: any;
+    google: {
+      translate: {
+        TranslateElement: {
+          new (options: {
+            pageLanguage: string;
+            includedLanguages: string;
+            layout: unknown;
+            autoDisplay: boolean;
+          }, elementId: string): void;
+          InlineLayout: { SIMPLE: unknown };
+        };
+      };
+    };
     googleTranslateElementInit: () => void;
   }
 }
 
 const LanguageSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLangCode, setCurrentLangCode] = useState('en');
+  const [currentLangCode, setCurrentLangCode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      const getCookie = (name: string) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop()?.split(';').shift();
+      };
+      const transCookie = getCookie('googtrans');
+      return transCookie?.split('/').pop() || 'en';
+    }
+    return 'en';
+  });
+  const [pendingLangCode, setPendingLangCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (pendingLangCode) {
+      document.cookie = `googtrans=/en/${pendingLangCode}; path=/; domain=${window.location.hostname}`;
+      document.cookie = `googtrans=/en/${pendingLangCode}; path=/`;
+      window.location.reload();
+    }
+  }, [pendingLangCode]);
 
   const languages = [
     { name: 'English', code: 'en', label: 'English' },
@@ -43,33 +75,12 @@ const LanguageSwitcher = () => {
       script.async = true;
       document.body.appendChild(script);
     }
-
-    // 3. Check for existing cookie to set initial state
-    const getCookie = (name: string) => {
-      const value = `; ${document.cookie}`;
-      const parts = value.split(`; ${name}=`);
-      if (parts.length === 2) return parts.pop()?.split(';').shift();
-    };
-
-    const transCookie = getCookie('googtrans');
-    if (transCookie) {
-      const lang = transCookie.split('/').pop();
-      if (lang) setCurrentLangCode(lang);
-    }
   }, []);
 
   const changeLanguage = (langCode: string) => {
-    // Set the cookie Google Translate looks for
-    // Format: /en/ur, /en/ps, etc.
-    document.cookie = `googtrans=/en/${langCode}; path=/; domain=${window.location.hostname}`;
-    document.cookie = `googtrans=/en/${langCode}; path=/`; // Fallback for local dev
-    
-    // Update local state
     setCurrentLangCode(langCode);
     setIsOpen(false);
-
-    // Refresh the page to apply translation (Standard Google Translate behavior for custom UI)
-    window.location.reload();
+    setPendingLangCode(langCode);
   };
 
   const currentLang = languages.find(l => l.code === currentLangCode) || languages[0];

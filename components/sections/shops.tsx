@@ -1,6 +1,7 @@
+import Image from 'next/image'
 import React from 'react'
 import Link from 'next/link'
-import { Store, ArrowRight, Star, ShoppingBag, TrendingUp, Users, Zap, CheckCircle2, Sparkles, Building2, Eye, MessageSquare, Award, Activity } from 'lucide-react'
+import { Store, ArrowRight, Star, TrendingUp, Users, Zap, CheckCircle2, Sparkles, Building2, Eye, MessageSquare, Award, Activity } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 
@@ -148,9 +149,10 @@ const Shops = () => {
             href={shops[0].href}
             className="md:col-span-2 lg:row-span-2 relative group overflow-hidden rounded-3xl bg-muted aspect-square lg:aspect-auto"
           >
-            <img
+            <Image
               src={shops[0].image}
               alt={shops[0].name}
+              fill
               className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
@@ -164,9 +166,9 @@ const Shops = () => {
                   <span className="text-xs font-bold text-white">{shops[0].rating}</span>
                 </div>
               </div>
-              <h3 className="text-3xl font-bold text-white mb-2">{shops[0].name}</h3>
+              <h3 className="text-3xl font-bold text-white mb-2">Grow Your Business</h3>
               <p className="text-white/80 text-sm max-w-md line-clamp-2 mb-4">
-                {shops[0].description}
+                Join hundreds of local entrepreneurs already reaching thousands of customers every month. List your business in minutes &mdash; it&apos;s free to start.
               </p>
               <div className="flex items-center gap-2 text-white font-bold text-sm">
                 Visit Shop <ArrowRight className="w-4 h-4" />
@@ -181,9 +183,10 @@ const Shops = () => {
               href={shop.href}
               className="group relative overflow-hidden rounded-3xl bg-card border border-border h-[300px]"
             >
-              <img
+              <Image
                 src={shop.image}
                 alt={shop.name}
+                fill
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -282,7 +285,9 @@ const Shops = () => {
 
                     {/* Image */}
                     <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
-                      <img
+                      <Image
+                        width={200}
+                        height={200}
                         src={performer.image}
                         alt={performer.name}
                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
@@ -342,12 +347,12 @@ const Shops = () => {
               <h3 className="text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white leading-[1.1] mb-4">
                 Grow Your Business
                 <br />
-                <span className="text-white/90">With Kohat's #1 Platform</span>
+                <span className="text-white/90">With Kohat&apos;s #1 Platform</span>
               </h3>
 
               {/* Subheading */}
               <p className="text-white/80 text-base md:text-lg max-w-lg mb-8 leading-relaxed">
-                Join hundreds of local entrepreneurs already reaching thousands of customers every month. List your business in minutes — it's free to start.
+                Join hundreds of local entrepreneurs already reaching thousands of customers every month. List your business in minutes &mdash; it&apos;s free to start.
               </p>
 
               {/* Benefits list */}
@@ -412,9 +417,10 @@ const Shops = () => {
               <div className="relative w-64 md:w-72 bg-white rounded-2xl shadow-2xl overflow-hidden -rotate-3 hover:rotate-0 transition-transform duration-500">
                 {/* Card header */}
                 <div className="relative h-32 bg-gradient-to-br from-primary/20 to-primary/40 overflow-hidden">
-                  <img
+                  <Image
                     src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=600&q=80"
                     alt="Business showcase"
+                    fill
                     className="w-full h-full object-cover opacity-80"
                   />
                   <div className="absolute top-3 right-3 px-2 py-1 rounded-full bg-green-500 text-white text-[9px] font-bold uppercase tracking-wider flex items-center gap-1">

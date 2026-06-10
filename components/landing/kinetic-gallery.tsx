@@ -1,5 +1,6 @@
 "use client"
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform, MotionValue } from "framer-motion";
+import Image from "next/image";
 const images = [
     {
         src: "https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
@@ -67,9 +68,9 @@ const images = [
 
 const KineticGridItem = ({ image, scrollVelocity }: {
     image: { src: string; alt: string };
-    scrollVelocity: any;
+    scrollVelocity: MotionValue<number>;
 }) => {
-    const smoothedVelocity :any = useSpring(scrollVelocity, {
+    const smoothedVelocity = useSpring(scrollVelocity, {
         mass: 0.1,
         stiffness: 80,
         damping: 40,
@@ -80,15 +81,17 @@ const KineticGridItem = ({ image, scrollVelocity }: {
     return (
         <motion.div
             className="w-full h-80 relative overflow-hidden rounded-lg group"
-            style={{ skewX: skew as any }}
+            style={{ skewX: skew }}
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.2 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
         >
-            <img
+            <Image
                 src={image.src}
                 alt={image.alt}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw"
                 className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                 style={{
                     transform: "scale(1.15)"
@@ -113,7 +116,7 @@ export default function KineticScrollGallery() {
         scrollYProgress,
         [0, 1],
         [0, 1000],
-        { clamp: false } as any
+        { clamp: false }
     );
 
     return (

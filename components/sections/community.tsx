@@ -1,6 +1,4 @@
-import React from 'react'
-import Link from 'next/link'
-import { MessageSquare, Megaphone, Search, ArrowRight, Plus, Calendar } from 'lucide-react'
+import { MessageSquare, Megaphone, Plus, Calendar } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const announcements = [
@@ -19,7 +17,7 @@ const Community = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col items-center text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black tracking-tighter mb-4 uppercase">Community Pulse</h2>
-          <p className="text-muted-foreground text-lg max-w-2xl italic">"Empowering Kohat through shared information and collective action."</p>
+          <p className="text-muted-foreground text-lg max-w-2xl italic">&quot;Empowering Kohat through shared information and collective action.&quot;</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

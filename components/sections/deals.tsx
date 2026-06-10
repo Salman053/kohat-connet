@@ -1,6 +1,7 @@
 import React from 'react'
 import { Tag, ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import Image from 'next/image'
 
 const deals = [
   { id: 1, title: "20% OFF on all Pizza", shop: "Kohat Pizza Hut", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" },
@@ -15,7 +16,7 @@ const DealsBanner = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {deals.map(deal => (
             <div key={deal.id} className="relative group rounded-3xl overflow-hidden h-64 border border-border">
-              <img src={deal.image} alt={deal.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+              <Image src={deal.image} alt={deal.title} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-black/20 p-6 flex flex-col justify-end">
                 <div className="flex items-center gap-2 text-primary font-bold text-sm mb-2">
                   <Tag className="w-4 h-4" /> Limited Offer

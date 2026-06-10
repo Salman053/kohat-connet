@@ -3,6 +3,7 @@ import * as React from "react";
 import { motion } from "framer-motion";
 import { ChevronLeft, ChevronRight, ArrowRight, Tag, MapPin, Calendar } from "lucide-react";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 // Define the type for a single card item
 export interface CardItem {
@@ -37,7 +38,7 @@ const GenericCard = React.forwardRef<HTMLAnchorElement, GenericCardProps>(({ ite
   >
     {/* Background Image */}
     <div className="h-1/2 overflow-hidden">
-      <img
+      <Image
         src={item.imageSrc}
         alt={item.imageAlt}
         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
@@ -83,7 +84,7 @@ const GenericCard = React.forwardRef<HTMLAnchorElement, GenericCardProps>(({ ite
       <div className="flex items-center justify-between pt-3 border-t border-border mt-auto">
         <div className="flex items-center gap-2">
           {item.authorLogo && (
-            <img src={item.authorLogo} alt={`${item.authorName} logo`} className="w-6 h-6 rounded-full bg-muted object-cover" />
+            <Image src={item.authorLogo} alt={`${item.authorName} logo`} className="w-6 h-6 rounded-full bg-muted object-cover" />
           )}
           {item.authorName && (
             <p className="text-xs font-semibold text-card-foreground truncate max-w-[120px]">{item.authorName}</p>

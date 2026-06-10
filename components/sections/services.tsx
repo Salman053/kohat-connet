@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Wrench, Camera, Laptop, Truck, HeartPulse, Zap, ArrowRight, ShieldCheck, Clock, TrendingUp } from 'lucide-react'
+import { Wrench, Camera, Laptop, Truck, HeartPulse, Zap, TrendingUp } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 const serviceCategories = [
@@ -29,7 +29,7 @@ const Services = () => {
              <h2 className="text-4xl font-black tracking-tighter text-foreground mb-6">
                 PROFESSIONAL <span className="text-primary">SERVICES</span>
              </h2>
-             <p className="text-muted-foreground text-sm mb-8 italic">"Your community experts, just a click away."</p>
+             <p className="text-muted-foreground text-sm mb-8 italic">&quot;Your community experts, just a click away.&quot;</p>
              
              <div className="bg-card p-6 rounded-3xl border border-border">
                 <h3 className="text-sm font-bold mb-4 flex items-center gap-2">

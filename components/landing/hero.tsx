@@ -4,7 +4,6 @@ import { WordsPullUp } from "./words-pull-up";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Search, MapPin } from "lucide-react";
-import { HeroCollage } from "./hero-collage";
 
 export default function Hero() {
   return (

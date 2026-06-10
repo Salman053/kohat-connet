@@ -3,6 +3,7 @@ import { CardItem } from '../shared/Cards'
 import NewsSection from '../shared/news'
 import { fetchNews } from '@/lib/news'
 import { Search, TrendingUp } from 'lucide-react';
+import Image from 'next/image';
 const trendingItems: CardItem[] = [
   {
     id: 1,
@@ -223,7 +224,7 @@ const Trending = async () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {trendingItems.slice(0,8).map((item) => (
             <Link href={item.href} key={item.id} className="group bg-card border border-border p-4 rounded-3xl flex gap-4 hover:border-primary/50 transition-colors">
-              <img src={item.imageSrc} alt={item.imageAlt} className="w-24 h-24 rounded-2xl object-cover" />
+              <Image width={300} height={300} src={item.imageSrc} alt={item.imageAlt} className="w-24 h-24 rounded-2xl object-cover" />
               <div className='flex-1'>
                 <span className='text-[10px] font-black uppercase text-primary'>{item.tag}</span>
                 <h4 className='font-bold text-sm leading-tight mt-1'>{item.title}</h4>

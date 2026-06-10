@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import { Briefcase, MapPin, DollarSign, ArrowRight, Building2, BarChart, Store, Star } from 'lucide-react'
+import { MapPin, DollarSign, ArrowRight, Building2, BarChart, Store, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const jobs = [
@@ -17,7 +17,7 @@ const Jobs = () => {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
             <div>
                 <h2 className="text-4xl font-black tracking-tighter uppercase mb-2">Job Opportunities</h2>
-                <p className="text-muted-foreground">Find your next role in Kohat's growing economy.</p>
+                <p className="text-muted-foreground">Find your next role in Kohat&apos;s growing economy.</p>
             </div>
             <Button size="lg" className="rounded-full">Browse All Jobs</Button>
         </div>

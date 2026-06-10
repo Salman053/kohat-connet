@@ -1,5 +1,5 @@
 import React from 'react'
-import { Building, MapPin, Bed, Bath, ArrowRight } from 'lucide-react'
+import { Building, MapPin } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const properties = [

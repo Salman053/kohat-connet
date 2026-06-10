@@ -1,5 +1,5 @@
 import React from 'react'
-import { Phone, AlertTriangle, ShieldCheck, Zap, Flame, Building2 } from 'lucide-react'
+import { AlertTriangle, ShieldCheck, Zap, Flame, Building2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const emergencyContacts = [

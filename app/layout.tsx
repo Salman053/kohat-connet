@@ -4,9 +4,6 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 import { keywords } from "@/lib/keywords";
-import { NoiseTexture } from "@/components/shared/noise-texture";
-import { Button } from "@/components/ui/button";
-import { ArrowUp } from "lucide-react";
 import ScrollToTopButton from "@/components/shared/scroll-to-top-button";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });

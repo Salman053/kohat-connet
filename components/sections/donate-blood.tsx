@@ -1,5 +1,5 @@
 import React from 'react'
-import { Droplet, Plus, MapPin, Phone, AlertCircle, Building2 } from 'lucide-react'
+import { Plus, MapPin, Phone, AlertCircle, Building2 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 
 const donors = [

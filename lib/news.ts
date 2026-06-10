@@ -101,6 +101,15 @@ export const getFallbackNews = (): NewsItem[] => [
   }
 ];
 
+interface NewsApiArticle {
+  title: string;
+  description?: string;
+  publishedAt: string;
+  url: string;
+  source: { name: string };
+  urlToImage?: string;
+}
+
 export async function fetchNews() {
   try {
     const API_KEY = process.env.NEWS_API_KEY || '8c741f84b9534113a0e3355bcf9150de';
@@ -122,7 +131,7 @@ export async function fetchNews() {
     }
 
     // Transform API response to match NewsItem format
-    return data.articles.map((article: any, index: number) => ({
+    return (data.articles as NewsApiArticle[]).map((article, index) => ({
       id: index + 1,
       title: article.title,
       category: determineCategory(article.title + ' ' + (article.description || '')),
