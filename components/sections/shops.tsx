@@ -137,7 +137,7 @@ const Shops = () => {
         {/* Quick Filter Bar */}
         <div className="flex gap-2 mb-10 overflow-x-auto pb-2 scrollbar-hide">
           {categories.map((cat, i) => (
-            <button key={cat} className={cn("px-5 py-2.5 rounded-full text-sm font-bold whitespace-nowrap transition-all", i === 0 ? "bg-primary text-primary-foreground" : "bg-muted hover:bg-muted/80 text-muted-foreground")}>
+            <button key={cat} className={cn("px-5 py-2.5  text-sm font-bold whitespace-nowrap transition-all", i === 0 ? "bg-primary text-primary-foreground" : "bg-muted hover:bg-muted/80 text-muted-foreground")}>
               {cat}
             </button>
           ))}

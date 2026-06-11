@@ -19,7 +19,7 @@ const Jobs = () => {
                 <h2 className="text-4xl font-black tracking-tighter uppercase mb-2">Job Opportunities</h2>
                 <p className="text-muted-foreground">Find your next role in Kohat&apos;s growing economy.</p>
             </div>
-            <Button size="lg" className="rounded-full">Browse All Jobs</Button>
+            <Button size="lg" >Browse All Jobs</Button>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">

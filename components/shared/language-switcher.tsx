@@ -25,18 +25,19 @@ declare global {
 
 const LanguageSwitcher = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [currentLangCode, setCurrentLangCode] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const getCookie = (name: string) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop()?.split(';').shift();
-      };
-      const transCookie = getCookie('googtrans');
-      return transCookie?.split('/').pop() || 'en';
+  const [currentLangCode, setCurrentLangCode] = useState('en');
+
+  useEffect(() => {
+    const getCookie = (name: string) => {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return parts.pop()?.split(';').shift();
+    };
+    const transCookie = getCookie('googtrans');
+    if (transCookie) {
+      setCurrentLangCode(transCookie.split('/').pop() || 'en');
     }
-    return 'en';
-  });
+  }, []);
   const [pendingLangCode, setPendingLangCode] = useState<string | null>(null);
 
   useEffect(() => {
