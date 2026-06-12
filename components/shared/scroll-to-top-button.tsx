@@ -14,7 +14,7 @@ function ScrollToTopButton() {
       const scrollY = window.scrollY;
       const height = document.documentElement.scrollHeight - window.innerHeight;
       const progress = (scrollY / height) * 100;
-      
+
       setIsVisible(scrollY > 300);
       setScrollProgress(progress);
     };
@@ -51,7 +51,7 @@ function ScrollToTopButton() {
             className="text-primary/20"
           />
         </svg>
-        
+
         {/* Progress circle */}
         <svg className="absolute inset-0 w-full h-full -rotate-90">
           <circle
@@ -67,9 +67,10 @@ function ScrollToTopButton() {
             strokeLinecap="round"
           />
         </svg>
-        
+
         {/* Button */}
         <Button
+          aria-label={"scroll to top"}
           variant={"ghost"}
           className={cn(
             "absolute inset-0 m-auto rounded-full shadow-lg",

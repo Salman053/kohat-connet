@@ -56,7 +56,7 @@ const Jobs = () => {
                     <p className="text-xs text-muted-foreground mb-6">What is the most needed service in Kohat right now?</p>
                     <div className="space-y-3">
                         {['Public Transport', 'Better Internet', 'More Parks'].map((opt) => (
-                            <Button key={opt} variant="outline" className="w-full justify-start rounded-full text-xs">
+                            <Button key={opt} variant="outline" className="w-full justify-start  text-xs">
                                 {opt}
                             </Button>
                         ))}

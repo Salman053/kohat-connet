@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, NavigationMenuContent } from './navigation-menu'
 import { navigationLinks, categories, site } from '@/lib/site'
-import { Menu, X, MapPin, Phone, Mail} from 'lucide-react'
+import { Menu, X, MapPin, Phone, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import LanguageSwitcher from './language-switcher'
+import { Button } from '../ui/button'
 
 const announcements = [
   "Welcome to Kohat Connect - Your local city guide",
@@ -65,7 +66,7 @@ const Header = () => {
               <span>{site.contactEmail}</span>
             </div>
           </div>
-          
+
           <div className="relative h-5 overflow-hidden flex-1 flex items-center justify-center max-w-[300px] md:max-w-md mx-4">
             <AnimatePresence initial={false}>
               <motion.div
@@ -82,21 +83,21 @@ const Header = () => {
           </div>
 
           {/* <div className="flex items-center gap-3"> */}
-            {/* <Link href={site.facebookPage} className="hover:opacity-80"><Facebook className="h-3 w-3" /></Link> */}
-            {/* <Link href={site.instagramHandle} className="hover:opacity-80"><Instagram className="h-3 w-3" /></Link> */}
-            {/* <Link href={site.twitterPage} className="hover:opacity-80"><Twitter className="h-3 w-3" /></Link> */}
+          {/* <Link href={site.facebookPage} className="hover:opacity-80"><Facebook className="h-3 w-3" /></Link> */}
+          {/* <Link href={site.instagramHandle} className="hover:opacity-80"><Instagram className="h-3 w-3" /></Link> */}
+          {/* <Link href={site.twitterPage} className="hover:opacity-80"><Twitter className="h-3 w-3" /></Link> */}
           {/* </div> */}
         </div>
       </div>
 
       <nav className={cn(
         "sticky mx-auto container top-0 z-50 w-full b transition-all duration-300 ",
-        scrolled 
-          ? "bg-background/80 backdrop-blur-xl h-14" 
+        scrolled
+          ? "bg-background/80 backdrop-blur-xl h-14"
           : "bg-background h-16 md:h-20"
       )}>
         {/* Animated Background Gradient Line */}
-        
+
         <div className=" bg-transparent mx-auto px-7 h-full">
           <div className="flex h-full items-center justify-between">
             {/* Logo */}
@@ -231,13 +232,13 @@ const Header = () => {
                         </NavigationMenuItem>
                       )
                     }
-                    
+
                     // Regular links
                     return (
-                      <NavigationMenuItem  key={link.name}>
-                          <NavigationMenuLink  href={link.href} className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-3 py-2 text-[11px] font-semibold transition-all hover:text-primary">
-                            {link.name}
-                          </NavigationMenuLink>
+                      <NavigationMenuItem key={link.name}>
+                        <NavigationMenuLink href={link.href} className="group inline-flex h-9 w-max items-center justify-center rounded-md bg-transparent px-3 py-2 text-[11px] font-semibold transition-all hover:text-primary">
+                          {link.name}
+                        </NavigationMenuLink>
                       </NavigationMenuItem>
                     )
                   })}
@@ -260,26 +261,28 @@ const Header = () => {
               </div>
 
               {/* Mobile Menu Button */}
-              <button
+              <Button
+                variant={'ghost'}
+               aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
                 onClick={toggleMobileMenu}
-                className="lg:hidden inline-flex items-center justify-center rounded-lg p-1.5  hover:bg-accent transition-colors z-50 border"
+                className="lg:hidden inline-flex items-center justify-center rounded-lg p-1.5 py-4  "
               >
                 {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
-              </button>
+              </Button>
             </div>
           </div>
         </div>
       </nav>
 
       {/* Mobile Menu - Slide-in Drawer */}
-      <div 
+      <div
         className={cn(
           "lg:hidden fixed inset-0 z-[100] transition-opacity duration-300",
           isMobileMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
         )}
       >
         <div className="absolute inset-0 bg-background/60 backdrop-blur-sm" onClick={toggleMobileMenu} />
-        <div 
+        <div
           className={cn(
             "fixed inset-y-0 right-0 w-full max-w-[320px] bg-background border-l shadow-2xl transition-transform duration-300 ease-in-out flex flex-col",
             isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
@@ -294,12 +297,12 @@ const Header = () => {
             </div>
             <div className="flex items-center gap-2">
               <LanguageSwitcher />
-              <button onClick={toggleMobileMenu} className="p-2 border rounded-lg hover:bg-accent transition-colors">
+              <button aria-label='arrow' onClick={toggleMobileMenu} className="p-2 border rounded-lg hover:bg-accent transition-colors">
                 <X className="h-4 w-4" />
               </button>
             </div>
           </div>
-          
+
           <div className="flex-1 overflow-y-auto px-6 py-6 space-y-2">
             {navigationLinks.map((link) => {
               if (link.name === "Categories") {
@@ -312,7 +315,7 @@ const Header = () => {
                       <span>Categories</span>
                       <X className={cn("h-3 w-3 transition-transform duration-300 rotate-[-45deg]", openCategories ? "rotate-0" : "")} />
                     </button>
-                    
+
                     <div className={cn(
                       "overflow-hidden transition-all duration-300 ease-in-out bg-muted/20 rounded-xl",
                       openCategories ? "max-h-[2000px] opacity-100 py-2" : "max-h-0 opacity-0"
@@ -410,7 +413,7 @@ const Header = () => {
                   </div>
                 )
               }
-              
+
               return (
                 <Link
                   key={link.name}
@@ -423,7 +426,7 @@ const Header = () => {
               )
             })}
           </div>
-          
+
           <div className="p-6 border-t bg-muted/30 space-y-3">
             <button className="w-full inline-flex items-center justify-center rounded-xl text-sm font-bold bg-primary text-primary-foreground hover:bg-primary/90 h-12 shadow-lg shadow-primary/20 transition-all">
               Sign In to Your Account

@@ -67,9 +67,9 @@ const Community = () => {
               </h3>
               <div className="space-y-3">
                 {upcomingEvents.map((event, i) => (
-                  <div key={i} className="flex items-center justify-between bg-muted/50 p-4 rounded-2xl">
-                    <span className="text-sm font-semibold">{event.title}</span>
-                    <span className="text-xs text-muted-foreground">{event.date}</span>
+                  <div key={i} className="flex items-center font-semibold justify-between bg-muted/50 p-4">
+                    <span className="text-sm ">{event.title}</span>
+                    <span className="text-xs  ">{event.date}</span>
                   </div>
                 ))}
               </div>
@@ -90,7 +90,7 @@ const Community = () => {
                     <div className="flex justify-between items-start mb-1">
                       <span className={cn(
                         "text-[10px] font-black uppercase tracking-tighter",
-                        item.priority === 'high' ? "text-red-400" : "text-primary"
+                        item.priority === 'high' ? "text-red-400" : ""
                       )}>{item.priority === 'high' ? 'Emergency' : 'Notice'}</span>
                       <span className="text-[10px] ">{item.time}</span>
                     </div>
