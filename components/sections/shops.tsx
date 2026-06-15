@@ -411,7 +411,7 @@ const Shops = () => {
             {/* Right: Visual Card Stack */}
             <div className="relative flex items-center justify-center min-h-[320px] lg:min-h-[400px]">
               {/* Background decorative card */}
-              <div className="absolute top-8 right-8 w-56 h-72 md:w-64 md:h-80 rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 rotate-6 hidden sm:block" />
+              <div className="absolute top-8 right-8 w-56 h-72 md:w-64 md:h-80 rounded-2xl animate-pulse bg-white/20 backdrop-blur-sm border border-white/20 rotate-6 hidden sm:block" />
               
               {/* Main showcase card */}
               <div className="relative w-64 md:w-72 bg-white rounded-2xl shadow-2xl overflow-hidden -rotate-3 hover:rotate-0 transition-transform duration-500">
@@ -472,7 +472,7 @@ const Shops = () => {
               </div>
 
               {/* Floating review card */}
-              <div className="absolute top-0 left-4 md:left-0 bg-white rounded-xl shadow-xl p-3 rotate-6 hidden md:flex items-center gap-2">
+              <div className="absolute top-0  left-4 md:left-50 bg-white rounded-xl shadow-xl p-3 rotate-6 hidden md:flex items-center gap-2">
                 <div className="flex -space-x-1">
                   {[...Array(5)].map((_, i) => (
                     <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />

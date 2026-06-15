@@ -87,13 +87,13 @@ const LanguageSwitcher = () => {
   const currentLang = languages.find(l => l.code === currentLangCode) || languages[0];
 
   return (
-    <div className="relative flex items-center">
+    <div className="relative flex items-center ">
       {/* Required hidden element for Google Translate to mount */}
       <div id="google_translate_element" style={{ display: 'none' }}></div>
       
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-1.5  border border-border bg-background hover:bg-muted transition-all text-xs font-semibold shadow-sm active:scale-95"
+        className="flex items-center gap-2 px-3 py-2   border border-border bg-background hover:bg-muted transition-all text-xs font-semibold shadow-sm active:scale-95"
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
