@@ -34,7 +34,7 @@ export default function Home() {
         <RealEstateHub />
         <BusinessDirectory />
         <DonateBlood />
-        <KineticScrollGallery/>
+        <KineticScrollGallery />
       </main>
       <Footer />
     </div>

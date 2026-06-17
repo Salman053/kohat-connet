@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 import { keywords } from "@/lib/keywords";
 import ScrollToTopButton from "@/components/shared/scroll-to-top-button";
+import Oneko from "@/components/shared/oneko";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
@@ -63,7 +64,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col select-none">
         {/* <NoiseTexture /> */}
 
-
+        <Oneko />
         {children}
 
         <ScrollToTopButton />

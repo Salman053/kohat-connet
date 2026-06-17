@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { CardItem } from '../shared/Cards'
+import { CardItem } from '../shared/cards'
 import NewsSection from '../shared/news'
 import { fetchNews } from '@/lib/news'
 import { Search, TrendingUp } from 'lucide-react';
