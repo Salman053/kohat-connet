@@ -112,7 +112,7 @@ const topPerformers = [
     category: "Clothing",
     views: "7.2K",
     growth: "+22%",
-    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=200&q=80"
+    image: "https://images.unsplash.com/photo-1523199455310-87b16c0eed11?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
   }
 ];
 
@@ -421,6 +421,7 @@ const Shops = () => {
                     src="https://images.unsplash.com/photo-1556740738-b6a63e27c4df?auto=format&fit=crop&w=600&q=80"
                     alt="Business showcase"
                     fill
+                    sizes=''
                     className="w-full h-full object-cover opacity-80"
                   />
                   <div className="absolute top-3 right-3 px-2 py-1 rounded-full bg-green-500 text-white text-[9px] font-bold uppercase tracking-wider flex items-center gap-1">

@@ -7,7 +7,7 @@ import { SectionWrapper } from '@/components/shared/section-wrapper'
 const deals = [
   { id: 1, title: "20% OFF on all Pizza", shop: "Kohat Pizza Hut", image: "https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80" },
   { id: 2, title: "Buy 1 Get 1 Free", shop: "Fashion Hub", image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80" },
-  { id: 3, title: "Free Oil Change", shop: "Auto Care Center", image: "https://images.unsplash.com/photo-1594870420799-d8205466d3a9?auto=format&fit=crop&w=800&q=80" },
+  { id: 3, title: "Free Oil Change", shop: "Auto Care Center", image: "https://images.unsplash.com/photo-1715081650442-31692c59b0d0?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
 ]
 
 const DealsBanner = () => {
@@ -23,7 +23,7 @@ const DealsBanner = () => {
               </div>
               <h3 className="text-white text-xl font-black tracking-tighter leading-tight mb-1">{deal.title}</h3>
               <p className="text-white/80 text-xs mb-4">{deal.shop}</p>
-              <Button size="sm" className="w-fit rounded-full bg-white text-black hover:bg-white/90">
+              <Button size="sm" className="w-fit  bg-white text-black hover:bg-white/90">
                 Claim Deal <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </div>

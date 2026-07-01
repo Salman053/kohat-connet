@@ -240,7 +240,7 @@ const Trending = async () => {
           </h3>
           <div className="flex flex-wrap gap-2">
             {popularSearches.map((search, i) => (
-              <Link key={i} href={`/search?q=${encodeURIComponent(search)}`} className="bg-background px-4 py-2 rounded-full text-sm font-semibold text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 border border-border">
+              <Link key={i} href={`/search?q=${encodeURIComponent(search)}`} className="bg-background px-4 py-2  text-sm font-semibold text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 border border-border">
                 <Search className='w-3 h-3' /> {search}
               </Link>
             ))}

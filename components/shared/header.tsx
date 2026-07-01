@@ -91,7 +91,7 @@ const Header = () => {
       </div>
 
       <nav className={cn(
-        "sticky mx-auto container top-0 z-50 w-full b transition-all duration-300 ",
+        "sticky mx-auto  top-0 z-50 w-full b transition-all duration-300 ",
         scrolled
           ? "bg-background/80 backdrop-blur-xl h-14"
           : "bg-background h-16 md:h-20"
@@ -103,15 +103,15 @@ const Header = () => {
             {/* Logo */}
             <div className="flex items-center gap-2">
               <Link href="/" className="flex items-center gap-2 group">
-                <div className="bg-primary p-1.5 rounded-lg text-primary-foreground group-hover:scale-110 transition-transform">
-                  <MapPin className="h-4 w-4 md:h-5 md:w-5" />
+                <div className="bg-primary p-1 rounded-lg text-primary-foreground  transition-transform">
+                  <MapPin className="h-4 w-4 " />
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-bold text-sm md:text-base leading-none tracking-tight">
+                  <span className="font-bold text-xs leading-none tracking-tight">
                     {site.name.split(' ')[0]}
                     <span className="text-primary">{site.name.split(' ')[1]}</span>
                   </span>
-                  <span className="text-[8px] md:text-[10px]  font-medium tracking-widest uppercase">
+                  <span className="text-[8px]   font-medium tracking-widest uppercase">
                     Connect • Discover • Grow
                   </span>
                 </div>
@@ -186,7 +186,7 @@ const Header = () => {
                               {servicesCategory?.subcategories.map((sub) => (
                                 <Link
                                   key={sub.name}
-                                  href={`/category/${sub.slug}`}
+                                  href={`/services/${sub.slug}`}
                                   className="flex flex-col p-2.5 rounded-lg hover:bg-accent transition-all group/sub"
                                 >
                                   <div className="font-bold text-foreground text-[11px] group-hover/sub:text-primary">

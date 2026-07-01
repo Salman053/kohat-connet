@@ -4,6 +4,7 @@ import { WordsPullUp } from "./words-pull-up";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Search, MapPin } from "lucide-react";
+import SearchBox from "../shared/search-box";
 
 export default function Hero() {
   return (
@@ -17,37 +18,16 @@ export default function Hero() {
           <div className="space-y-6 max-w-5xl text-center">
             <WordsPullUp
               text="Connecting the Heart of Kohat"
-              className="text-2xl md:text-3xl lg:text-4xl text-center font-extrabold tracking-tighter text-foreground"
+              className="text-2xl md:text-3xl  text-center font-extrabold tracking-tighter text-foreground"
             />
-            <p className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-700 fill-mode-both leading-relaxed">
-              Find everything from local businesses and essential services to 
+            <p className="text-muted-foreground text-sm  max-w-3xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-700 fill-mode-both leading-relaxed">
+              Find everything from local businesses and essential services to
               hidden historical gems in the soul of KPK.
             </p>
           </div>
 
           {/* Search Box */}
-          <div className="w-full max-w-4xl p-2 bg-background/40 backdrop-blur-2xl border border-white/20 shadow-xl flex flex-col md:flex-row gap-2 animate-in fade-in slide-in-from-bottom-8 duration-1000 delay-1000 fill-mode-both">
-            <div className="flex-1 flex items-center px-4 py-4 gap-4 bg-background/20 border border-white/10">
-              <Search className="h-6 w-6 text-primary" />
-              <input 
-                type="text" 
-                placeholder="What are you looking for?" 
-                className="w-full bg-transparent outline-none text-base font-semibold placeholder:text-muted-foreground/60"
-              />
-            </div>
-            <div className="h-px md:h-10 w-full md:w-px bg-white/10 my-auto hidden md:block" />
-            <div className="flex-1 flex items-center px-4 py-4 gap-4 bg-background/20 border border-white/10">
-              <MapPin className="h-6 w-6 text-primary" />
-              <input 
-                type="text" 
-                placeholder="KDA, City, or Cantt" 
-                className="w-full bg-transparent outline-none text-base font-semibold placeholder:text-muted-foreground/60"
-              />
-            </div>
-            <Button size="sm" className="h-auto  px-5 font-bold text-sm shadow-xl shadow-primary/20 transition-all">
-              Search Now
-            </Button>
-          </div>
+          <SearchBox />
 
           <div className="flex flex-wrap justify-center gap-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-[1200ms] fill-mode-both">
             <Link href="/explore">

@@ -28,7 +28,7 @@ const Emergency = () => {
               href={`tel:${contact.number}`} 
               className="group flex flex-col items-center justify-center gap-3 p-5 bg-card border border-border rounded-3xl hover:border-primary/50 transition-all hover:shadow-md"
             >
-              <div className={`p-3 rounded-full ${contact.bg}`}>
+              <div className={`p-3  ${contact.bg}`}>
                 <contact.icon className={`w-6 h-6 ${contact.color}`} />
               </div>
               <div className="text-center">
@@ -36,7 +36,7 @@ const Emergency = () => {
                 <p className="text-lg font-black text-foreground mt-1">{contact.number}</p>
               </div>
               <div className="w-full flex justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                <Button size="sm" variant="secondary" className="rounded-full w-full">Call Now</Button>
+                <Button size="sm" variant="secondary" className=" w-full">Call Now</Button>
               </div>
             </a>
           ))}

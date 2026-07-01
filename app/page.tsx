@@ -17,7 +17,6 @@ import KineticScrollGallery from "@/components/landing/kinetic-gallery";
 export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
       <main>
         <Hero />
         <Emergency />
@@ -36,7 +35,6 @@ export default function Home() {
         <DonateBlood />
         <KineticScrollGallery />
       </main>
-      <Footer />
     </div>
   );
 }

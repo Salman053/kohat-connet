@@ -136,6 +136,7 @@ const FeaturedNews: React.FC<{ item: NewsItem }> = ({ item }) => (
 const NewsItemCard: React.FC<{ item: NewsItem; isLast: boolean }> = ({ item, isLast }) => (
   <a
     href={item.href}
+    target='_self'
     className={cn(
       "block p-4 transition-all group relative",
       "hover:bg-muted/50 hover:pl-5",
@@ -222,7 +223,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({
           </div>
           
           {breakingNews.length > 0 && (
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-destructive/10 border border-destructive/20">
+            <div className="flex items-center gap-1.5 px-2.5 py-1  bg-destructive/10 border border-destructive/20">
               <div className="relative">
                 <div className="w-2 h-2 bg-destructive rounded-full" />
                 <div className="absolute inset-0 w-2 h-2 bg-destructive rounded-full animate-ping" />

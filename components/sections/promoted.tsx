@@ -28,7 +28,7 @@ const PromotedListings = () => {
                 <Star className="w-4 h-4 fill-amber-500" />
                 <span className="text-sm font-bold text-foreground">{ad.rating}</span>
               </div>
-              <Button variant="outline" className="w-full rounded-full mt-auto">View Listing</Button>
+              <Button variant="outline" className="w-full  mt-auto">View Listing</Button>
             </div>
           ))}
         </div>
