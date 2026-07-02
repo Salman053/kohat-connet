@@ -221,7 +221,7 @@ const Trending = async () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {trendingItems.slice(0,8).map((item) => (
+          {trendingItems.slice(0,8).map((item :any) => (
             <Link href={item.href} key={item.id} className="group bg-card border border-border p-4 rounded-3xl flex gap-4 hover:border-primary/50 transition-colors">
               <Image width={300} height={300} src={item.imageSrc} alt={item.imageAlt} className="w-24 h-24 rounded-2xl object-cover" />
               <div className='flex-1'>
