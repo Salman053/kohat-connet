@@ -2,24 +2,22 @@
   "$schema": "https://opencode.ai/config.json",
   "provider": {
     "ollama": {
+      "npm": "@ai-sdk/openai-compatible",
+      "name": "Ollama (Local)",
+      "options": {
+        "baseURL": "http://localhost:11434/v1"
+      },
       "models": {
         "llama3.2:3b": {
           "name": "llama3.2:3b",
           "tool_call": false,
           "options": {
             "num_ctx": 4096,
-            "num_thread": 6,
-            "temperature": 0.3  // Lower temperature = less hallucination
+            "num_thread": 6
           }
         }
       }
     }
-  },
-  "agents": {
-    "chat": {
-      "model": "llama3.2:3b",
-      "tools": [],  // No tools for this agent
-      "system": "You are a helpful assistant. Do NOT use JSON or tool formats. Just respond in plain text."
-    }
   }
+  // No "agents" key here!
 }

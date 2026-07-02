@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Search, TrendingUp } from 'lucide-react';
 import Image from 'next/image';
-import { CardItem } from '../shared/cards';
+import type { CardItem } from '../shared/cards';
 import { fetchNews } from '@/lib/news';
 import NewsSection from '../shared/news';
 const trendingItems: CardItem[] = [
