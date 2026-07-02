@@ -8,6 +8,7 @@ import PageHeader from '@/components/shared/page-header'
 
 const blogPosts = [
   {
+    slug: "historic-landmarks-kohat",
     title: "10 Must-Visit Historic Landmarks in Kohat",
     excerpt: "Kohat is rich in cultural heritage. Explore the ancient Garrison Fort, the majestic Cavagnari Tunnel, and the historic British-era bungalows.",
     image: "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=800&q=80",
@@ -17,6 +18,7 @@ const blogPosts = [
     readTime: "6 min read"
   },
   {
+    slug: "best-chapli-kababs-kohat",
     title: "The Ultimate Guide to Kohat's Best Chapli Kababs",
     excerpt: "Looking for the juiciest, most authentic chapli kababs? We've visited every major spot in Kohat and ranked the top 5 places you must try.",
     image: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=800&q=80",
@@ -26,6 +28,7 @@ const blogPosts = [
     readTime: "4 min read"
   },
   {
+    slug: "tanda-dam-eco-tourism",
     title: "Why Tanda Dam is KPK's Hidden Eco-Tourism Gem",
     excerpt: "Discover the spectacular wildlife, scenic boating options, and the peaceful retreats surrounding the Tanda Dam wetland sanctuary.",
     image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80",
@@ -35,6 +38,7 @@ const blogPosts = [
     readTime: "5 min read"
   },
   {
+    slug: "kust-educational-beacon",
     title: "Understanding KUST: The Educational Beacon of Kohat",
     excerpt: "How Kohat University of Science and Technology is leading academic and scientific research initiatives in the southern region of KPK.",
     image: "https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80",
@@ -124,7 +128,7 @@ export default function BlogPage() {
                   {post.readTime}
                 </span>
                 <Link
-                  href="#"
+                  href={`/blog/${post.slug}`}
                   className="inline-flex items-center gap-1 text-[11px] font-black text-primary hover:underline group-hover:translate-x-1 transition-transform"
                 >
                   Read Full Article <ArrowRight className="h-3.5 w-3.5" />
