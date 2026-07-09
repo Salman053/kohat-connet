@@ -1,10 +1,12 @@
 import { createClient } from '@supabase/supabase-js'
 import { NextRequest, NextResponse } from 'next/server'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}
 
 export async function GET(
   request: NextRequest,
@@ -12,6 +14,7 @@ export async function GET(
 ) {
   try {
     const { id } = await params
+    const supabase = getSupabase()
     const { data, error } = await supabase
       .from('advertisements')
       .select(`
@@ -38,6 +41,7 @@ export async function PUT(
 ) {
   try {
     const { id } = await params
+    const supabase = getSupabase()
     const authHeader = request.headers.get('authorization')
     if (!authHeader) {
       return NextResponse.json(
@@ -112,6 +116,7 @@ export async function DELETE(
 ) {
   try {
     const { id } = await params
+    const supabase = getSupabase()
     const authHeader = request.headers.get('authorization')
     if (!authHeader) {
       return NextResponse.json(
