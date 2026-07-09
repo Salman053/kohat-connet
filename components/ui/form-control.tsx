@@ -4,7 +4,7 @@ const formControlVariants = cva(
   [
     "rounded-none border border-input bg-transparent text-xs transition-colors outline-none",
     "placeholder:text-muted-foreground",
-    "focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-ring/50",
+    "focus-visible:border-ring focus-visible:ring-1 focus-visible:ring-primary/50",
     "disabled:cursor-not-allowed disabled:bg-input/50 disabled:opacity-50",
     "aria-invalid:border-destructive aria-invalid:ring-1 aria-invalid:ring-destructive/20",
     "dark:bg-input/30",

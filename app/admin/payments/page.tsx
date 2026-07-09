@@ -179,7 +179,7 @@ export default function AdminPaymentsPage() {
                 placeholder="Search payments..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
@@ -189,7 +189,7 @@ export default function AdminPaymentsPage() {
               value={statusFilter}
               onValueChange={(v) => setStatusFilter(v as PaymentStatus | 'all')}
             >
-              <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>

@@ -261,7 +261,7 @@ export default function NewAdPage() {
                   required
                   value={formData.title}
                   onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                   placeholder="Enter ad title"
                 />
               </div>
@@ -274,7 +274,7 @@ export default function NewAdPage() {
                   required
                   value={formData.description}
                   onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                   rows={3}
                   placeholder="Describe your advertisement"
                 />
@@ -291,7 +291,7 @@ export default function NewAdPage() {
                     required
                     value={formData.image_url}
                     onChange={(e) => setFormData({ ...formData, image_url: e.target.value })}
-                    className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="https://example.com/ad-image.jpg"
                   />
                 </div>
@@ -315,7 +315,7 @@ export default function NewAdPage() {
                     required
                     value={formData.redirect_url}
                     onChange={(e) => setFormData({ ...formData, redirect_url: e.target.value })}
-                    className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                    className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     placeholder="https://yourwebsite.com"
                   />
                 </div>
@@ -334,7 +334,7 @@ export default function NewAdPage() {
                       value={formData.start_date}
                       onChange={(e) => handleStartDateChange(e.target.value)}
                       min={new Date().toISOString().split('T')[0]}
-                      className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
                 </div>
@@ -374,7 +374,7 @@ export default function NewAdPage() {
                       value={formData.payment_method}
                       onValueChange={(v) => setFormData({ ...formData, payment_method: v ?? '' })}
                     >
-                      <SelectTrigger className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                      <SelectTrigger className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                         <SelectValue placeholder="Select payment method" />
                       </SelectTrigger>
                       <SelectContent>
@@ -395,7 +395,7 @@ export default function NewAdPage() {
                       required
                       value={formData.transaction_id || ''}
                       onChange={(e) => setFormData({ ...formData, transaction_id: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                       placeholder="Enter transaction ID"
                     />
                   </div>
@@ -412,7 +412,7 @@ export default function NewAdPage() {
                           required
                           value={formData.receipt_url || ''}
                           onChange={(e) => setFormData({ ...formData, receipt_url: e.target.value })}
-                          className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                          className="pl-10 w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                           placeholder="Enter receipt image URL"
                         />
                       </div>
@@ -436,7 +436,7 @@ export default function NewAdPage() {
                     <Textarea
                       value={formData.notes || ''}
                       onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
                       rows={2}
                       placeholder="Any additional information about your payment"
                     />

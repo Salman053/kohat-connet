@@ -130,7 +130,7 @@ export default function AdminUsersPage() {
                 placeholder="Search users..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
@@ -140,7 +140,7 @@ export default function AdminUsersPage() {
               value={roleFilter}
               onValueChange={(v) => setRoleFilter(v as UserRole | 'all')}
             >
-              <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                 <SelectValue placeholder="All Roles" />
               </SelectTrigger>
               <SelectContent>
@@ -222,7 +222,7 @@ export default function AdminUsersPage() {
                       value={user.role}
                       onValueChange={(v) => handleRoleChange(user.id, v as UserRole)}
                     >
-                      <SelectTrigger className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                      <SelectTrigger className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>

@@ -195,7 +195,6 @@ export default function CareersPage() {
                       value={candidateName}
                       onChange={(e) => setCandidateName(e.target.value)}
                       placeholder="e.g. Amir Yousaf"
-                      className="w-full bg-background border border-border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary/50"
                     />
                   </div>
 
@@ -207,7 +206,6 @@ export default function CareersPage() {
                       value={candidateEmail}
                       onChange={(e) => setCandidateEmail(e.target.value)}
                       placeholder="e.g. amir@gmail.com"
-                      className="w-full bg-background border border-border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary/50"
                     />
                   </div>
 
@@ -219,7 +217,6 @@ export default function CareersPage() {
                       value={candidatePhone}
                       onChange={(e) => setCandidatePhone(e.target.value)}
                       placeholder="e.g. +92 333 1122334"
-                      className="w-full bg-background border border-border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary/50"
                     />
                   </div>
 
@@ -231,7 +228,6 @@ export default function CareersPage() {
                       value={cvLink}
                       onChange={(e) => setCvLink(e.target.value)}
                       placeholder="e.g. https://drive.google.com/..."
-                      className="w-full bg-background border border-border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary/50"
                     />
                   </div>
 

@@ -35,7 +35,7 @@ export default function CategoryPage({ params }: PageProps) {
       <PageHeader
         title={category.name}
         subtitle={category.description}
-        bgImage={category.imageUrl}
+        bgImage={category.imageUrl} 
         backLink={{ href: '/categories', label: 'Categories' }}
       />
 

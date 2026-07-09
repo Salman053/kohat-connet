@@ -244,7 +244,7 @@ export default function Trending() {
           </TabsList>
           {tabs.map((tab) => (
             <TabsContent key={tab} value={tab}>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 mt-4 md:grid-cols-2 gap-4">
                 {(tab === "All" ? trendingItems : trendingItems.filter((i: any) => i.tag === tab)).slice(0, 8).map((item: any) => (
                   <Link href={item.href} key={item.id} className="group bg-card border border-border p-4 rounded-3xl flex gap-4 hover:border-primary/50 transition-colors">
                     <Image width={300} height={300} src={item.imageSrc} alt={item.imageAlt} className="w-24 h-24 rounded-2xl object-cover shrink-0" />

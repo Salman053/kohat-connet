@@ -145,7 +145,7 @@ export default function AdminAdvertisementsPage() {
                 placeholder="Search advertisements..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="pl-10 w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary"
               />
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function AdminAdvertisementsPage() {
               value={statusFilter}
               onValueChange={(v) => setStatusFilter(v as AdStatus | 'all')}
             >
-              <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                 <SelectValue placeholder="All Status" />
               </SelectTrigger>
               <SelectContent>
@@ -171,7 +171,7 @@ export default function AdminAdvertisementsPage() {
               value={typeFilter}
               onValueChange={(v) => setTypeFilter(v as AdType | 'all')}
             >
-              <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500">
+              <SelectTrigger className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary">
                 <SelectValue placeholder="All Types" />
               </SelectTrigger>
               <SelectContent>

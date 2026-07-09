@@ -8,9 +8,10 @@ const supabase = createClient(
 
 export async function PUT(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params
     const authHeader = request.headers.get('authorization')
     if (!authHeader) {
       return NextResponse.json(
@@ -60,7 +61,7 @@ export async function PUT(
     const { data, error } = await supabase
       .from('payments')
       .update(updateData)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
       .single()
 

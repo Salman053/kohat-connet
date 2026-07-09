@@ -76,7 +76,7 @@ export default function PageHeader({
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/10 via-transparent to-transparent pointer-events-none" />
       <div className={cn(
         "container mx-auto px-6 relative z-10",
-        align === 'center' ? 'text-center max-w-3xl' : 'max-w-6xl'
+        align === 'center' ? 'text-center' : ''
       )}>
         {backLink && (
           <div className="mb-4">

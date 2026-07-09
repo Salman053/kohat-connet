@@ -11,7 +11,7 @@ function Input({ className, type, ...props }: React.ComponentProps<"input">) {
       data-slot="input"
       className={cn(
         formControlVariants({ size: "default" }),
-        "w-full min-w-0 file:inline-flex file:h-6 file:border-0 file:bg-transparent file:text-xs file:font-medium file:text-foreground md:text-xs",
+        "w-full min-w-0 file:inline-flex file:h-6  file:border-0 file:bg-transparent file:text-xs file:font-medium file:text-foreground md:text-xs",
         className
       )}
       {...props}
