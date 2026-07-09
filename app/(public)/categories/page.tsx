@@ -35,7 +35,7 @@ export default function CategoriesPage() {
                   height={350}
                   className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
                 />
-                <div className="absolute inset-0 bg-black bg-opacity-35 flex items-end p-6">
+                <div className="absolute inset-0  bg-opacity-35 flex items-end p-6">
                   <h3 className="text-xl font-black text-white uppercase tracking-tight">{cat.name}</h3>
                 </div>
               </div>

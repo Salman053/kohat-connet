@@ -5,6 +5,9 @@ import { categories } from '@/lib/site'
 import { PlusCircle, Check, Info, Store, FileText } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 export default function RequestListingPage() {
   const [formData, setFormData] = useState({
@@ -87,7 +90,7 @@ export default function RequestListingPage() {
                       Thank you. We will verify the details of <strong>{formData.bizName}</strong>. You will receive an SMS and email notification once your profile is verified and active.
                     </p>
                   </div>
-                  <button
+                  <Button
                     onClick={() => {
                       setSubmitted(false)
                       setFormData({
@@ -104,13 +107,13 @@ export default function RequestListingPage() {
                     className="px-6 py-2.5 bg-primary text-primary-foreground font-bold text-xs rounded-xl shadow-md"
                   >
                     Add Another Business
-                  </button>
+                  </Button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Business Name</label>
-                    <input
+                    <Input
                       type="text"
                       required
                       value={formData.bizName}
@@ -123,7 +126,7 @@ export default function RequestListingPage() {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Phone Number</label>
-                      <input
+                      <Input
                         type="tel"
                         required
                         value={formData.bizPhone}
@@ -134,7 +137,7 @@ export default function RequestListingPage() {
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Business Email (Optional)</label>
-                      <input
+                      <Input
                         type="email"
                         value={formData.bizEmail}
                         onChange={(e) => setFormData({ ...formData, bizEmail: e.target.value })}
@@ -194,7 +197,7 @@ export default function RequestListingPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Shop / Physical Address</label>
-                    <input
+                    <Input
                       type="text"
                       required
                       value={formData.bizAddress}
@@ -206,7 +209,7 @@ export default function RequestListingPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Business Description</label>
-                    <textarea
+                    <Textarea
                       rows={4}
                       value={formData.desc}
                       onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
@@ -215,12 +218,12 @@ export default function RequestListingPage() {
                     />
                   </div>
 
-                  <button
+                  <Button
                     type="submit"
                     className="inline-flex items-center justify-center gap-1.5 bg-primary hover:bg-primary/95 text-primary-foreground font-black text-xs px-6 py-3 rounded-xl transition-all shadow-md shadow-primary/10 mt-2"
                   >
                     <PlusCircle className="h-4.5 w-4.5" /> Register Business Listing
-                  </button>
+                  </Button>
                 </form>
               )}
             </div>

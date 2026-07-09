@@ -31,12 +31,12 @@ export default function Hero() {
 
           <div className="flex flex-wrap justify-center gap-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-[1200ms] fill-mode-both">
             <Link href="/explore">
-              <Button variant="ghost" size="lg" className="px-10 h-14 text-base font-bold bg-background/80 backdrop-blur-md border-white/20 ">
+              <Button variant="ghost" size="lg" className=" text-base font-bold bg-background/80 backdrop-blur-md border-white/20 ">
                 Explore Categories
               </Button>
             </Link>
             <Link href="/request-listing">
-              <Button size="lg" className="px-10 h-14 text-base font-bold shadow-xl shadow-primary/20 transition-all">
+              <Button size="lg" className=" text-base font-bold shadow-xl shadow-primary/20 transition-all">
                 List Your Business
               </Button>
             </Link>

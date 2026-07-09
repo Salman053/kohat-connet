@@ -6,6 +6,7 @@ import { Search, MapPin, Star, Filter, ArrowUpRight, Grid, List } from 'lucide-r
 import Image from 'next/image'
 import Link from 'next/link'
 import PageHeader from '@/components/shared/page-header'
+import { Input } from '@/components/ui/input'
 
 // Quick trending items data
 const trendingItems = [
@@ -93,7 +94,7 @@ export default function Explore() {
         {/* Search Bar */}
         <div className="relative max-w-xl mx-auto mt-6">
           <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
-          <input
+          <Input
             type="text"
             placeholder="Search places, restaurants, categories..."
             value={searchQuery}

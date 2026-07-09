@@ -5,6 +5,8 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Search, Star, MapPin, Store, Tag, ArrowRight } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 const shopsList = [
   {
@@ -71,13 +73,13 @@ export default function ShopsPage() {
         tag="Marketplace Directory"
       >
         <div className="relative max-w-xl mx-auto mt-6">
-          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5" />
-          <input
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground h-5 w-5 z-10" />
+          <Input
             type="text"
             placeholder="Search shops by name, category, or address..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-12 pr-4 py-4 rounded-2xl bg-card border border-border focus:border-primary/50 focus:outline-none shadow-lg transition-all text-sm"
+            className="w-full pl-12 py-4 h-auto text-sm rounded-2xl shadow-lg"
           />
         </div>
       </PageHeader>
@@ -90,19 +92,16 @@ export default function ShopsPage() {
               <h3 className="font-extrabold text-sm flex items-center gap-2">
                 <Store className="h-4 w-4 text-primary" /> Shop Categories
               </h3>
-              <div className="space-y-1">
+              <div className="space-y-1 z-50">
                 {categories.map((cat) => (
-                  <button
+                  <Button
                     key={cat}
-                    onClick={() => setSelectedCategory(cat)}
-                    className={`w-full text-left px-3 py-2 rounded-xl text-xs font-semibold transition-all ${
-                      selectedCategory === cat
-                        ? "bg-primary text-primary-foreground"
-                        : "hover:bg-accent text-muted-foreground hover:text-foreground"
-                    }`}
+                    variant={selectedCategory === cat ? "default" : "ghost"}
+                    onClick={() => {console.log(cat); setSelectedCategory(cat)}}
+                    className="w-full justify-start text-xs font-semibold rounded-xl px-3"
                   >
                     {cat}
-                  </button>
+                  </Button>
                 ))}
               </div>
             </div>

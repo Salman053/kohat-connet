@@ -4,6 +4,9 @@ import React, { useState } from 'react'
 import { Handshake, ShieldCheck, Target, Award, Users } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 
 export default function BecomeAPartnerPage() {
   const [partnerName, setPartnerName] = useState("")
@@ -78,7 +81,7 @@ export default function BecomeAPartnerPage() {
                   Thank you for applying. A partnership board representative will review your proposal and respond with collaboration terms within 3-5 business days.
                 </p>
               </div>
-              <button
+              <Button
                 onClick={() => {
                   setSubmitted(false)
                   setPartnerName("")
@@ -90,14 +93,14 @@ export default function BecomeAPartnerPage() {
                 className="px-6 py-2.5 bg-primary text-primary-foreground font-bold text-xs rounded-xl shadow-md"
               >
                 Submit Another Application
-              </button>
+              </Button>
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-4">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Full Name</label>
-                  <input
+                  <Input
                     type="text"
                     required
                     value={partnerName}
@@ -108,7 +111,7 @@ export default function BecomeAPartnerPage() {
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Company Name (Optional)</label>
-                  <input
+                  <Input
                     type="text"
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
@@ -121,7 +124,7 @@ export default function BecomeAPartnerPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Email Address</label>
-                  <input
+                  <Input
                     type="email"
                     required
                     value={partnerEmail}
@@ -132,7 +135,7 @@ export default function BecomeAPartnerPage() {
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Contact Phone</label>
-                  <input
+                  <Input
                     type="tel"
                     required
                     value={partnerPhone}
@@ -164,7 +167,7 @@ export default function BecomeAPartnerPage() {
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Partnership Proposal / Pitch</label>
-                <textarea
+                <Textarea
                   required
                   rows={5}
                   value={proposal}
@@ -174,12 +177,12 @@ export default function BecomeAPartnerPage() {
                 />
               </div>
 
-              <button
+              <Button
                 type="submit"
                 className="w-full bg-primary hover:bg-primary/95 text-primary-foreground font-black text-xs py-3.5 rounded-xl transition-all shadow-md shadow-primary/10 mt-2"
               >
                 Submit Partnership Request
-              </button>
+              </Button>
             </form>
           )}
         </div>

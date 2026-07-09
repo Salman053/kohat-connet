@@ -4,6 +4,9 @@ import React, { useState } from 'react'
 import { LifeBuoy, Check, Mail, Phone, ExternalLink } from 'lucide-react'
 import { site } from '@/lib/site'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 
 export default function SupportPage() {
   const [supportName, setSupportName] = useState("")
@@ -83,7 +86,7 @@ export default function SupportPage() {
                       Thank you. We have logged your request. Our support staff will check your query and email you updates shortly.
                     </p>
                   </div>
-                  <button
+                  <Button
                     onClick={() => {
                       setSubmitted(false)
                       setSupportName("")
@@ -93,14 +96,14 @@ export default function SupportPage() {
                     className="px-6 py-2.5 bg-primary text-primary-foreground font-bold text-xs rounded-xl shadow-md"
                   >
                     Open New Ticket
-                  </button>
+                  </Button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Full Name</label>
-                      <input
+                      <Input
                         type="text"
                         required
                         value={supportName}
@@ -111,7 +114,7 @@ export default function SupportPage() {
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Email Address</label>
-                      <input
+                      <Input
                         type="email"
                         required
                         value={supportEmail}
@@ -142,7 +145,7 @@ export default function SupportPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Problem Description</label>
-                    <textarea
+                    <Textarea
                       required
                       rows={5}
                       value={description}
@@ -152,12 +155,12 @@ export default function SupportPage() {
                     />
                   </div>
 
-                  <button
+                  <Button
                     type="submit"
                     className="w-full bg-primary hover:bg-primary/95 text-primary-foreground font-black text-xs py-3.5 rounded-xl transition-all shadow-md shadow-primary/10 mt-2"
                   >
                     Submit Support Ticket
-                  </button>
+                  </Button>
                 </form>
               )}
             </div>

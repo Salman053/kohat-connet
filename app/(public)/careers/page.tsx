@@ -2,6 +2,8 @@
 
 import React, { useState } from 'react'
 import { Briefcase, Check, Sparkles, Send, MapPin, Calendar } from 'lucide-react'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
 
 const jobOpenings = [
   {
@@ -132,12 +134,12 @@ export default function CareersPage() {
                     <span className="text-xs font-bold text-primary">
                       {job.salary}
                     </span>
-                    <button
+                    <Button
                       onClick={() => setSelectedJob(job.title)}
                       className="px-4 py-2 bg-primary/5 hover:bg-primary/10 text-primary font-bold text-xs rounded-lg transition-all"
                     >
                       {selectedJob === job.title ? "Selected" : "Apply for Role"}
-                    </button>
+                    </Button>
                   </div>
                 </div>
               ))}
@@ -160,7 +162,7 @@ export default function CareersPage() {
                       Thanks for applying. Our HR lead will check your CV link and contact you if there is a match.
                     </p>
                   </div>
-                  <button
+                  <Button
                     onClick={() => {
                       setSubmitted(false)
                       setCandidateName("")
@@ -171,13 +173,13 @@ export default function CareersPage() {
                     className="w-full py-2 bg-primary text-primary-foreground font-bold text-xs rounded-xl"
                   >
                     Apply for Another Role
-                  </button>
+                  </Button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Applying for</label>
-                    <input
+                    <Input
                       type="text"
                       disabled
                       value={selectedJob}
@@ -187,7 +189,7 @@ export default function CareersPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Full Name</label>
-                    <input
+                    <Input
                       type="text"
                       required
                       value={candidateName}
@@ -199,7 +201,7 @@ export default function CareersPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Email Address</label>
-                    <input
+                    <Input
                       type="email"
                       required
                       value={candidateEmail}
@@ -211,7 +213,7 @@ export default function CareersPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Phone Number</label>
-                    <input
+                    <Input
                       type="tel"
                       required
                       value={candidatePhone}
@@ -223,7 +225,7 @@ export default function CareersPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">CV Link (Google Drive, Dropbox, etc.)</label>
-                    <input
+                    <Input
                       type="url"
                       required
                       value={cvLink}
@@ -233,12 +235,12 @@ export default function CareersPage() {
                     />
                   </div>
 
-                  <button
+                  <Button
                     type="submit"
                     className="w-full bg-primary hover:bg-primary/95 text-primary-foreground font-black text-xs py-3 rounded-xl transition-all shadow-md shadow-primary/10 mt-2"
                   >
                     Submit Application
-                  </button>
+                  </Button>
                 </form>
               )}
             </div>

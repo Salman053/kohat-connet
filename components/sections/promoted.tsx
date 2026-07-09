@@ -1,14 +1,11 @@
 import React from 'react'
 import { BadgeInfo, Star } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { getActiveAdvertisements } from '@/lib/data'
 
-const ads = [
-  { id: 1, title: "Best Marble Supplier", company: "Kohat Marble & Granite", type: "Promoted", rating: 4.9 },
-  { id: 2, title: "Expert Car Mechanic", company: "Al-Hamd Auto Garage", type: "Featured", rating: 4.8 },
-  { id: 3, title: "Top-Rated Furniture", company: "City Modern Furniture", type: "Promoted", rating: 4.7 },
-]
+const PromotedListings = async () => {
+  const ads = await getActiveAdvertisements('featured', 3)
 
-const PromotedListings = () => {
   return (
     <section className="py-12 bg-muted/20">
       <div className="container mx-auto px-4">
@@ -19,18 +16,23 @@ const PromotedListings = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {ads.map(ad => (
-            <div key={ad.id} className="bg-card p-6 rounded-3xl border border-border shadow-sm flex flex-col hover:border-primary/50 transition-all">
-              <span className="text-[10px] font-black uppercase text-primary bg-primary/10 px-2 py-1 rounded-full self-start mb-3">{ad.type}</span>
-              <h3 className="text-lg font-bold mb-1">{ad.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4">{ad.company}</p>
-              <div className="flex items-center gap-1 text-amber-500 mb-6">
-                <Star className="w-4 h-4 fill-amber-500" />
-                <span className="text-sm font-bold text-foreground">{ad.rating}</span>
+          {ads.length > 0 ? (
+            ads.map((ad: any) => (
+              <div key={ad.id} className="bg-card p-6 rounded-3xl border border-border shadow-sm flex flex-col hover:border-primary/50 transition-all">
+                <span className="text-[10px] font-black uppercase text-primary bg-primary/10 px-2 py-1 rounded-full self-start mb-3">{ad.ad_type}</span>
+                <h3 className="text-lg font-bold mb-1">{ad.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4">{ad.description}</p>
+                {ad.image_url && (
+                  <img src={ad.image_url} alt={ad.title} className="w-full h-32 object-cover rounded-lg mb-4" />
+                )}
+                <Button variant="outline" className="w-full mt-auto">View Listing</Button>
               </div>
-              <Button variant="outline" className="w-full  mt-auto">View Listing</Button>
+            ))
+          ) : (
+            <div className="col-span-3 text-center text-muted-foreground py-8">
+              No sponsored listings yet. Contact us to promote your business!
             </div>
-          ))}
+          )}
         </div>
       </div>
     </section>

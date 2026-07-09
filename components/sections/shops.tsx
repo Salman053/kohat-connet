@@ -1,9 +1,12 @@
+"use client"
+
 import Image from 'next/image'
-import React from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { Store, ArrowRight, Star, TrendingUp, Users, Zap, CheckCircle2, Sparkles, Building2, Eye, MessageSquare, Award, Activity } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
+import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
 
 const categories = ["All", "Electronics", "Clothing", "Home", "Groceries", "Sports", "Beauty"];
 
@@ -117,6 +120,11 @@ const topPerformers = [
 ];
 
 const Shops = () => {
+  const [activeTab, setActiveTab] = useState("All")
+
+  const filteredShops = (tab: string) =>
+    tab === "All" ? shops : shops.filter((s) => s.category === tab)
+
   return (
     <section className="py-20 bg-background overflow-hidden">
       <div className="container mx-auto px-4">
@@ -134,75 +142,81 @@ const Shops = () => {
           </Link>
         </div>
 
-        {/* Quick Filter Bar */}
-        <div className="flex gap-2 mb-10 overflow-x-auto pb-2 scrollbar-hide">
-          {categories.map((cat, i) => (
-            <button key={cat} className={cn("px-5 py-2.5  text-sm font-bold whitespace-nowrap transition-all", i === 0 ? "bg-primary text-primary-foreground" : "bg-muted hover:bg-muted/80 text-muted-foreground")}>
-              {cat}
-            </button>
-          ))}
-        </div>
+        <Tabs value={activeTab} onValueChange={(v) => setActiveTab(v as string)}>
+          <TabsList className="flex-wrap gap-2 mb-10 overflow-x-auto pb-2 scrollbar-hide">
+            {categories.map((cat) => (
+              <TabsTrigger key={cat} value={cat} className="text-sm font-bold whitespace-nowrap">
+                {cat}
+              </TabsTrigger>
+            ))}
+          </TabsList>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {/* Featured Shop - Large Bento Item */}
-          <Link
-            href={shops[0].href}
-            className="md:col-span-2 lg:row-span-2 relative group overflow-hidden rounded-3xl bg-muted aspect-square lg:aspect-auto"
-          >
-            <Image
-              src={shops[0].image}
-              alt={shops[0].name}
-              fill
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute bottom-0 left-0 p-8 w-full">
-              <div className="flex items-center gap-2 mb-3">
-                <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest">
-                  Featured
-                </span>
-                <div className="flex items-center gap-1 text-yellow-400">
-                  <Star className="w-3 h-3 fill-current" />
-                  <span className="text-xs font-bold text-white">{shops[0].rating}</span>
-                </div>
+          {categories.map((cat) => (
+            <TabsContent key={cat} value={cat}>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 min-h-[400px]">
+                {filteredShops(cat).map((shop, idx) => (
+                  idx === 0 ? (
+                    <Link
+                      key={shop.id}
+                      href={shop.href}
+                      className="md:col-span-2 lg:row-span-2 relative group overflow-hidden rounded-3xl bg-muted aspect-square lg:aspect-auto"
+                    >
+                      <Image
+                        src={shop.image}
+                        alt={shop.name}
+                        fill
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                      <div className="absolute bottom-0 left-0 p-8 w-full">
+                        <div className="flex items-center gap-2 mb-3">
+                          <span className="px-3 py-1 rounded-full bg-primary text-primary-foreground text-[10px] font-bold uppercase tracking-widest">
+                            Featured
+                          </span>
+                          <div className="flex items-center gap-1 text-yellow-400">
+                            <Star className="w-3 h-3 fill-current" />
+                            <span className="text-xs font-bold text-white">{shop.rating}</span>
+                          </div>
+                        </div>
+                        <h3 className="text-3xl font-bold text-white mb-2">Grow Your Business</h3>
+                        <p className="text-white/80 text-sm max-w-md line-clamp-2 mb-4">
+                          Join hundreds of local entrepreneurs already reaching thousands of customers every month. List your business in minutes &mdash; it&apos;s free to start.
+                        </p>
+                        <div className="flex items-center gap-2 text-white font-bold text-sm">
+                          Visit Shop <ArrowRight className="w-4 h-4" />
+                        </div>
+                      </div>
+                    </Link>
+                  ) : (
+                    <Link
+                      key={shop.id}
+                      href={shop.href}
+                      className="group relative overflow-hidden rounded-3xl bg-card border border-border h-[300px]"
+                    >
+                      <Image
+                        src={shop.image}
+                        alt={shop.name}
+                        fill
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                      <div className="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-black/90 via-transparent to-transparent">
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">{shop.category}</span>
+                          <div className="flex items-center gap-1 text-yellow-400">
+                            <Star className="w-3 h-3 fill-current" />
+                            <span className="text-xs font-bold text-white">{shop.rating}</span>
+                          </div>
+                        </div>
+                        <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">{shop.name}</h3>
+                      </div>
+                    </Link>
+                  )
+                ))}
               </div>
-              <h3 className="text-3xl font-bold text-white mb-2">Grow Your Business</h3>
-              <p className="text-white/80 text-sm max-w-md line-clamp-2 mb-4">
-                Join hundreds of local entrepreneurs already reaching thousands of customers every month. List your business in minutes &mdash; it&apos;s free to start.
-              </p>
-              <div className="flex items-center gap-2 text-white font-bold text-sm">
-                Visit Shop <ArrowRight className="w-4 h-4" />
-              </div>
-            </div>
-          </Link>
-
-          {/* Regular Shops */}
-          {shops.slice(1).map((shop) => (
-            <Link
-              key={shop.id}
-              href={shop.href}
-              className="group relative overflow-hidden rounded-3xl bg-card border border-border h-[300px]"
-            >
-              <Image
-                src={shop.image}
-                alt={shop.name}
-                fill
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-              />
-              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-              <div className="absolute inset-0 p-6 flex flex-col justify-end bg-gradient-to-t from-black/90 via-transparent to-transparent">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">{shop.category}</span>
-                  <div className="flex items-center gap-1 text-yellow-400">
-                    <Star className="w-3 h-3 fill-current" />
-                    <span className="text-xs font-bold text-white">{shop.rating}</span>
-                  </div>
-                </div>
-                <h3 className="text-xl font-bold text-white group-hover:text-primary transition-colors">{shop.name}</h3>
-              </div>
-            </Link>
+            </TabsContent>
           ))}
-        </div>
+        </Tabs>
 
         {/* ============================================ */}
         {/* MARKETPLACE AT A GLANCE SECTION */}
@@ -277,7 +291,7 @@ const Shops = () => {
                     <div className={cn(
                       "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center font-black text-sm",
                       idx === 0 ? "bg-yellow-100 text-yellow-700" :
-                      idx === 1 ? "bg-gray-100 text-gray-700" :
+                      idx === 1 ? "bg-gray-100 text-muted-foreground" :
                       "bg-orange-100 text-orange-700"
                     )}>
                       #{idx + 1}
@@ -324,7 +338,7 @@ const Shops = () => {
         {/* ============================================ */}
         {/* BUSINESS OWNER CTA SECTION */}
         {/* ============================================ */}
-        <div className="mt-16 relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary/70 to-primary/80 border border-primary/20 shadow-2xl shadow-primary/20">
+        <div className="mt-16 relative overflow-hidden rounded-3xl bg-gradient-to-br from-primary via-primary/80 to-primary/90 border border-primary/20 shadow-2xl shadow-primary/20">
           {/* Decorative background elements */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2" />
           <div className="absolute bottom-0 left-0 w-80 h-80 bg-primary-foreground/5 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2" />

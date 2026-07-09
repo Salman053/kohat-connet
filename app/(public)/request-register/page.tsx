@@ -3,6 +3,9 @@
 import React, { useState } from 'react'
 import { Megaphone, Check, DollarSign } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 
 const adPlans = [
   {
@@ -98,7 +101,7 @@ export default function RequestRegisterPage() {
                 </ul>
               </div>
 
-              <button
+              <Button
                 onClick={() => setSelectedPlan(plan.name)}
                 className={`w-full py-3.5 rounded-xl font-bold text-xs transition-all ${
                   selectedPlan === plan.name
@@ -107,7 +110,7 @@ export default function RequestRegisterPage() {
                 }`}
               >
                 {selectedPlan === plan.name ? "Selected Plan" : "Choose This Plan"}
-              </button>
+              </Button>
             </div>
           ))}
         </div>
@@ -129,7 +132,7 @@ export default function RequestRegisterPage() {
                   Thank you for your interest in advertising with us. Our sales team will get back to you with ad placement details and booking information within 24 hours.
                 </p>
               </div>
-              <button
+              <Button
                 onClick={() => {
                   setSubmitted(false)
                   setBusinessName("")
@@ -140,13 +143,13 @@ export default function RequestRegisterPage() {
                 className="px-6 py-2.5 bg-primary text-primary-foreground font-bold text-xs rounded-xl shadow-md"
               >
                 Submit New Inquiry
-              </button>
+              </Button>
             </div>
           ) : (
             <form onSubmit={handleProposalSubmit} className="space-y-4">
               <div className="space-y-1.5">
                 <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Selected Advertisement Plan</label>
-                <input
+                <Input
                   type="text"
                   disabled
                   value={selectedPlan}
@@ -157,7 +160,7 @@ export default function RequestRegisterPage() {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Business / Brand Name</label>
-                  <input
+                  <Input
                     type="text"
                     required
                     value={businessName}
@@ -168,7 +171,7 @@ export default function RequestRegisterPage() {
                 </div>
                 <div className="space-y-1.5">
                   <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Contact Phone</label>
-                  <input
+                  <Input
                     type="tel"
                     required
                     value={advertiserPhone}
@@ -181,7 +184,7 @@ export default function RequestRegisterPage() {
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Email Address</label>
-                <input
+                <Input
                   type="email"
                   required
                   value={advertiserEmail}
@@ -193,7 +196,7 @@ export default function RequestRegisterPage() {
 
               <div className="space-y-1.5">
                 <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Campaign Goals / Details</label>
-                <textarea
+                <Textarea
                   rows={4}
                   value={campaignDetails}
                   onChange={(e) => setCampaignDetails(e.target.value)}
@@ -202,12 +205,12 @@ export default function RequestRegisterPage() {
                 />
               </div>
 
-              <button
+              <Button
                 type="submit"
                 className="w-full bg-primary hover:bg-primary/95 text-primary-foreground font-black text-xs py-3.5 rounded-xl transition-all shadow-md shadow-primary/10 mt-2"
               >
                 Send Request Proposal
-              </button>
+              </Button>
             </form>
           )}
         </div>

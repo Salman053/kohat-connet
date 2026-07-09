@@ -6,6 +6,9 @@ import Link from 'next/link'
 import Image from 'next/image'
 import { Check, Shield, Star, Calendar } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 
 interface PageProps {
   params: Promise<{
@@ -180,7 +183,7 @@ export default function ServiceSlugPage({ params }: PageProps) {
                       Our customer service team will reach out to verify and coordinate timings.
                     </p>
                   </div>
-                  <button
+                  <Button
                     onClick={() => {
                       setIsBooked(false)
                       setBookingName("")
@@ -191,13 +194,13 @@ export default function ServiceSlugPage({ params }: PageProps) {
                     className="w-full py-2 bg-primary text-primary-foreground font-bold text-xs rounded-xl"
                   >
                     Book Another Service
-                  </button>
+                  </Button>
                 </div>
               ) : (
                 <form onSubmit={handleBooking} className="space-y-4">
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Your Name</label>
-                    <input
+                    <Input
                       type="text"
                       required
                       placeholder="e.g. Salman Khan"
@@ -209,7 +212,7 @@ export default function ServiceSlugPage({ params }: PageProps) {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Phone Number</label>
-                    <input
+                    <Input
                       type="tel"
                       required
                       placeholder="e.g. +92 335 1234567"
@@ -221,7 +224,7 @@ export default function ServiceSlugPage({ params }: PageProps) {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Preferred Date</label>
-                    <input
+                    <Input
                       type="date"
                       required
                       value={bookingDate}
@@ -232,7 +235,7 @@ export default function ServiceSlugPage({ params }: PageProps) {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Special Instructions</label>
-                    <textarea
+                    <Textarea
                       placeholder="Explain the problem briefly..."
                       value={bookingNote}
                       onChange={(e) => setBookingNote(e.target.value)}
@@ -241,12 +244,12 @@ export default function ServiceSlugPage({ params }: PageProps) {
                     />
                   </div>
 
-                  <button
+                  <Button
                     type="submit"
                     className="w-full bg-primary hover:bg-primary/95 text-primary-foreground font-black text-xs py-3 rounded-xl transition-all shadow-md shadow-primary/10 mt-2"
                   >
                     Confirm Booking Request
-                  </button>
+                  </Button>
                 </form>
               )}
             </div>

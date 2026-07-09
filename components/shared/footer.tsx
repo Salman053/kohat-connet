@@ -1,7 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-import { MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react'
+import { Phone, Mail, ArrowUpRight, MapPin } from 'lucide-react'
 import { site, footerLinks, categories } from '@/lib/site'
+import Logo from './logo'
 
 const Footer = () => {
   return (
@@ -10,15 +11,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
           {/* Brand Column */}
           <div className="flex flex-col gap-6">
-            <Link href="/" className="flex items-center gap-2 group w-fit">
-              <div className="bg-primary p-2 rounded-xl text-primary-foreground">
-                <MapPin className="h-5 w-5" />
-              </div>
-              <span className="font-bold text-xl tracking-tight">
-                {site.name.split(' ')[0]}
-                <span className="text-primary">{site.name.split(' ')[1]}</span>
-              </span>
-            </Link>
+            <Logo variant="footer" />
             <p className="text-muted-foreground text-sm leading-relaxed">
               {site.description}
             </p>

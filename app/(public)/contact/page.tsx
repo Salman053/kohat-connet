@@ -4,6 +4,9 @@ import React, { useState } from 'react'
 import { Mail, Phone, MapPin, Send, MessageSquare, Check } from 'lucide-react'
 import { site } from '@/lib/site'
 import PageHeader from '@/components/shared/page-header'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -91,7 +94,7 @@ export default function ContactPage() {
                       Thank you for contacting us. A member of our support team will reply to you as soon as possible.
                     </p>
                   </div>
-                  <button
+                  <Button
                     onClick={() => {
                       setSubmitted(false)
                       setFormData({ name: "", email: "", subject: "", message: "" })
@@ -99,14 +102,14 @@ export default function ContactPage() {
                     className="px-6 py-2.5 bg-primary text-primary-foreground font-bold text-xs rounded-xl shadow-md"
                   >
                     Send Another Message
-                  </button>
+                  </Button>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Full Name</label>
-                      <input
+                      <Input
                         type="text"
                         required
                         value={formData.name}
@@ -117,7 +120,7 @@ export default function ContactPage() {
                     </div>
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Email Address</label>
-                      <input
+                      <Input
                         type="email"
                         required
                         value={formData.email}
@@ -130,7 +133,7 @@ export default function ContactPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Subject</label>
-                    <input
+                    <Input
                       type="text"
                       required
                       value={formData.subject}
@@ -142,7 +145,7 @@ export default function ContactPage() {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Your Message</label>
-                    <textarea
+                    <Textarea
                       required
                       rows={5}
                       value={formData.message}
@@ -152,12 +155,12 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <button
+                  <Button
                     type="submit"
                     className="inline-flex items-center gap-1.5 bg-primary hover:bg-primary/95 text-primary-foreground font-black text-xs px-6 py-3 rounded-xl transition-all shadow-md shadow-primary/10 mt-2"
                   >
                     Send Message <Send className="h-3.5 w-3.5" />
-                  </button>
+                  </Button>
                 </form>
               )}
             </div>

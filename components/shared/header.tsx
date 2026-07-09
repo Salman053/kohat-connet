@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { NavigationMenu, NavigationMenuItem, NavigationMenuLink, NavigationMenuList, NavigationMenuTrigger, NavigationMenuContent } from './navigation-menu'
 import { navigationLinks, categories, site } from '@/lib/site'
-import { Menu, X, MapPin, Phone, Mail } from 'lucide-react'
+import { Menu, X, Phone, Mail } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { motion, AnimatePresence } from 'framer-motion'
 import LanguageSwitcher from './language-switcher'
+import Logo from './logo'
 import { Button } from '../ui/button'
 
 const announcements = [
@@ -101,22 +102,7 @@ const Header = () => {
         <div className=" bg-transparent mx-auto px-7 h-full">
           <div className="flex h-full items-center justify-between">
             {/* Logo */}
-            <div className="flex items-center gap-2">
-              <Link href="/" className="flex items-center gap-2 group">
-                <div className="bg-primary p-1 rounded-lg text-primary-foreground  transition-transform">
-                  <MapPin className="h-4 w-4 " />
-                </div>
-                <div className="flex flex-col">
-                  <span className="font-bold text-xs leading-none tracking-tight">
-                    {site.name.split(' ')[0]}
-                    <span className="text-primary">{site.name.split(' ')[1]}</span>
-                  </span>
-                  <span className="text-[8px]   font-medium tracking-widest uppercase">
-                    Connect • Discover • Grow
-                  </span>
-                </div>
-              </Link>
-            </div>
+            <Logo variant="header" showTagline />
 
             {/* Desktop Navigation */}
             <div className="hidden lg:block">
@@ -159,7 +145,7 @@ const Header = () => {
                                 </div>
                               ))}
                             </div>
-                            <div className="border-t p-3 bg-muted/30 rounded-b-xl flex justify-between items-center px-6">
+                            <div className="border-t p-3 bg-muted/90 mix-blend-color-dodge rounded-b-xl flex justify-between items-center px-6">
                               <span className="text-[10px]  italic">Find what you need in Kohat</span>
                               <Link
                                 href="/categories"
@@ -251,13 +237,15 @@ const Header = () => {
               <div className="hidden sm:flex items-center space-x-2">
                 <LanguageSwitcher />
                 <Link href="/request-listing">
-                  <button className="inline-flex items-center justify-center rounded-lg text-[10px] md:text-xs font-bold border-2 border-primary/20 hover:border-primary/40 transition-all h-8 md:h-9 px-4">
+                  <Button variant="outline" size="sm" className="text-[10px] md:text-xs h-8 md:h-9 px-4">
                     List Business
-                  </button>
+                  </Button>
                 </Link>
-                <button className="inline-flex items-center justify-center rounded-lg text-[10px] md:text-xs font-bold bg-primary text-primary-foreground hover:bg-primary/90 shadow-lg shadow-primary/20 transition-all h-8 md:h-9 px-4">
-                  Sign In
-                </button>
+                <Link href="/auth/signin">
+                  <Button size="sm" className="text-[10px] md:text-xs h-8 md:h-9 px-4">
+                    Sign In
+                  </Button>
+                </Link>
               </div>
 
               {/* Mobile Menu Button */}
@@ -289,17 +277,12 @@ const Header = () => {
           )}
         >
           <div className="flex h-16 md:h-20 items-center justify-between px-6 border-b">
-            <div className="flex items-center gap-2">
-              <div className="bg-primary p-1 rounded-md text-primary-foreground">
-                <MapPin className="h-4 w-4" />
-              </div>
-              <span className="font-bold text-sm tracking-tight">{site.name}</span>
-            </div>
+            <Logo variant="minimal" />
             <div className="flex items-center gap-2">
               <LanguageSwitcher />
-              <button aria-label='arrow' onClick={toggleMobileMenu} className="p-2 border rounded-lg hover:bg-accent transition-colors">
+              <Button variant="outline" size="icon-xs" aria-label="Close menu" onClick={toggleMobileMenu}>
                 <X className="h-4 w-4" />
-              </button>
+              </Button>
             </div>
           </div>
 
@@ -428,13 +411,15 @@ const Header = () => {
           </div>
 
           <div className="p-6 border-t bg-muted/30 space-y-3">
-            <button className="w-full inline-flex items-center justify-center rounded-xl text-sm font-bold bg-primary text-primary-foreground hover:bg-primary/90 h-12 shadow-lg shadow-primary/20 transition-all">
-              Sign In to Your Account
-            </button>
+            <Link href="/auth/signin" className="block" onClick={toggleMobileMenu}>
+              <Button className="w-full h-12 text-sm">
+                Sign In to Your Account
+              </Button>
+            </Link>
             <Link href="/request-listing" className="block" onClick={toggleMobileMenu}>
-              <button className="w-full inline-flex items-center justify-center rounded-xl text-sm font-bold border-2 border-primary/20 hover:border-primary/40 h-12 transition-all">
+              <Button variant="outline" className="w-full h-12 text-sm">
                 Add Your Business
-              </button>
+              </Button>
             </Link>
           </div>
         </div>

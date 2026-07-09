@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 const emergencyContacts = [
   { name: "Police", number: "15", icon: ShieldCheck, color: "text-blue-500", bg: "bg-blue-50" },
   { name: "Rescue 1122", number: "1122", icon: AlertTriangle, color: "text-orange-500", bg: "bg-orange-50" },
-  { name: "Fire Brigade", number: "1122", icon: Flame, color: "text-red-500", bg: "bg-red-50" },
+  { name: "Fire Brigade", number: "1122", icon: Flame, color: "text-destructive", bg: "bg-red-50" },
   { name: "DHQ Hospital", number: "0922-123456", icon: Building2, color: "text-purple-500", bg: "bg-purple-50" },
   { name: "PESCO Complaint", number: "0922-987654", icon: Zap, color: "text-yellow-600", bg: "bg-yellow-50" },
 ]

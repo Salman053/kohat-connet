@@ -1,5 +1,6 @@
 import { MessageSquare, Megaphone, Plus, Calendar } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import { Button } from '@/components/ui/button'
 
 const announcements = [
   { id: 1, title: "Water Supply Notice", description: "Scheduled maintenance in KDA Phase 1 this Sunday.", time: "3h ago", priority: "low" },
@@ -33,9 +34,9 @@ const Community = () => {
                     <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">Active Now</p>
                   </div>
                 </div>
-                <button className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-xs font-bold hover:scale-105 transition-transform">
+                <Button className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-xl text-xs font-bold hover:scale-105 transition-transform">
                   <Plus className="w-3.5 h-3.5" /> Start Topic
-                </button>
+                </Button>
               </div>
               
               <div className="divide-y divide-border">

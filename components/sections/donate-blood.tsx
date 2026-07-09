@@ -13,7 +13,7 @@ const StatisticCard = ({ stat }: { stat: any }) => {
       <div className="absolute top-0 right-0 w-24 sm:w-32 h-24 sm:h-32 bg-gradient-to-br from-red-500/5 to-transparent rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity" />
       <div className="relative">
         <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-lg sm:rounded-xl bg-red-500/10 flex items-center justify-center mb-3 sm:mb-4">
-          <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-red-500" />
+          <Icon className="w-5 h-5 sm:w-6 sm:h-6 text-destructive" />
         </div>
         <div className="text-2xl sm:text-3xl font-black text-foreground mb-1">{stat.value}</div>
         <div className="text-xs sm:text-sm font-semibold text-foreground mb-1">{stat.label}</div>
@@ -33,8 +33,8 @@ export default function DonateBlood() {
         {/* Hero Section */}
         <div className="text-center mb-12 sm:mb-16 max-w-4xl mx-auto">
           <div className="inline-flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-red-500/10 border border-red-500/20 mb-4 sm:mb-6">
-            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-red-500 fill-red-500" />
-            <span className="text-xs sm:text-sm font-semibold text-red-500">Save Lives Today</span>
+            <Heart className="w-3 h-3 sm:w-4 sm:h-4 text-destructive fill-destructive" />
+            <span className="text-xs sm:text-sm font-semibold text-destructive">Save Lives Today</span>
           </div>
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black tracking-tighter text-foreground mb-4 sm:mb-6">
             Blood Donor

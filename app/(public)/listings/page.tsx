@@ -6,6 +6,8 @@ import Image from 'next/image'
 import { categories } from '@/lib/site'
 import { Search, MapPin, Phone, Star, ShieldCheck, LayoutGrid, List } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
+import { Input } from '@/components/ui/input'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
 interface ListingItem {
   name: string
@@ -165,7 +167,7 @@ export default function ListingsPage() {
         <div className="flex flex-col md:flex-row gap-4 mb-8">
           <div className="relative flex-1">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <input
+            <Input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
@@ -174,15 +176,19 @@ export default function ListingsPage() {
             />
           </div>
           <div className="flex gap-2">
-            <select
+            <Select
               value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              className="bg-card border border-border rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-primary/50"
+              onValueChange={(v) => setSelectedCategory(v ?? "All")}
             >
-              {uniqueCategories.map(cat => (
-                <option key={cat} value={cat}>{cat}</option>
-              ))}
-            </select>
+              <SelectTrigger className="bg-card border border-border rounded-2xl px-4 py-3 text-xs focus:outline-none focus:border-primary/50">
+                <SelectValue placeholder="All" />
+              </SelectTrigger>
+              <SelectContent>
+                {uniqueCategories.map(cat => (
+                  <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
             <div className="flex bg-card border border-border rounded-2xl overflow-hidden">
               <button
                 onClick={() => setViewMode("grid")}

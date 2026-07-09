@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import { Newspaper, Clock, TrendingUp,  ArrowRight, ExternalLink, Zap } from 'lucide-react';
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export interface NewsItem {
@@ -67,6 +68,7 @@ const EmptyState: React.FC = () => (
 const FeaturedNews: React.FC<{ item: NewsItem }> = ({ item }) => (
   <a
     href={item.href}
+    target='_blank'
     className="block p-4  border-b border-border hover:from-destructive/10 transition-all group relative overflow-hidden"
   >
     {/* Animated gradient border */}
@@ -136,7 +138,7 @@ const FeaturedNews: React.FC<{ item: NewsItem }> = ({ item }) => (
 const NewsItemCard: React.FC<{ item: NewsItem; isLast: boolean }> = ({ item, isLast }) => (
   <a
     href={item.href}
-    target='_self'
+    target='_blank'
     className={cn(
       "block p-4 transition-all group relative",
       "hover:bg-muted/50 hover:pl-5",
@@ -266,13 +268,14 @@ const NewsSection: React.FC<NewsSectionProps> = ({
 
             {/* Show More Button */}
             {hasMore && !showAll && (
-              <button
+              <Button
                 onClick={() => setShowAll(true)}
-                className="w-full p-3 text-xs font-medium text-primary hover:bg-primary/5 transition-colors border-t border-border flex items-center justify-center gap-1"
+                variant="ghost"
+                className="w-full p-3 text-xs font-medium border-t border-border flex items-center justify-center gap-1 rounded-none"
               >
                 <span>Show {regularNews.length - maxItems} more stories</span>
                 <ArrowRight className="w-3 h-3" />
-              </button>
+              </Button>
             )}
           </>
         )}
@@ -281,6 +284,7 @@ const NewsSection: React.FC<NewsSectionProps> = ({
       {/* Footer */}
       <a 
         href="/news" 
+        target='_blank'
         className="p-3 text-center text-xs font-semibold text-primary hover:bg-primary/5 transition-all border-t border-border flex items-center justify-center gap-1.5 group"
       >
         <span>View All Local News</span>

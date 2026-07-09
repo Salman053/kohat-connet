@@ -6,6 +6,9 @@ import Link from 'next/link'
 import { ArrowLeft, Star, MapPin, Phone, Mail, Globe, ShieldCheck, Clock, Heart, Share2 } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
 
 const listingData = [
   {
@@ -249,7 +252,7 @@ export default function ListingDetailPage({ params }: PageProps) {
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-1.5">
                       <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Your Name</label>
-                      <input
+                      <Input
                         type="text"
                         required
                         value={reviewName}
@@ -277,7 +280,7 @@ export default function ListingDetailPage({ params }: PageProps) {
 
                   <div className="space-y-1.5">
                     <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Your Review</label>
-                    <textarea
+                    <Textarea
                       required
                       rows={4}
                       value={reviewText}
@@ -287,12 +290,12 @@ export default function ListingDetailPage({ params }: PageProps) {
                     />
                   </div>
 
-                  <button
+                  <Button
                     type="submit"
                     className="bg-primary hover:bg-primary/95 text-primary-foreground font-black text-xs px-6 py-3 rounded-xl transition-all shadow-md shadow-primary/10"
                   >
                     Submit Review
-                  </button>
+                  </Button>
                 </form>
               )}
             </div>
