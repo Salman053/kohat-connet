@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { Suspense, useState } from 'react'
 import { signIn } from '@/lib/auth'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
 import Logo from '@/components/shared/logo'
 
-export default function SignInPage() {
+function SignInForm() {
   const router = useRouter()
   const searchParams = useSearchParams()
   const message = searchParams.get('message')
@@ -132,5 +132,17 @@ export default function SignInPage() {
         </div>
       </div>
     </div>
+  )
+}
+
+export default function SignInPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-background px-4">
+        <div className="text-muted-foreground text-sm">Loading...</div>
+      </div>
+    }>
+      <SignInForm />
+    </Suspense>
   )
 }
