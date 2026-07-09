@@ -8,8 +8,12 @@ export interface AuthUser {
   avatar_url?: string
 }
 
+function sb() {
+  return supabase()
+}
+
 export async function signUp(email: string, password: string, fullName: string, role: 'admin' | 'business' | 'user' = 'user') {
-  const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await sb().auth.signUp({
     email,
     password,
     options: {
@@ -25,7 +29,7 @@ export async function signUp(email: string, password: string, fullName: string, 
 }
 
 export async function signIn(email: string, password: string) {
-  const { data, error } = await supabase.auth.signInWithPassword({
+  const { data, error } = await sb().auth.signInWithPassword({
     email,
     password
   })
@@ -35,18 +39,17 @@ export async function signIn(email: string, password: string) {
 }
 
 export async function signOut() {
-  const { error } = await supabase.auth.signOut()
+  const { error } = await sb().auth.signOut()
   
   if (error) throw error
 }
 
 export async function getCurrentUser(): Promise<AuthUser | null> {
-  const { data: { user }, error } = await supabase.auth.getUser()
+  const { data: { user }, error } = await sb().auth.getUser()
   
   if (error || !user) return null
 
-  // Get user profile with role
-  const { data: profile } = await supabase
+  const { data: profile } = await sb()
     .from('profiles')
     .select('role, full_name, avatar_url')
     .eq('id', user.id)
@@ -62,7 +65,7 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
 }
 
 export async function resetPassword(email: string) {
-  const { error } = await supabase.auth.resetPasswordForEmail(email, {
+  const { error } = await sb().auth.resetPasswordForEmail(email, {
     redirectTo: `${window.location.origin}/auth/reset-password`
   })
 
@@ -70,7 +73,7 @@ export async function resetPassword(email: string) {
 }
 
 export async function updatePassword(newPassword: string) {
-  const { error } = await supabase.auth.updateUser({
+  const { error } = await sb().auth.updateUser({
     password: newPassword
   })
 
