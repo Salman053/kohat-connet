@@ -8,10 +8,12 @@ import { cn } from '@/lib/utils'
 import { bloodTypeColors } from '@/lib/donate-blood-data'
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}
 
 export const DonorList = () => {
   const [searchQuery, setSearchQuery] = useState('')
@@ -25,7 +27,7 @@ export const DonorList = () => {
 
   const fetchDonors = async () => {
     try {
-      const { data, error } = await supabase
+      const { data, error } = await getSupabase()
         .from('blood_donors')
         .select('*')
         .eq('is_available', true)
