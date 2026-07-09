@@ -1,5 +1,3 @@
-import { supabase } from './supabase'
-
 // ===== Types =====
 
 export interface ListingItem {
