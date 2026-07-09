@@ -1,11 +1,14 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+function getSupabase() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  )
+}
 
 export async function getFeaturedListings(limit = 6) {
+  const supabase = getSupabase()
   const { data, error } = await supabase
     .from('listings')
     .select(`
@@ -27,6 +30,7 @@ export async function getFeaturedListings(limit = 6) {
 }
 
 export async function getListingsByCategory(categorySlug: string, limit = 10) {
+  const supabase = getSupabase()
   const { data: category } = await supabase
     .from('categories')
     .select('id')
@@ -56,6 +60,7 @@ export async function getListingsByCategory(categorySlug: string, limit = 10) {
 }
 
 export async function getActiveAdvertisements(type?: string, limit = 5) {
+  const supabase = getSupabase()
   let query = supabase
     .from('advertisements')
     .select('*')
@@ -80,6 +85,7 @@ export async function getActiveAdvertisements(type?: string, limit = 5) {
 }
 
 export async function getCategories() {
+  const supabase = getSupabase()
   const { data, error } = await supabase
     .from('categories')
     .select('*')
@@ -95,6 +101,7 @@ export async function getCategories() {
 }
 
 export async function getBloodDonors(bloodType?: string, limit = 10) {
+  const supabase = getSupabase()
   let query = supabase
     .from('blood_donors')
     .select('*')
@@ -117,6 +124,7 @@ export async function getBloodDonors(bloodType?: string, limit = 10) {
 }
 
 export async function getCommunityPosts(postType?: string, limit = 10) {
+  const supabase = getSupabase()
   let query = supabase
     .from('community_posts')
     .select(`
@@ -143,6 +151,7 @@ export async function getCommunityPosts(postType?: string, limit = 10) {
 }
 
 export async function searchListings(query: string, limit = 20) {
+  const supabase = getSupabase()
   const { data, error } = await supabase
     .from('listings')
     .select(`
