@@ -4,10 +4,7 @@ import "./globals.css";
 import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 import { keywords } from "@/lib/keywords";
-import ScrollToTopButton from "@/components/shared/scroll-to-top-button";
-import Oneko from "@/components/shared/oneko";
-import Header from "@/components/shared/header";
-import Footer from "@/components/shared/footer";
+import LayoutShell from "@/components/shared/layout-shell";
 
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
@@ -64,15 +61,7 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable)}
     >
       <body className="min-h-full flex flex-col ">
-        <Header />
-
-
-        <Oneko />
-        {children}
-
-        <ScrollToTopButton />
-        <Footer />
-
+        <LayoutShell>{children}</LayoutShell>
       </body>
     </html>
   );

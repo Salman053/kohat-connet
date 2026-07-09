@@ -1,83 +1,24 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { categories } from '@/lib/site'
 import { Search, MapPin, Star, Filter, ArrowUpRight, Grid, List } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import PageHeader from '@/components/shared/page-header'
 import { Input } from '@/components/ui/input'
-
-// Quick trending items data
-const trendingItems = [
-  {
-    name: "KDA Family Park",
-    category: "Tourism",
-    subcategory: "Parks & Gardens",
-    rating: 4.8,
-    reviews: 120,
-    address: "Phase 1, KDA, Kohat",
-    imageUrl: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80",
-    slug: "tourism"
-  },
-  {
-    name: "Al-Makkah Chapli Kabab",
-    category: "Food & Dining",
-    subcategory: "Dhabas & Street Food",
-    rating: 4.9,
-    reviews: 350,
-    address: "Hangu Road, Kohat",
-    imageUrl: "https://images.unsplash.com/photo-1606491956689-2ea866880c84?auto=format&fit=crop&w=800&q=80",
-    slug: "food-dining"
-  },
-  {
-    name: "Kohat Fort (Garrison Fort)",
-    category: "Tourism",
-    subcategory: "Historical Sites",
-    rating: 4.7,
-    reviews: 85,
-    address: "Fort Road, Kohat Cantt",
-    imageUrl: "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=800&q=80",
-    slug: "tourism"
-  },
-  {
-    name: "Star Crest Academy",
-    category: "Local Business",
-    subcategory: "Schools & Academies",
-    rating: 4.6,
-    reviews: 42,
-    address: "University Road, Kohat",
-    imageUrl: "https://images.unsplash.com/photo-1523050854058-8df90110c8f5?auto=format&fit=crop&w=800&q=80",
-    slug: "local-business"
-  },
-  {
-    name: "Tanda Dam Lake Resort",
-    category: "Tourism",
-    subcategory: "Natural Attractions",
-    rating: 4.9,
-    reviews: 512,
-    address: "Tanda Dam Road, Kohat",
-    imageUrl: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80",
-    slug: "tourism"
-  },
-  {
-    name: "Dr. Khan Dental & Maxillofacial Clinic",
-    category: "Local Business",
-    subcategory: "Clinics & Hospitals",
-    rating: 4.8,
-    reviews: 95,
-    address: "KDA Sector 8, Kohat",
-    imageUrl: "https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=800&q=80",
-    slug: "local-business"
-  }
-]
+import { fallbackExploreItems, getExploreItems } from '@/lib/data-fallback'
+import type { ExploreItem } from '@/lib/data-fallback'
 
 export default function Explore() {
+  const [items, setItems] = useState<ExploreItem[]>(fallbackExploreItems)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
 
-  const filteredItems = trendingItems.filter(item => {
+  useEffect(() => { getExploreItems().then(setItems) }, [])
+
+  const filteredItems = items.filter(item => {
     const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           item.subcategory.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           item.address.toLowerCase().includes(searchQuery.toLowerCase())

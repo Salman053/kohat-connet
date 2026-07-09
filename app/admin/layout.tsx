@@ -2,12 +2,12 @@ import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
-import { 
-  LayoutDashboard, 
-  Users, 
-  Building2, 
-  Megaphone, 
-  FolderTree, 
+import {
+  LayoutDashboard,
+  Users,
+  Building2,
+  Megaphone,
+  FolderTree,
   BarChart3,
   DollarSign,
   Settings,
@@ -19,6 +19,8 @@ import {
   Flag
 } from 'lucide-react'
 import Logo from '@/components/shared/logo'
+import { Card } from '@/components/ui/card'
+import { signOut } from '@/lib/auth'
 
 export default async function AdminLayout({
   children,
@@ -40,9 +42,6 @@ export default async function AdminLayout({
               cookieStore.set(name, value, options)
             )
           } catch {
-            // The `setAll` method was called from a Server Component.
-            // This can be ignored if you have middleware refreshing
-            // user sessions.
           }
         },
       },
@@ -82,22 +81,22 @@ export default async function AdminLayout({
   ]
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-muted/30">
+      <header className="sticky top-0 z-50 bg-background border-b border-border">
+        <div className="mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
+            <div className="flex items-center gap-3">
               <Logo variant="minimal" />
-              <span className="ml-3 text-sm text-gray-500">Admin Panel</span>
+              <div className="h-4 w-px bg-border" />
+              <span className="text-sm font-medium text-muted-foreground">Admin Panel</span>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center gap-4">
               <span className="text-sm text-foreground">
                 {profile?.full_name || user.email}
               </span>
               <Link
                 href="/auth/signout"
-                className="flex items-center space-x-1 text-sm text-gray-600 hover:text-gray-900"
+                className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 <LogOut className="h-4 w-4" />
                 <span>Sign out</span>
@@ -108,18 +107,17 @@ export default async function AdminLayout({
       </header>
 
       <div className="flex">
-        {/* Sidebar */}
-        <aside className="w-64 bg-white border-r border-gray-200 min-h-screen">
-          <nav className="p-4 space-y-1">
+        <aside className="w-64 bg-background border-r border-border min-h-[calc(100vh-4rem)]">
+          <nav className="p-3 space-y-0.5">
             {navItems.map((item) => {
               const Icon = item.icon
               return (
                 <Link
                   key={item.href}
                   href={item.href}
-                  className="flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium text-foreground hover:bg-gray-100 hover:text-gray-900"
+                  className="flex items-center gap-3 px-3 py-2 rounded-sm text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
                 >
-                  <Icon className="h-5 w-5" />
+                  <Icon className="h-4 w-4" />
                   <span>{item.label}</span>
                 </Link>
               )
@@ -127,9 +125,10 @@ export default async function AdminLayout({
           </nav>
         </aside>
 
-        {/* Main content */}
-        <main className="flex-1 p-8">
-          {children}
+        <main className="flex-1 p-6">
+          <Card size="sm" className="p-6">
+            {children}
+          </Card>
         </main>
       </div>
     </div>

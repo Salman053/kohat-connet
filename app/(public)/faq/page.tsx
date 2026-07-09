@@ -1,33 +1,15 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { HelpCircle, ChevronDown, ChevronUp } from 'lucide-react'
-
-const faqs = [
-  {
-    question: "How do I add my business listing to Kohat Connect?",
-    answer: "You can add your business listing by clicking the 'List Business' button on the top right, filling out the business details form (phone, category, subcategory, address), and submitting it. Our verification team will review and publish it within 24 hours."
-  },
-  {
-    question: "Is listing my business free?",
-    answer: "Yes! Creating a basic business directory listing, including your contact details, map location, and a description, is 100% free."
-  },
-  {
-    question: "What advertising opportunities are available?",
-    answer: "We offer premium home banner placements, targeted search results ads, sticky sidebars, and sponsored blog posts to showcase your business to thousands of locals monthly."
-  },
-  {
-    question: "How does the Emergency Blood Donor registry work?",
-    answer: "Residents of Kohat can sign up as voluntary blood donors on our platform. In case of an emergency, users can view public requests or search donor contact lists to get immediate support."
-  },
-  {
-    question: "How can I update or modify my existing listing details?",
-    answer: "To claim or update a business listing, please contact us via the contact form or send a WhatsApp message to our verified helpline with proof of ownership."
-  }
-]
+import { fallbackFaqs, getFaqs } from '@/lib/data-fallback'
+import type { FaqItem } from '@/lib/data-fallback'
 
 export default function FAQPage() {
+  const [faqs, setFaqs] = useState<FaqItem[]>(fallbackFaqs)
   const [openIndex, setOpenIndex] = useState<number | null>(0)
+
+  useEffect(() => { getFaqs().then(setFaqs) }, [])
 
   const toggleFaq = (index: number) => {
     setOpenIndex(openIndex === index ? null : index)

@@ -25,7 +25,7 @@ export default function SignInPage() {
     setLoading(true)
 
     try {
-      await signIn(email, password)
+      await signIn(email, password).then((res)=>console.log(res))
       const redirect = searchParams.get('redirect') || '/'
       router.push(redirect)
       router.refresh()

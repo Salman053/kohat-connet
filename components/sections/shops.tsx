@@ -1,57 +1,22 @@
 "use client"
 
 import Image from 'next/image'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { Store, ArrowRight, Star, TrendingUp, Users, Zap, CheckCircle2, Sparkles, Building2, Eye, MessageSquare, Award, Activity } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
+import { fallbackShops, getShops } from '@/lib/data-fallback'
+import type { ShopItem } from '@/lib/data-fallback'
 
 const categories = ["All", "Electronics", "Clothing", "Home", "Groceries", "Sports", "Beauty"];
 
-const shops = [
-  {
-    id: 1,
-    name: "Al-Noor Electronics",
-    category: "Electronics",
-    rating: 4.8,
-    reviews: 124,
-    image: "https://images.unsplash.com/photo-1740803292814-13d2e35924c3?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    description: "The biggest electronics hub in Kohat. Branded appliances and smartphones.",
-    featured: true,
-    href: "/shops/al-noor"
-  },
-  {
-    id: 2,
-    name: "Kohat Fashion House",
-    category: "Clothing",
-    rating: 4.5,
-    reviews: 89,
-    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80",
-    description: "Traditional and modern clothing. Specialist in bridal wear.",
-    href: "/shops/fashion-house"
-  },
-  {
-    id: 3,
-    name: "City Furniture Mart",
-    category: "Home",
-    rating: 4.7,
-    reviews: 56,
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80",
-    description: "Quality wood furniture crafted by master artisans.",
-    href: "/shops/city-furniture"
-  },
-  {
-    id: 4,
-    name: "Green Grocery",
-    category: "Groceries",
-    rating: 4.9,
-    reviews: 210,
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
-    description: "Fresh farm-to-table vegetables and fruits.",
-    href: "/shops/green-grocery"
-  }
+const shops: (ShopItem & { id: number; featured?: boolean; href: string })[] = [
+  { id: 1, name: "Al-Noor Electronics", category: "Electronics", rating: 4.8, reviews: 124, image: "https://images.unsplash.com/photo-1740803292814-13d2e35924c3?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "The biggest electronics hub in Kohat.", featured: true, slug: "al-noor", address: "Hangu Road, Kohat Cantt", href: "/shops/al-noor" },
+  { id: 2, name: "Kohat Fashion House", category: "Clothing", rating: 4.5, reviews: 89, image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80", description: "Traditional and modern clothing.", slug: "fashion-house", address: "Bazar-e-Mustafa, Kohat Cantt", href: "/shops/fashion-house" },
+  { id: 3, name: "City Furniture Mart", category: "Home", rating: 4.7, reviews: 56, image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80", description: "Quality wood furniture.", slug: "city-furniture", address: "KDA Khas, Sector 3, Kohat", href: "/shops/city-furniture" },
+  { id: 4, name: "Green Grocery", category: "Groceries", rating: 4.9, reviews: 210, image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80", description: "Fresh farm-to-table vegetables.", slug: "green-grocery", address: "Main Bazar Chowk, Kohat", href: "/shops/green-grocery" }
 ]
 
 const benefits = [

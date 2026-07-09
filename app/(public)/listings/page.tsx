@@ -1,152 +1,26 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { categories } from '@/lib/site'
 import { Search, MapPin, Phone, Star, ShieldCheck, LayoutGrid, List } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
 import { Input } from '@/components/ui/input'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-
-interface ListingItem {
-  name: string
-  slug: string
-  category: string
-  categorySlug: string
-  subcategory: string
-  rating: number
-  reviews: number
-  phone: string
-  address: string
-  image: string
-  verified: boolean
-  description: string
-}
-
-const allListings: ListingItem[] = [
-  {
-    name: "Khyber Electronics Center",
-    slug: "khyber-electronics",
-    category: "Local Business",
-    categorySlug: "local-business",
-    subcategory: "Hardware & Electronics",
-    rating: 4.8,
-    reviews: 140,
-    phone: "+92 333 9876543",
-    address: "Main Bazar Road, Near Chowk, Kohat",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Best quality electronics and hardware services in Kohat Cantt."
-  },
-  {
-    name: "Kohat Elite Salon",
-    slug: "kohat-elite-salon",
-    category: "Beauty & Wellness",
-    categorySlug: "beauty-wellness",
-    subcategory: "Salons",
-    rating: 4.6,
-    reviews: 64,
-    phone: "+92 334 1234567",
-    address: "Phase 1, KDA, Kohat",
-    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Premium salon services for men and women in Kohat."
-  },
-  {
-    name: "Tanda Dam View Point",
-    slug: "tanda-dam-view",
-    category: "Tourism",
-    categorySlug: "tourism",
-    subcategory: "Natural Attractions",
-    rating: 4.9,
-    reviews: 210,
-    phone: "+92 922 515253",
-    address: "Tanda Dam Road, Kohat",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Scenic viewpoint with boating and picnic spots."
-  },
-  {
-    name: "National Tailors & Fashion",
-    slug: "national-tailors",
-    category: "Local Business",
-    categorySlug: "local-business",
-    subcategory: "Tailors & Fashion",
-    rating: 4.4,
-    reviews: 28,
-    phone: "+92 922 515254",
-    address: "Hangu Road Bypass, Kohat",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=800&q=80",
-    verified: false,
-    description: "Custom tailoring and traditional shalwar kameez stitching."
-  },
-  {
-    name: "Al-Noor Restaurant",
-    slug: "al-noor-restaurant",
-    category: "Food & Dining",
-    categorySlug: "food-dining",
-    subcategory: "Restaurants",
-    rating: 4.7,
-    reviews: 189,
-    phone: "+92 333 1122334",
-    address: "KDA Chowk, Kohat Cantt",
-    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Family dining with authentic Pakistani cuisine."
-  },
-  {
-    name: "City Medical Store",
-    slug: "city-medical-store",
-    category: "Local Business",
-    categorySlug: "local-business",
-    subcategory: "Pharmacies",
-    rating: 4.5,
-    reviews: 76,
-    phone: "+92 335 9900112",
-    address: "Main Bazar Chowk, Kohat",
-    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "24-hour pharmacy with all essential medicines available."
-  },
-  {
-    name: "Kohat Blood Donor Network",
-    slug: "kohat-blood-donor",
-    category: "Community",
-    categorySlug: "community",
-    subcategory: "Blood Donors",
-    rating: 5.0,
-    reviews: 45,
-    phone: "+92 334 5566778",
-    address: "Kohat Cantt, KPK",
-    image: "https://images.unsplash.com/photo-1615461066842-32561977e3d8?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Emergency blood donor network serving all of Kohat."
-  },
-  {
-    name: "Green Grocery Store",
-    slug: "green-grocery-store",
-    category: "Food & Dining",
-    categorySlug: "food-dining",
-    subcategory: "Dhabas & Street Food",
-    rating: 4.3,
-    reviews: 52,
-    phone: "+92 331 4455667",
-    address: "Bazar-e-Mustafa, Kohat",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
-    verified: false,
-    description: "Fresh farm-to-table vegetables and organic produce."
-  }
-]
+import { fallbackListings, getListings } from '@/lib/data-fallback'
+import type { ListingItem } from '@/lib/data-fallback'
 
 export default function ListingsPage() {
+  const [listings, setListings] = useState<ListingItem[]>(fallbackListings)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
   const [viewMode, setViewMode] = useState<"grid" | "list">("grid")
 
-  const uniqueCategories = ["All", ...new Set(allListings.map(l => l.category))]
+  useEffect(() => { getListings().then(setListings) }, [])
 
-  const filtered = allListings.filter(item => {
+  const uniqueCategories = ["All", ...new Set(listings.map(l => l.category))]
+
+  const filtered = listings.filter(item => {
     const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.subcategory.toLowerCase().includes(searchQuery.toLowerCase())

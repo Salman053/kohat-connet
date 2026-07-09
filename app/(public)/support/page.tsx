@@ -151,8 +151,7 @@ export default function SupportPage() {
                       value={description}
                       onChange={(e) => setDescription(e.target.value)}
                       placeholder="Detail the issue you are facing, including any business names or links..."
-                      className="w-full bg-background border border-border rounded-xl p-3 text-xs focus:outline-none focus:border-primary/50 resize-none"
-                    />
+                         />
                   </div>
 
                   <Button

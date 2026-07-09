@@ -240,8 +240,7 @@ export default function ServiceSlugPage({ params }: PageProps) {
                       value={bookingNote}
                       onChange={(e) => setBookingNote(e.target.value)}
                       rows={3}
-                      className="w-full bg-background border border-border rounded-xl p-3 text-xs focus:outline-none focus:border-primary/50 resize-none"
-                    />
+                         />
                   </div>
 
                   <Button

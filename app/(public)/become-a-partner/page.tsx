@@ -7,6 +7,9 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import AnimatedGradientOrbs from '@/components/animated/animated-gradient-Orbs'
+import AnimatedGridPattern from '@/components/animated/animated-grid-pattern'
+import FloatingParticles from '@/components/animated/floating-particles'
 
 export default function BecomeAPartnerPage() {
   const [partnerName, setPartnerName] = useState("")
@@ -23,6 +26,15 @@ export default function BecomeAPartnerPage() {
     setSubmitted(true)
   }
 
+  const resetStates = () => {
+    setSubmitted(false)
+    setPartnerName("")
+    setCompanyName("")
+    setPartnerEmail("")
+    setPartnerPhone("")
+    setProposal("")
+  }
+
   return (
     <div className="min-h-screen bg-background pb-20">
       <PageHeader
@@ -30,7 +42,6 @@ export default function BecomeAPartnerPage() {
         subtitle="Collaborate with Kohat Connect to expand local commerce, sponsor community initiatives, and drive innovation."
         tag="Synergy &amp; Growth"
       />
-
       <div className="container mx-auto px-6 mt-12 max-w-5xl">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
           <div className="bg-card border border-border p-6 rounded-3xl text-center space-y-4">
@@ -82,14 +93,7 @@ export default function BecomeAPartnerPage() {
                 </p>
               </div>
               <Button
-                onClick={() => {
-                  setSubmitted(false)
-                  setPartnerName("")
-                  setCompanyName("")
-                  setPartnerEmail("")
-                  setPartnerPhone("")
-                  setProposal("")
-                }}
+                onClick={resetStates}
                 className="px-6 py-2.5 bg-primary text-primary-foreground font-bold text-xs rounded-xl shadow-md"
               >
                 Submit Another Application
@@ -106,7 +110,7 @@ export default function BecomeAPartnerPage() {
                     value={partnerName}
                     onChange={(e) => setPartnerName(e.target.value)}
                     placeholder="e.g. Mohammad Qasim"
-                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary/50"
+
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -116,7 +120,7 @@ export default function BecomeAPartnerPage() {
                     value={companyName}
                     onChange={(e) => setCompanyName(e.target.value)}
                     placeholder="e.g. Khyber Tech Group"
-                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary/50"
+
                   />
                 </div>
               </div>
@@ -130,7 +134,7 @@ export default function BecomeAPartnerPage() {
                     value={partnerEmail}
                     onChange={(e) => setPartnerEmail(e.target.value)}
                     placeholder="e.g. partner@domain.com"
-                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary/50"
+
                   />
                 </div>
                 <div className="space-y-1.5">
@@ -141,7 +145,7 @@ export default function BecomeAPartnerPage() {
                     value={partnerPhone}
                     onChange={(e) => setPartnerPhone(e.target.value)}
                     placeholder="e.g. +92 333 1234567"
-                    className="w-full bg-background border border-border rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-primary/50"
+
                   />
                 </div>
               </div>
@@ -157,10 +161,10 @@ export default function BecomeAPartnerPage() {
                   </SelectTrigger>
                   <SelectContent>
 
-                  <SelectItem value="Local Franchise">Local Franchise Operator</SelectItem>
-                  <SelectItem value="Event Sponsor">Corporate Event Sponsor</SelectItem>
-                  <SelectItem value="Developer API integration">Developer / API Partnership</SelectItem>
-                  <SelectItem value="Blood Drive Coalition">Blood Drive &amp; Health Partner</SelectItem>
+                    <SelectItem value="Local Franchise">Local Franchise Operator</SelectItem>
+                    <SelectItem value="Event Sponsor">Corporate Event Sponsor</SelectItem>
+                    <SelectItem value="Developer API integration">Developer / API Partnership</SelectItem>
+                    <SelectItem value="Blood Drive Coalition">Blood Drive &amp; Health Partner</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -169,11 +173,11 @@ export default function BecomeAPartnerPage() {
                 <label className="text-[10px] font-extrabold uppercase text-muted-foreground">Partnership Proposal / Pitch</label>
                 <Textarea
                   required
-                  rows={5}
+                  rows={10}
                   value={proposal}
+                  className='min-h-28'
                   onChange={(e) => setProposal(e.target.value)}
                   placeholder="Outline your collaboration proposal, target audience, expected outcomes, or any background info..."
-                  className="w-full bg-background border border-border rounded-xl p-3 text-xs focus:outline-none focus:border-primary/50 resize-none"
                 />
               </div>
 

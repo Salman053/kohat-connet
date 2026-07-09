@@ -201,8 +201,7 @@ export default function RequestRegisterPage() {
                   value={campaignDetails}
                   onChange={(e) => setCampaignDetails(e.target.value)}
                   placeholder="Tell us about your campaign timeline, preferred banners sizes, or any specific goals..."
-                  className="w-full bg-background border border-border rounded-xl p-3 text-xs focus:outline-none focus:border-primary/50 resize-none"
-                />
+                 />
               </div>
 
               <Button

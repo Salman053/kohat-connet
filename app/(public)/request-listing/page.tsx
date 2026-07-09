@@ -214,8 +214,7 @@ export default function RequestListingPage() {
                       value={formData.desc}
                       onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
                       placeholder="Introduce your business, services, opening hours, or special offerings..."
-                      className="w-full bg-background border border-border rounded-xl p-3 text-xs focus:outline-none focus:border-primary/50 resize-none"
-                    />
+                         />
                   </div>
 
                   <Button

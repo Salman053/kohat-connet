@@ -1,39 +1,17 @@
 "use client"
 
-import React, { useState } from 'react'
-import { Briefcase, Check, Sparkles, Send, MapPin, Calendar } from 'lucide-react'
+import React, { useState, useEffect } from 'react'
+import { Briefcase, Check, Sparkles, MapPin } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
-const jobOpenings = [
-  {
-    title: "Regional Sales Lead",
-    department: "Sales & Marketing",
-    location: "Kohat, KPK",
-    type: "Full-Time",
-    salary: "Competitive",
-    description: "Lead advertising sales campaigns, secure corporate partnerships, and manage local sales executives in the southern region of KPK."
-  },
-  {
-    title: "Field Listing Agent",
-    department: "Operations",
-    location: "Kohat Cantonment & KDA",
-    type: "Part-Time / Contract",
-    salary: "Base + Commission",
-    description: "Visit shops, collect business info, photos, and verification proofs to register local merchants on the Kohat Connect directory."
-  },
-  {
-    title: "Frontend Developer (Next.js)",
-    department: "Technology",
-    location: "Remote / Hybrid (Kohat)",
-    type: "Full-Time",
-    salary: "Negotiable",
-    description: "Maintain and upgrade the Kohat Connect web app, improve user dashboard interfaces, and build interactive map capabilities."
-  }
-]
+import { fallbackCareers, getCareers } from '@/lib/data-fallback'
+import type { CareerItem } from '@/lib/data-fallback'
 
 export default function CareersPage() {
-  const [selectedJob, setSelectedJob] = useState("Regional Sales Lead")
+  const [jobOpenings, setJobOpenings] = useState<CareerItem[]>(fallbackCareers)
+  const [selectedJob, setSelectedJob] = useState(fallbackCareers[0].title)
+
+  useEffect(() => { getCareers().then(setJobOpenings) }, [])
   const [candidateName, setCandidateName] = useState("")
   const [candidateEmail, setCandidateEmail] = useState("")
   const [candidatePhone, setCandidatePhone] = useState("")
@@ -132,7 +110,7 @@ export default function CareersPage() {
 
                   <div className="mt-4 pt-4 border-t border-border/40 flex justify-between items-center">
                     <span className="text-xs font-bold text-primary">
-                      {job.salary}
+                      {job?.salary}
                     </span>
                     <Button
                       onClick={() => setSelectedJob(job.title)}

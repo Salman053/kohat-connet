@@ -1,161 +1,16 @@
 "use client"
 
-import React, { use, useState } from 'react'
+import React, { use, useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, Star, MapPin, Phone, Mail, Globe, ShieldCheck, Clock, Heart, Share2 } from 'lucide-react'
+import { ArrowLeft, Star, MapPin, Phone, Mail, Globe, ShieldCheck, Clock, Heart } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-
-const listingData = [
-  {
-    name: "Khyber Electronics Center",
-    slug: "khyber-electronics",
-    category: "Local Business",
-    categorySlug: "local-business",
-    subcategory: "Hardware & Electronics",
-    rating: 4.8,
-    reviews: 140,
-    phone: "+92 333 9876543",
-    email: "contact@khyberelectronics.com",
-    website: "www.khyberelectronics.com",
-    address: "Main Bazar Road, Near Chowk, Kohat Cantt",
-    hours: "09:00 AM - 09:00 PM",
-    image: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Best quality electronics and hardware services in Kohat Cantt and surrounding areas. Highly experienced team, professional support, and affordable prices.",
-    about: "Khyber Electronics Center has been serving the Kohat community for over 15 years. We specialize in consumer electronics, home appliances, mobile phones, and computer accessories. Our team of certified technicians provides repair services and expert advice to help you find the right products for your needs."
-  },
-  {
-    name: "Kohat Elite Salon",
-    slug: "kohat-elite-salon",
-    category: "Beauty & Wellness",
-    categorySlug: "beauty-wellness",
-    subcategory: "Salons",
-    rating: 4.6,
-    reviews: 64,
-    phone: "+92 334 1234567",
-    email: "info@kohatelite.com",
-    website: "www.kohatelite.com",
-    address: "Phase 1, KDA, Kohat",
-    hours: "10:00 AM - 10:00 PM",
-    image: "https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Premium salon services for men and women in Kohat.",
-    about: "Kohat Elite Salon offers a wide range of beauty and grooming services including haircuts, styling, facial treatments, bridal makeup, and henna application. Our professional stylists use premium products to ensure you look your best for every occasion."
-  },
-  {
-    name: "Tanda Dam View Point",
-    slug: "tanda-dam-view",
-    category: "Tourism",
-    categorySlug: "tourism",
-    subcategory: "Natural Attractions",
-    rating: 4.9,
-    reviews: 210,
-    phone: "+92 922 515253",
-    email: "info@kpk tourism.com",
-    website: "www.kpktourism.com",
-    address: "Tanda Dam Road, Kohat",
-    hours: "06:00 AM - 06:00 PM",
-    image: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Scenic viewpoint with boating and picnic spots.",
-    about: "Tanda Dam is one of KPK's most beautiful wetland sanctuaries, offering breathtaking views, boating facilities, and peaceful picnic spots. It is home to a variety of migratory birds and native wildlife, making it a must-visit destination for nature lovers."
-  },
-  {
-    name: "National Tailors & Fashion",
-    slug: "national-tailors",
-    category: "Local Business",
-    categorySlug: "local-business",
-    subcategory: "Tailors & Fashion",
-    rating: 4.4,
-    reviews: 28,
-    phone: "+92 922 515254",
-    email: "nationaltailors@email.com",
-    website: "www.nationaltailors.com",
-    address: "Hangu Road Bypass, Kohat",
-    hours: "10:00 AM - 08:00 PM",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?auto=format&fit=crop&w=800&q=80",
-    verified: false,
-    description: "Custom tailoring and traditional shalwar kameez stitching.",
-    about: "National Tailors & Fashion specializes in bespoke tailoring services including suits, shalwar kameez, wedding wear, and casual fashion. With skilled master tailors and modern stitching techniques, we deliver perfectly fitted garments for men, women, and children."
-  },
-  {
-    name: "Al-Noor Restaurant",
-    slug: "al-noor-restaurant",
-    category: "Food & Dining",
-    categorySlug: "food-dining",
-    subcategory: "Restaurants",
-    rating: 4.7,
-    reviews: 189,
-    phone: "+92 333 1122334",
-    email: "alnoor@restaurant.com",
-    website: "www.alnoorrestaurant.com",
-    address: "KDA Chowk, Kohat Cantt",
-    hours: "11:00 AM - 11:00 PM",
-    image: "https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Family dining with authentic Pakistani cuisine.",
-    about: "Al-Noor Restaurant serves the finest Pakistani and BBQ cuisine in Kohat. From sizzling chapli kababs to aromatic biryanis and freshly baked naans, every dish is prepared with authentic recipes and the freshest ingredients. Warm ambiance and friendly service make it a favorite for families."
-  },
-  {
-    name: "City Medical Store",
-    slug: "city-medical-store",
-    category: "Local Business",
-    categorySlug: "local-business",
-    subcategory: "Pharmacies",
-    rating: 4.5,
-    reviews: 76,
-    phone: "+92 335 9900112",
-    email: "citymedical@email.com",
-    website: "",
-    address: "Main Bazar Chowk, Kohat",
-    hours: "24 Hours",
-    image: "https://images.unsplash.com/photo-1587854692152-cbe660dbde88?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "24-hour pharmacy with all essential medicines available.",
-    about: "City Medical Store is a trusted 24-hour pharmacy serving the Kohat community with genuine medicines, surgical supplies, and healthcare products. Our licensed pharmacists provide prescription dispensing, health consultations, and home delivery services."
-  },
-  {
-    name: "Kohat Blood Donor Network",
-    slug: "kohat-blood-donor",
-    category: "Community",
-    categorySlug: "community",
-    subcategory: "Blood Donors",
-    rating: 5.0,
-    reviews: 45,
-    phone: "+92 334 5566778",
-    email: "blooddonor@kohatconnect.com",
-    website: "",
-    address: "Kohat Cantt, KPK",
-    hours: "Emergency Service",
-    image: "https://images.unsplash.com/photo-1615461066842-32561977e3d8?auto=format&fit=crop&w=800&q=80",
-    verified: true,
-    description: "Emergency blood donor network serving all of Kohat.",
-    about: "Kohat Blood Donor Network is a community-driven initiative that connects blood donors with patients in need. Our registry includes voluntary donors across all blood types. In case of an emergency, we mobilize donors quickly to save lives."
-  },
-  {
-    name: "Green Grocery Store",
-    slug: "green-grocery-store",
-    category: "Food & Dining",
-    categorySlug: "food-dining",
-    subcategory: "Dhabas & Street Food",
-    rating: 4.3,
-    reviews: 52,
-    phone: "+92 331 4455667",
-    email: "greengrocery@email.com",
-    website: "",
-    address: "Bazar-e-Mustafa, Kohat",
-    hours: "07:00 AM - 10:00 PM",
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
-    verified: false,
-    description: "Fresh farm-to-table vegetables and organic produce.",
-    about: "Green Grocery Store brings fresh, organic, and farm-sourced vegetables and fruits directly to your neighborhood. We source directly from local farmers in Kohat and surrounding areas to ensure the highest quality produce at affordable prices."
-  }
-]
+import { fallbackListingDetails, getListingBySlug } from '@/lib/data-fallback'
+import type { ListingDetail } from '@/lib/data-fallback'
 
 interface PageProps {
   params: Promise<{
@@ -167,7 +22,9 @@ export default function ListingDetailPage({ params }: PageProps) {
   const resolvedParams = use(params)
   const slug = resolvedParams.slug
 
-  const listing = listingData.find(l => l.slug === slug)
+  const [listing, setListing] = useState<ListingDetail | null>(null)
+
+  useEffect(() => { getListingBySlug(slug).then(setListing) }, [slug])
 
   const [reviewName, setReviewName] = useState("")
   const [reviewText, setReviewText] = useState("")
@@ -286,8 +143,7 @@ export default function ListingDetailPage({ params }: PageProps) {
                       value={reviewText}
                       onChange={(e) => setReviewText(e.target.value)}
                       placeholder="Share your experience with this listing..."
-                      className="w-full bg-background border border-border rounded-xl p-3 text-xs focus:outline-none focus:border-primary/50 resize-none"
-                    />
+                         />
                   </div>
 
                   <Button

@@ -1,68 +1,26 @@
 "use client"
 
-import React, { use, useState } from 'react'
+import React, { use, useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, Star, MapPin, Phone, Mail, Clock, ShieldCheck, Tag, Heart } from 'lucide-react'
+import { ArrowLeft, Star, MapPin, Phone, Mail, Clock, ShieldCheck, Heart } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 
-const shopsList = [
-  {
-    name: "Al-Noor Electronics",
-    category: "Electronics",
-    rating: 4.8,
-    reviews: 124,
-    image: "https://images.unsplash.com/photo-1740803292814-13d2e35924c3?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    description: "The biggest electronics hub in Kohat. Branded appliances and smartphones.",
-    slug: "al-noor",
-    address: "Hangu Road, Kohat Cantt",
-    phone: "+92 333 1122334",
-    email: "alnoor@kohat.com",
-    hours: "10:00 AM - 10:00 PM"
-  },
-  {
-    name: "Kohat Fashion House",
-    category: "Clothing",
-    rating: 4.5,
-    reviews: 89,
-    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80",
-    description: "Traditional and modern clothing. Specialist in bridal wear.",
-    slug: "fashion-house",
-    address: "Bazar-e-Mustafa, Kohat Cantt",
-    phone: "+92 334 5566778",
-    email: "fashion@kohat.com",
-    hours: "11:00 AM - 09:30 PM"
-  },
-  {
-    name: "City Furniture Mart",
-    category: "Home",
-    rating: 4.7,
-    reviews: 56,
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80",
-    description: "Quality wood furniture crafted by master artisans.",
-    slug: "city-furniture",
-    address: "KDA Khas, Sector 3, Kohat",
-    phone: "+92 335 9900112",
-    email: "cityfurniture@kohat.com",
-    hours: "09:00 AM - 08:00 PM"
-  },
-  {
-    name: "Green Grocery",
-    category: "Groceries",
-    rating: 4.9,
-    reviews: 210,
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
-    description: "Fresh farm-to-table vegetables and fruits.",
-    slug: "green-grocery",
-    address: "Main Bazar Chowk, Kohat",
-    phone: "+92 331 4455667",
-    email: "greengrocery@kohat.com",
-    hours: "07:00 AM - 11:00 PM"
-  }
+interface ShopDetail {
+  name: string; category: string; rating: number; reviews: number
+  image: string; description: string; slug: string; address: string
+  phone: string; email: string; hours: string
+}
+
+const shopsList: ShopDetail[] = [
+  { name: "Al-Noor Electronics", category: "Electronics", rating: 4.8, reviews: 124, image: "https://images.unsplash.com/photo-1740803292814-13d2e35924c3?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", description: "The biggest electronics hub in Kohat. Branded appliances and smartphones.", slug: "al-noor", address: "Hangu Road, Kohat Cantt", phone: "+92 333 1122334", email: "alnoor@kohat.com", hours: "10:00 AM - 10:00 PM" },
+  { name: "Kohat Fashion House", category: "Clothing", rating: 4.5, reviews: 89, image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80", description: "Traditional and modern clothing. Specialist in bridal wear.", slug: "fashion-house", address: "Bazar-e-Mustafa, Kohat Cantt", phone: "+92 334 5566778", email: "fashion@kohat.com", hours: "11:00 AM - 09:30 PM" },
+  { name: "City Furniture Mart", category: "Home", rating: 4.7, reviews: 56, image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80", description: "Quality wood furniture crafted by master artisans.", slug: "city-furniture", address: "KDA Khas, Sector 3, Kohat", phone: "+92 335 9900112", email: "cityfurniture@kohat.com", hours: "09:00 AM - 08:00 PM" },
+  { name: "Green Grocery", category: "Groceries", rating: 4.9, reviews: 210, image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80", description: "Fresh farm-to-table vegetables and fruits.", slug: "green-grocery", address: "Main Bazar Chowk, Kohat", phone: "+92 331 4455667", email: "greengrocery@kohat.com", hours: "07:00 AM - 11:00 PM" }
 ]
 
 interface PageProps {
@@ -75,7 +33,7 @@ export default function ShopDetailsPage({ params }: PageProps) {
   const resolvedParams = use(params)
   const slug = resolvedParams.slug
 
-  const shop = shopsList.find(s => s.slug === slug)
+  const shop = shopsList.find(s => s.slug === slug) || null
 
   const [reviewName, setReviewName] = useState("")
   const [reviewText, setReviewText] = useState("")
@@ -195,8 +153,7 @@ export default function ShopDetailsPage({ params }: PageProps) {
                       value={reviewText}
                       onChange={(e) => setReviewText(e.target.value)}
                       placeholder="Share details of your experience visiting this shop..."
-                      className="w-full bg-background border border-border rounded-xl p-3 text-xs focus:outline-none focus:border-primary/50 resize-none"
-                    />
+                         />
                   </div>
 
                   <Button

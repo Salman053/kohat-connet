@@ -1,63 +1,25 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Search, Star, MapPin, Store, Tag, ArrowRight } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-
-const shopsList = [
-  {
-    name: "Al-Noor Electronics",
-    category: "Electronics",
-    rating: 4.8,
-    reviews: 124,
-    image: "https://images.unsplash.com/photo-1740803292814-13d2e35924c3?q=80&w=1476&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
-    description: "The biggest electronics hub in Kohat. Branded appliances and smartphones.",
-    slug: "al-noor",
-    address: "Hangu Road, Kohat Cantt"
-  },
-  {
-    name: "Kohat Fashion House",
-    category: "Clothing",
-    rating: 4.5,
-    reviews: 89,
-    image: "https://images.unsplash.com/photo-1441984904996-e0b6ba687e04?auto=format&fit=crop&w=800&q=80",
-    description: "Traditional and modern clothing. Specialist in bridal wear.",
-    slug: "fashion-house",
-    address: "Bazar-e-Mustafa, Kohat Cantt"
-  },
-  {
-    name: "City Furniture Mart",
-    category: "Home",
-    rating: 4.7,
-    reviews: 56,
-    image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=800&q=80",
-    description: "Quality wood furniture crafted by master artisans.",
-    slug: "city-furniture",
-    address: "KDA Khas, Sector 3, Kohat"
-  },
-  {
-    name: "Green Grocery",
-    category: "Groceries",
-    rating: 4.9,
-    reviews: 210,
-    image: "https://images.unsplash.com/photo-1542838132-92c53300491e?auto=format&fit=crop&w=800&q=80",
-    description: "Fresh farm-to-table vegetables and fruits.",
-    slug: "green-grocery",
-    address: "Main Bazar Chowk, Kohat"
-  }
-]
+import { fallbackShops, getShops } from '@/lib/data-fallback'
+import type { ShopItem } from '@/lib/data-fallback'
 
 export default function ShopsPage() {
+  const [shops, setShops] = useState<ShopItem[]>(fallbackShops)
   const [searchQuery, setSearchQuery] = useState("")
   const [selectedCategory, setSelectedCategory] = useState("All")
 
   const categories = ["All", "Electronics", "Clothing", "Home", "Groceries"]
 
-  const filteredShops = shopsList.filter(shop => {
+  useEffect(() => { getShops().then(setShops) }, [])
+
+  const filteredShops = shops.filter(shop => {
     const matchesSearch = shop.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           shop.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           shop.address.toLowerCase().includes(searchQuery.toLowerCase())

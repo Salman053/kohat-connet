@@ -76,7 +76,7 @@ export default async function DashboardLayout({
               </Link>
               <Link
                 href="/auth/signout"
-                className="flex items-center space-x-1 text-sm text-gray-600 hover:text-gray-900"
+                className="flex items-center space-x-1 text-sm "
               >
                 <LogOut className="h-4 w-4" />
                 <span>Sign out</span>
