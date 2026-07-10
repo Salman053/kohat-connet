@@ -1,7 +1,7 @@
 'use client'
 
-import { Suspense, useState } from 'react'
-import { signIn } from '@/lib/auth'
+import { Suspense, useEffect, useState } from 'react'
+import { getCurrentUser, signIn } from '@/lib/auth'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowRight, Eye, EyeOff } from 'lucide-react'
@@ -33,6 +33,15 @@ function SignInForm() {
       setLoading(false)
     }
   }
+
+
+  useEffect(()=>{
+
+    (async ()=>{
+      console.log(await getCurrentUser().then(res=>res))
+    })()
+    
+  })
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-12">

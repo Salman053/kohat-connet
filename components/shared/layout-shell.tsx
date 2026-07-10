@@ -19,7 +19,7 @@ export default function LayoutShell({ children }: { children: React.ReactNode })
   return (
     <>
       <Header />
-      <AnimatedGradientOrbs />
+      {/* <AnimatedGradientOrbs /> */}
       <Oneko />
       {children}
       <ScrollToTopButton />

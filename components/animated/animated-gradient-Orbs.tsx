@@ -52,7 +52,7 @@ export default function AnimatedGradientOrbs() {
   if (!mounted) return <div className="pointer-events-none fixed inset-0" />
 
   return (
-    <div className="pointer-events-none fixed inset-0 overflow-hidden">
+    <div className="pointer-events-none fixed inset-0 z-[1] overflow-hidden">
       {orbs.map((orb) => (
         <motion.div
           key={orb.id}
