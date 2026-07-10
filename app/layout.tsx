@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 import { keywords } from "@/lib/keywords";
 import LayoutShell from "@/components/shared/layout-shell";
-
+import { Analytics } from "@vercel/analytics/next"
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 const geistSans = Geist({
@@ -61,7 +61,10 @@ export default function RootLayout({
       className={cn("h-full", "antialiased", geistSans.variable, geistMono.variable, "font-mono", jetbrainsMono.variable)}
     >
       <body className="min-h-full flex flex-col ">
-        <LayoutShell>{children}</LayoutShell>
+        <LayoutShell>
+          <Analytics />
+
+          {children}</LayoutShell>
       </body>
     </html>
   );
