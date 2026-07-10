@@ -27,8 +27,10 @@ export default async function DashboardLayout({
         getAll() {
           return cookieStore.getAll()
         },
-        setAll() {
-          // Ignore for read operations
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) =>
+            cookieStore.set(name, value, options)
+          )
         },
       },
     }

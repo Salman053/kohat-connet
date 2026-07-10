@@ -1,7 +1,7 @@
 // components/Oneko.tsx
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 
 interface OnekoProps {
   /** Path to the cat sprite image (default: "/oneko.gif") */
@@ -23,16 +23,13 @@ export default function Oneko({
   persistPosition = true,
   className 
 }: OnekoProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const scriptId = 'oneko-script';
 
   useEffect(() => {
-    // Don't load if already loaded
-    if (window.onekoLoaded) {
-      return;
-    }
+    if (window.onekoLoaded) return;
 
-    // Create container for oneko
+    window.onekoLoaded = true;
+
     const container = document.createElement('div');
     container.id = 'oneko-container';
     if (className) {
@@ -40,7 +37,6 @@ export default function Oneko({
     }
     document.body.appendChild(container);
 
-    // Create and configure script
     const script = document.createElement('script');
     script.id = scriptId;
     script.src = '/oneko.js';
@@ -48,30 +44,9 @@ export default function Oneko({
     script.dataset.cat = catSprite;
     script.dataset.persistPosition = persistPosition ? 'true' : 'false';
 
-    // Mark as loaded when script loads
-    script.onload = () => {
-      window.onekoLoaded = true;
-    };
-
     document.body.appendChild(script);
 
-    // Cleanup
-    return () => {
-      // Remove script
-      const existingScript = document.getElementById(scriptId);
-      if (existingScript) {
-        document.body.removeChild(existingScript);
-      }
-      
-      // Remove container
-      const existingContainer = document.getElementById('oneko-container');
-      if (existingContainer) {
-        document.body.removeChild(existingContainer);
-      }
-      
-      // Reset loaded flag (optional - remove if you want it to load only once per session)
-      window.onekoLoaded = false;
-    };
+    return () => {};
   }, [catSprite, persistPosition, className]);
 
   // This component doesn't render anything visible itself

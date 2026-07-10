@@ -25,10 +25,9 @@ function SignInForm() {
     setLoading(true)
 
     try {
-      await signIn(email, password).then((res)=>console.log(res))
+      await signIn(email, password)
       const redirect = searchParams.get('redirect') || '/'
       router.push(redirect)
-      router.refresh()
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
     } finally {
