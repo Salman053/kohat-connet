@@ -1,4 +1,6 @@
-import { redirect } from 'next/navigation'
+'use client'
+
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import {
   LayoutDashboard,
@@ -16,33 +18,52 @@ import {
   Heart,
   Flag,
 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import Logo from '@/components/shared/logo'
 import { Card } from '@/components/ui/card'
-import { createClient } from '@/lib/supabase/server'
+import { useAuth } from '@/components/auth/auth-context'
+import { createClient } from '@/lib/supabase/client'
 
-export default async function AdminLayout({
+type Profile = {
+  role: string
+  full_name: string | null
+}
+
+export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const supabase = await createClient()
+  const { user } = useAuth()
+  const router = useRouter()
+  const [profile, setProfile] = useState<Profile | null>(null)
+  const [loadingProfile, setLoadingProfile] = useState(true)
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const supabase = createClient()
 
+  useEffect(() => {
+    if (!user) return
+    supabase
+      .from('profiles')
+      .select('role, full_name')
+      .eq('id', user.id)
+      .single()
+      .then(({ data, error }) => {
+        if (error || data?.role !== 'admin') {
+          router.replace('/dashboard')
+          return
+        }
+        setProfile(data)
+        setLoadingProfile(false)
+      })
+  }, [user])
 
-  console.log(user)
-  if (!user) {
-    redirect('/auth/signin')
-  }
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role, full_name')
-    .eq('id', user.id)
-    .single()
-
-  if (profile?.role !== 'admin') {
-    redirect('/dashboard')
+  if (!user || loadingProfile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin h-8 w-8 border-4 border-indigo-600 border-t-transparent rounded-full" />
+      </div>
+    )
   }
 
   const navItems = [

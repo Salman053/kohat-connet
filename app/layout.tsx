@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 import { keywords } from "@/lib/keywords";
 import LayoutShell from "@/components/shared/layout-shell";
+import { AuthProvider } from "@/components/auth/auth-context";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
@@ -64,9 +65,11 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col ">
         <SpeedInsights />
         <Analytics />
-        <LayoutShell>
-          {children}
-        </LayoutShell>
+        <AuthProvider>
+          <LayoutShell>
+            {children}
+          </LayoutShell>
+        </AuthProvider>
       </body>
     </html>
   );

@@ -1,12 +1,12 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { signIn } from '@/lib/auth'
 import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowRight, Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
+import { useAuth } from '@/components/auth/auth-context'
 
 function SignInForm() {
   const searchParams = useSearchParams()
@@ -16,12 +16,11 @@ function SignInForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-
+  const { signIn } = useAuth()
 
   const routeTo = (role: string) => {
     if (role === "admin") {
       window.location.href = "/admin";
-
     }
     else if (role == "business") window.location.href = "/dashboard"
   }

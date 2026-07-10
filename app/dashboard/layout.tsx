@@ -1,4 +1,5 @@
-import { redirect } from 'next/navigation'
+'use client'
+
 import Link from 'next/link'
 import { 
   LayoutDashboard, 
@@ -8,27 +9,46 @@ import {
   LogOut,
   Plus,
 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import Logo from '@/components/shared/logo'
-import { createClient } from '@/lib/supabase/server'
+import { useAuth } from '@/components/auth/auth-context'
+import { createClient } from '@/lib/supabase/client'
 
-export default async function DashboardLayout({
+type Profile = {
+  role: string
+  full_name: string | null
+  business_name: string | null
+}
+
+export default function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const supabase = await createClient()
+  const { user } = useAuth()
+  const [profile, setProfile] = useState<Profile | null>(null)
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const supabase = createClient()
+
+  useEffect(() => {
+    if (!user) return
+    supabase
+      .from('profiles')
+      .select('role, full_name, business_name')
+      .eq('id', user.id)
+      .single()
+      .then(({ data }) => {
+        if (data) setProfile(data)
+      })
+  }, [user])
 
   if (!user) {
-    redirect('/auth/signin')
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin h-8 w-8 border-4 border-indigo-600 border-t-transparent rounded-full" />
+      </div>
+    )
   }
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role, full_name, business_name')
-    .eq('id', user.id)
-    .single()
 
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
