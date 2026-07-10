@@ -43,7 +43,7 @@ function SelectTrigger({
       data-size={size}
       className={cn(
         formControlVariants({ size: size === "sm" ? "sm" : "default" }),
-        "flex w-fit items-center justify-between gap-1.5 whitespace-nowrap select-none data-placeholder:text-muted-foreground hover:bg-input/50 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "flex w-fit items-center capitalize justify-between gap-1.5 whitespace-nowrap select-none data-placeholder:text-muted-foreground hover:bg-input/50 *:data-[slot=select-value]:line-clamp-1 *:data-[slot=select-value]:flex *:data-[slot=select-value]:items-center *:data-[slot=select-value]:gap-1.5 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

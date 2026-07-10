@@ -203,12 +203,10 @@ export default function AdminUsersPage() {
                   <td className="px-6 py-4 whitespace-nowrap capitalize">
                     <Button
                       onClick={() => handleVerificationToggle(user.id, user.is_verified)}
-                      className={`flex items-center space-x-1 ${
-                        user.is_verified ? 'text-green-600' : 'text-gray-400'
-                      }`}
+                      className={`flex items-center space-x-1 text-white`}
                     >
-                      {user.is_verified ? <Check className="h-4 w-4" /> : <X className="h-4 w-4" />}
-                      <span className="text-sm">{user.is_verified ? 'Verified' : 'Unverified'}</span>
+                      {user.is_verified ? <Check className="h-2 w-2" /> : <X className="h-2 w-2" />}
+                      <span className="">{user.is_verified ? 'Verified' : 'Unverified'}</span>
                     </Button>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
@@ -219,7 +217,7 @@ export default function AdminUsersPage() {
                       value={user.role}
                       onValueChange={(v) => handleRoleChange(user.id, v as UserRole)}
                     >
-                      <SelectTrigger className="text-sm border border-gray-300 rounded px-2 py-1 focus:outline-none focus:ring-2 focus:ring-primary">
+                      <SelectTrigger className="">
                         <SelectValue />
                       </SelectTrigger>
                       <SelectContent>
