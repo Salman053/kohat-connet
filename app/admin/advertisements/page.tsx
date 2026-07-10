@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js'
+import { supabase as createSupabaseClient } from '@/lib/supabase'
 import { 
   Search, 
   Filter, 
@@ -16,10 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+const supabase = createSupabaseClient()
 
 type AdStatus = 'pending' | 'active' | 'paused' | 'completed' | 'cancelled'
 type AdType = 'banner' | 'sidebar' | 'featured' | 'sponsored'

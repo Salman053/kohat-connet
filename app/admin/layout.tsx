@@ -35,28 +35,23 @@ export default async function AdminLayout({
         getAll() {
           return cookieStore.getAll()
         },
-        setAll(cookiesToSet) {
-          try {
-            cookiesToSet.forEach(({ name, value, options }) =>
-              cookieStore.set(name, value, options)
-            )
-          } catch {
-          }
+        setAll() {
+          // Proxy handles token refresh; do not set cookies during render
         },
       },
     }
   )
 
-  const { data: { session } } = await supabase.auth.getSession()
+  const { data: { user } } = await supabase.auth.getUser()
 
-  if (!session?.user) {
+  if (!user) {
     redirect('/auth/signin')
   }
 
   const { data: profile } = await supabase
     .from('profiles')
     .select('role, full_name')
-    .eq('id', session.user.id)
+    .eq('id', user.id)
     .single()
 
   if (profile?.role !== 'admin') {
@@ -91,7 +86,7 @@ export default async function AdminLayout({
             </div>
             <div className="flex items-center gap-4">
               <span className="text-sm text-foreground">
-                {profile?.full_name || session.user.email}
+                {profile?.full_name || user.email}
               </span>
               <Link
                 href="/auth/signout"

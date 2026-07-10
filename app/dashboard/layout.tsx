@@ -26,25 +26,23 @@ export default async function DashboardLayout({
         getAll() {
           return cookieStore.getAll()
         },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
+        setAll() {
+          // Proxy handles token refresh; do not set cookies during render
         },
       },
     }
   )
 
-  const { data: { session } } = await supabase.auth.getSession()
+  const { data: { user } } = await supabase.auth.getUser()
 
-  if (!session?.user) {
+  if (!user) {
     redirect('/auth/signin')
   }
 
   const { data: profile } = await supabase
     .from('profiles')
     .select('role, full_name, business_name')
-    .eq('id', session.user.id)
+    .eq('id', user.id)
     .single()
 
   const navItems = [

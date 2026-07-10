@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { createClient } from '@supabase/supabase-js'
+import { supabase as createSupabaseClient } from '@/lib/supabase'
 import { Search, Plus, Edit, Trash2, Calendar, MapPin, Users, Eye, EyeOff } from 'lucide-react'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -11,10 +11,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { FormField, FormActions } from '@/components/shared/form-field'
 
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-)
+const supabase = createSupabaseClient()
 
 interface Event {
   id: string; title: string; description: string; venue: string; city: string

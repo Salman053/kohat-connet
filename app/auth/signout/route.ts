@@ -1,8 +1,8 @@
 import { createServerClient } from '@supabase/ssr'
 import { cookies } from 'next/headers'
-import { NextResponse } from 'next/server'
+import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   const cookieStore = await cookies()
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -12,10 +12,8 @@ export async function GET() {
         getAll() {
           return cookieStore.getAll()
         },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
+        setAll() {
+          // No-op - sign-out only needs to clear cookies
         },
       },
     }
@@ -23,5 +21,6 @@ export async function GET() {
 
   await supabase.auth.signOut()
 
-  return NextResponse.redirect(new URL('/', process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'))
+  const origin = request.nextUrl.origin
+  return NextResponse.redirect(new URL('/', origin))
 }

@@ -88,6 +88,7 @@ function SignInForm() {
                   type={showPassword ? 'text' : 'password'}
                   required
                   placeholder="••••••••"
+                  autoComplete="current-password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="pr-10"

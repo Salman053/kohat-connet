@@ -28,13 +28,11 @@ export default async function DashboardPage() {
     }
   )
 
-  const { data: { session } } = await supabase.auth.getSession()
+  const { data: { user } } = await supabase.auth.getUser()
 
-  if (!session?.user) {
+  if (!user) {
     return null
   }
-
-  const user = session.user
 
   // Fetch user's listings and ads
   const [
