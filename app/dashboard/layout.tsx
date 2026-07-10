@@ -10,6 +10,7 @@ import {
   Plus,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Logo from '@/components/shared/logo'
 import { useAuth } from '@/components/auth/auth-context'
 import { createClient } from '@/lib/supabase/client'
@@ -25,13 +26,26 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user } = useAuth()
+  const { user, loading: loadingAuth } = useAuth()
+  const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
+  const [loadingProfile, setLoadingProfile] = useState(true)
 
   const supabase = createClient()
 
+  // 1. Redirect if authentication load completes and no user is found
+  useEffect(() => {
+    if (!loadingAuth && !user) {
+      console.log('DashboardLayout - No user, redirecting to signin')
+      router.replace('/auth/signin')
+    }
+  }, [user, loadingAuth, router])
+
+  // 2. Fetch profile details
   useEffect(() => {
     if (!user) return
+    
+    setLoadingProfile(true)
     supabase
       .from('profiles')
       .select('role, full_name, business_name')
@@ -39,10 +53,13 @@ export default function DashboardLayout({
       .single()
       .then(({ data }:{data:any}) => {
         if (data) setProfile(data)
+        setLoadingProfile(false)
       })
   }, [user])
 
-  if (!user) {
+  const showSpinner = loadingAuth || (user && loadingProfile) || !user
+
+  if (showSpinner) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin h-8 w-8 border-4 border-indigo-600 border-t-transparent rounded-full" />

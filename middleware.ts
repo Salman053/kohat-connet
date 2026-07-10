@@ -47,40 +47,8 @@ export async function middleware(request: NextRequest) {
 
   console.log('Middleware - Path:', request.nextUrl.pathname, 'User:', user?.id || 'none')
 
-  // Protected routes
-  const protectedPaths = ['/admin', '/dashboard', '/business']
-  const isProtectedPath = protectedPaths.some(path =>
-    request.nextUrl.pathname.startsWith(path)
-  )
-
-  if (!user && isProtectedPath) {
-    console.log('Middleware - Redirecting to signin, no user')
-    const url = request.nextUrl.clone()
-    url.pathname = '/auth/signin'
-    url.searchParams.set('redirect', request.nextUrl.pathname)
-    
-    // Create redirect response
-    const redirectResponse = NextResponse.redirect(url)
-    
-    // Copy the cookies from supabaseResponse to the redirectResponse
-    // so that any updated/deleted cookies are returned to the client
-    supabaseResponse.cookies.getAll().forEach(cookie => {
-      redirectResponse.cookies.set(cookie.name, cookie.value, {
-        path: cookie.path,
-        domain: cookie.domain,
-        maxAge: cookie.maxAge,
-        expires: cookie.expires,
-        secure: cookie.secure,
-        httpOnly: cookie.httpOnly,
-        sameSite: cookie.sameSite
-      })
-    })
-    
-    return redirectResponse
-  }
-
-  // Admin-only routes - skip DB check in middleware, handle in layout
-  // This prevents middleware from blocking due to DB issues
+  // Admin-only routes - skip DB check and auth redirect in middleware, handle in layout
+  // This prevents middleware from blocking due to DB or cookie sync issues
 
   return supabaseResponse
 }

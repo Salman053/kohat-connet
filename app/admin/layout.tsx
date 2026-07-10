@@ -34,7 +34,7 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user } = useAuth()
+  const { user, loading: loadingAuth } = useAuth()
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loadingProfile, setLoadingProfile] = useState(true);
@@ -43,14 +43,22 @@ export default function AdminLayout({
 
   console.log('AdminLayout - Render, user:', user?.id || 'none', 'profile:', profile?.role || 'none')
 
+  // 1. Redirect if authentication load completes and no user is found
   useEffect(() => {
-    console.log('AdminLayout - useEffect triggered, user:', user?.id || 'none')
+    if (!loadingAuth && !user) {
+      console.log('AdminLayout - No user, redirecting to signin')
+      router.replace('/auth/signin')
+    }
+  }, [user, loadingAuth, router])
+
+  // 2. Fetch profile and role details
+  useEffect(() => {
     if (!user) {
-      console.log('AdminLayout - No user, skipping profile fetch')
       return
     }
     
     console.log('AdminLayout - Fetching profile for user:', user.id)
+    setLoadingProfile(true)
     supabase
       .from('profiles')
       .select('role, full_name')
@@ -64,7 +72,6 @@ export default function AdminLayout({
         } else {
           setProfile(data)
           console.log('AdminLayout - Profile set:', data?.role)
-          // Only redirect if we successfully fetched profile and user is not admin
           if (data?.role !== 'admin') {
             console.log('AdminLayout - User is not admin, redirecting to dashboard')
             router.replace('/dashboard')
@@ -74,8 +81,10 @@ export default function AdminLayout({
       })
   }, [user, router])
 
-  if (!user) {
-    console.log('AdminLayout - No user, showing loading')
+  const showSpinner = loadingAuth || (user && loadingProfile) || !user || profile?.role !== 'admin'
+
+  if (showSpinner) {
+    console.log('AdminLayout - Showing loading spinner')
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin h-8 w-8 border-4 border-indigo-600 border-t-transparent rounded-full" />
