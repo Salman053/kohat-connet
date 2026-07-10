@@ -22,10 +22,16 @@ const AuthContext = createContext<AuthContextType>({
   signOut: async () => {},
 })
 
-export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
-  const [session, setSession] = useState<Session | null>(null)
-  const [loading, setLoading] = useState(true)
+export function AuthProvider({ 
+  children, 
+  initialSession = null 
+}: { 
+  children: ReactNode
+  initialSession?: Session | null
+}) {
+  const [user, setUser] = useState<User | null>(initialSession?.user ?? null)
+  const [session, setSession] = useState<Session | null>(initialSession)
+  const [loading, setLoading] = useState(!initialSession)
 
   const supabase = useMemo(() => createClient(), [])
 
@@ -45,22 +51,24 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     )
 
-    // Get initial session
-    supabase.auth.getSession().then(({ data: { session } }: any) => {
-      console.log('AuthContext - Initial session:', session?.user?.id || 'none')
-      if (mounted) {
-        setSession(session)
-        setUser(session?.user ?? null)
-        setLoading(false)
-      }
-    })
+    // Get initial session if we didn't have one from server
+    if (!initialSession) {
+      supabase.auth.getSession().then(({ data: { session } }: any) => {
+        console.log('AuthContext - Initial session:', session?.user?.id || 'none')
+        if (mounted) {
+          setSession(session)
+          setUser(session?.user ?? null)
+          setLoading(false)
+        }
+      })
+    }
 
     return () => {
       console.log('AuthContext - Provider unmounted')
       mounted = false
       subscription.unsubscribe()
     }
-  }, [supabase])
+  }, [supabase, initialSession])
 
   const signUp = async (email: string, password: string) => {
     const { data, error } = await supabase.auth.signUp({ email, password })

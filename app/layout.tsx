@@ -8,6 +8,8 @@ import LayoutShell from "@/components/shared/layout-shell";
 import { AuthProvider } from "@/components/auth/auth-context";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { createClient } from "@/lib/supabase/server";
+
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 const geistSans = Geist({
@@ -52,11 +54,14 @@ export const metadata: Metadata = {
 
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const supabase = await createClient()
+  const { data: { session } } = await supabase.auth.getSession()
+
   return (
     <html
       lang="en"
@@ -65,7 +70,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col ">
         <SpeedInsights />
         <Analytics />
-        <AuthProvider>
+        <AuthProvider initialSession={session}>
           <LayoutShell>
             {children}
           </LayoutShell>

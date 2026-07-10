@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, useState } from 'react'
+import { Suspense, useState, useEffect } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowRight, Eye, EyeOff } from 'lucide-react'
@@ -17,7 +17,22 @@ function SignInForm() {
   const [showPassword, setShowPassword] = useState(false)
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
-  const { signIn } = useAuth()
+  const { signIn, user } = useAuth()
+
+  useEffect(() => {
+    if (user) {
+      const { createClient } = require('@/lib/supabase/client')
+      const supabase = createClient()
+      supabase
+        .from('profiles')
+        .select('role')
+        .eq('id', user.id)
+        .single()
+        .then(({ data }: any) => {
+          routeTo(data?.role || 'user')
+        })
+    }
+  }, [user])
 
   const routeTo = (role: string) => {
     console.log('SignIn - Routing to role:', role)
