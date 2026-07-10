@@ -1,8 +1,8 @@
 'use client'
 
-import { Suspense, useEffect, useState } from 'react'
-import { getCurrentUser, signIn } from '@/lib/auth'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { Suspense, useState } from 'react'
+import { signIn } from '@/lib/auth'
+import { useSearchParams } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowRight, Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -10,7 +10,6 @@ import { Input } from "@/components/ui/input"
 import { Session } from '@/types'
 
 function SignInForm() {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const message = searchParams.get('message')
   const [email, setEmail] = useState('')
@@ -22,10 +21,10 @@ function SignInForm() {
 
   const routeTo = (role:string) =>{
     if(role === "admin"){
-       router.replace("/admin");
+       window.location.href = "/admin";
       
     }
-    else if(role == "business") router.replace("/dashboard")
+    else if(role == "business") window.location.href = "/dashboard"
   }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -33,24 +32,14 @@ function SignInForm() {
     setLoading(true)
 
     try {
-      await signIn(email, password).then((res:Session)=>{
-       routeTo(res.user.user_metadata.role);
-      })
+      const res: Session = await signIn(email, password)
+      routeTo(res.user.user_metadata.role)
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
     } finally {
       setLoading(false)
     }
   }
-
-
-  useEffect(()=>{
-
-    (async ()=>{
-      console.log(await getCurrentUser().then(res=>res))
-    })()
-    
-  })
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-background px-4 py-12">
