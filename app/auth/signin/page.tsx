@@ -79,6 +79,7 @@ function SignInForm() {
                 id="email"
                 name="email"
                 type="email"
+                autoComplete="username"
                 required
                 placeholder="john@example.com"
                 value={email}
