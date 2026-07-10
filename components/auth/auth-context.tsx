@@ -38,25 +38,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let mounted = true
 
-    // Get initial session and refresh if needed
+    // Get initial session
     const initializeAuth = async () => {
       try {
         const { data: { session } } = await supabase.auth.getSession()
-        
-        // Refresh session if it exists to ensure it's valid
-        if (session) {
-          const { data: { session: refreshedSession } } = await supabase.auth.refreshSession()
-          if (mounted) {
-            setSession(refreshedSession)
-            setUser(refreshedSession?.user ?? null)
-            setLoading(false)
-          }
-        } else {
-          if (mounted) {
-            setSession(null)
-            setUser(null)
-            setLoading(false)
-          }
+        if (mounted) {
+          setSession(session)
+          setUser(session?.user ?? null)
+          setLoading(false)
         }
       } catch (error) {
         console.error('Error getting session:', error)

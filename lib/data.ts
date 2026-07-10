@@ -1,10 +1,7 @@
+import { createClient as createBrowserClient } from '@/lib/supabase/client'
+
 function getSupabase() {
-  // eslint-disable-next-line @typescript-eslint/no-require-imports
-  const { createClient } = require('@supabase/supabase-js')
-  return createClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-  )
+  return createBrowserClient()
 }
 
 export async function getFeaturedListings(limit = 6) {
