@@ -37,12 +37,17 @@ export default function AdminLayout({
   const { user } = useAuth()
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
-  const [loadingProfile, setLoadingProfile] = useState(true)
+  const [loadingProfile, setLoadingProfile] = useState(true);
 
   const supabase = createClient()
 
   useEffect(() => {
-    if (!user) return
+    if (!user) {
+      setLoadingProfile(false)
+      return
+    }
+    
+    setLoadingProfile(true)
     supabase
       .from('profiles')
       .select('role, full_name')
@@ -56,7 +61,7 @@ export default function AdminLayout({
         setProfile(data)
         setLoadingProfile(false)
       })
-  }, [user])
+  }, [user, router])
 
   if (!user || loadingProfile) {
     return (
