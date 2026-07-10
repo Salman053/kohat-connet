@@ -6,6 +6,16 @@ export async function middleware(request: NextRequest) {
     request,
   })
 
+  // 1. Skip auth checks for Next.js prefetch requests to avoid
+  // token rotation / cookie synchronization bugs during link prefetching.
+  const isPrefetch = 
+    request.headers.get('x-middleware-prefetch') === '1' ||
+    request.headers.get('purpose') === 'prefetch'
+
+  if (isPrefetch) {
+    return supabaseResponse
+  }
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -17,13 +27,16 @@ export async function middleware(request: NextRequest) {
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) => {
             request.cookies.set(name, value)
-            supabaseResponse.cookies.set(name, value, {
-              ...options,
-              maxAge: 3600,
-              path: '/',
-              secure: process.env.NODE_ENV === 'production',
-              sameSite: 'lax'
-            })
+          })
+          
+          // Re-create response object to propagate updated request cookies downstream
+          // to Server Components and API Routes
+          supabaseResponse = NextResponse.next({
+            request,
+          })
+          
+          cookiesToSet.forEach(({ name, value, options }) => {
+            supabaseResponse.cookies.set(name, value, options)
           })
         },
       },
@@ -45,7 +58,25 @@ export async function middleware(request: NextRequest) {
     const url = request.nextUrl.clone()
     url.pathname = '/auth/signin'
     url.searchParams.set('redirect', request.nextUrl.pathname)
-    return NextResponse.redirect(url)
+    
+    // Create redirect response
+    const redirectResponse = NextResponse.redirect(url)
+    
+    // Copy the cookies from supabaseResponse to the redirectResponse
+    // so that any updated/deleted cookies are returned to the client
+    supabaseResponse.cookies.getAll().forEach(cookie => {
+      redirectResponse.cookies.set(cookie.name, cookie.value, {
+        path: cookie.path,
+        domain: cookie.domain,
+        maxAge: cookie.maxAge,
+        expires: cookie.expires,
+        secure: cookie.secure,
+        httpOnly: cookie.httpOnly,
+        sameSite: cookie.sameSite
+      })
+    })
+    
+    return redirectResponse
   }
 
   // Admin-only routes - skip DB check in middleware, handle in layout
