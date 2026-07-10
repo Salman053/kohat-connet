@@ -37,7 +37,7 @@ export default function DashboardLayout({
       .select('role, full_name, business_name')
       .eq('id', user.id)
       .single()
-      .then(({ data }) => {
+      .then(({ data }:{data:any}) => {
         if (data) setProfile(data)
       })
   }, [user])
