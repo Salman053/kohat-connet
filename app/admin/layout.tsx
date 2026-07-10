@@ -34,7 +34,7 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user, loading: loadingAuth } = useAuth()
+  const { user, loading: loadingAuth, signOut } = useAuth()
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loadingProfile, setLoadingProfile] = useState(true);
@@ -122,13 +122,14 @@ export default function AdminLayout({
               <span className="text-sm text-foreground">
                 {profile?.full_name || user.email}
               </span>
-              <Link
-                href="/auth/signout"
+              <button
+                type="button"
+                onClick={signOut}
                 className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
               >
                 <LogOut className="h-4 w-4" />
                 <span>Sign out</span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>

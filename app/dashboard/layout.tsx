@@ -26,7 +26,7 @@ export default function DashboardLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { user, loading: loadingAuth } = useAuth()
+  const { user, loading: loadingAuth, signOut } = useAuth()
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loadingProfile, setLoadingProfile] = useState(true)
@@ -94,13 +94,14 @@ export default function DashboardLayout({
               >
                 View Site
               </Link>
-              <Link
-                href="/auth/signout"
+              <button
+                type="button"
+                onClick={signOut}
                 className="flex items-center space-x-1 text-sm "
               >
                 <LogOut className="h-4 w-4" />
                 <span>Sign out</span>
-              </Link>
+              </button>
             </div>
           </div>
         </div>
