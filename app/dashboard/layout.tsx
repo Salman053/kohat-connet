@@ -8,8 +8,7 @@ import {
   Megaphone, 
   Settings,
   LogOut,
-  Plus,
-  User
+  Plus
 } from 'lucide-react'
 import Logo from '@/components/shared/logo'
 
@@ -36,16 +35,16 @@ export default async function DashboardLayout({
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
 
-  if (!user) {
+  if (!session?.user) {
     redirect('/auth/signin')
   }
 
   const { data: profile } = await supabase
     .from('profiles')
     .select('role, full_name, business_name')
-    .eq('id', user.id)
+    .eq('id', session.user.id)
     .single()
 
   const navItems = [

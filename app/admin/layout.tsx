@@ -20,7 +20,6 @@ import {
 } from 'lucide-react'
 import Logo from '@/components/shared/logo'
 import { Card } from '@/components/ui/card'
-import { signOut } from '@/lib/auth'
 
 export default async function AdminLayout({
   children,
@@ -48,16 +47,16 @@ export default async function AdminLayout({
     }
   )
 
-  const { data: { user } } = await supabase.auth.getUser()
+  const { data: { session } } = await supabase.auth.getSession()
 
-  if (!user) {
+  if (!session?.user) {
     redirect('/auth/signin')
   }
 
   const { data: profile } = await supabase
     .from('profiles')
     .select('role, full_name')
-    .eq('id', user.id)
+    .eq('id', session.user.id)
     .single()
 
   if (profile?.role !== 'admin') {
@@ -92,7 +91,7 @@ export default async function AdminLayout({
             </div>
             <div className="flex items-center gap-4">
               <span className="text-sm text-foreground">
-                {profile?.full_name || user.email}
+                {profile?.full_name || session.user.email}
               </span>
               <Link
                 href="/auth/signout"

@@ -4,10 +4,9 @@ import { Suspense, useState } from 'react'
 import { signIn } from '@/lib/auth'
 import { useRouter, useSearchParams } from 'next/navigation'
 import Link from 'next/link'
-import { LogIn, ArrowRight, Eye, EyeOff } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
-import Logo from '@/components/shared/logo'
 
 function SignInForm() {
   const router = useRouter()
