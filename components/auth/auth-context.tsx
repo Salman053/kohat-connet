@@ -1,7 +1,7 @@
 'use client'
 
 import { createClient } from '@/lib/supabase/client'
-import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
+import { createContext, useContext, useEffect, useState, useMemo, type ReactNode } from 'react'
 import type { User, Session } from '@supabase/supabase-js'
 
 type AuthContextType = {
@@ -27,37 +27,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const supabase = createClient()
+  const supabase = useMemo(() => createClient(), [])
 
   useEffect(() => {
     console.log('AuthContext - Provider mounted')
     let mounted = true
 
-    // Get initial session
-    const initializeAuth = async () => {
-      try {
-        const { data: { session } } = await supabase.auth.getSession()
-        console.log('AuthContext - Initial session:', session?.user?.id || 'none')
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange(
+      (event: any, session: any) => {
+        console.log('AuthContext - Auth state change:', event, 'User:', session?.user?.id || 'none')
         if (mounted) {
           setSession(session)
           setUser(session?.user ?? null)
           setLoading(false)
         }
-      } catch (error) {
-        console.error('Error getting session:', error)
-        if (mounted) {
-          setSession(null)
-          setUser(null)
-          setLoading(false)
-        }
       }
-    }
+    )
 
-    initializeAuth()
-
-    // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any, session: any) => {
-      console.log('AuthContext - Auth state change:', event, 'User:', session?.user?.id || 'none')
+    // Get initial session
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      console.log('AuthContext - Initial session:', session?.user?.id || 'none')
       if (mounted) {
         setSession(session)
         setUser(session?.user ?? null)
