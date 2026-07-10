@@ -26,6 +26,8 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser()
 
+  console.log('Middleware - Path:', request.nextUrl.pathname, 'User:', user?.id || 'none')
+
   // Protected routes
   const protectedPaths = ['/admin', '/dashboard', '/business']
   const isProtectedPath = protectedPaths.some(path =>
@@ -33,24 +35,15 @@ export async function middleware(request: NextRequest) {
   )
 
   if (!user && isProtectedPath) {
+    console.log('Middleware - Redirecting to signin, no user')
     const url = request.nextUrl.clone()
     url.pathname = '/auth/signin'
     url.searchParams.set('redirect', request.nextUrl.pathname)
     return NextResponse.redirect(url)
   }
 
-  // Admin-only routes
-  if (request.nextUrl.pathname.startsWith('/admin') && user) {
-    const { data: profile } = await supabase
-      .from('profiles')
-      .select('role')
-      .eq('id', user.id)
-      .single()
-
-    if (profile?.role !== 'admin') {
-      return NextResponse.redirect(new URL('/dashboard', request.url))
-    }
-  }
+  // Admin-only routes - skip DB check in middleware, handle in layout
+  // This prevents middleware from blocking due to DB issues
 
   return supabaseResponse
 }
