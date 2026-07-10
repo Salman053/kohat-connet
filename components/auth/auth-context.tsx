@@ -1,7 +1,7 @@
 'use client'
 
-import { createBrowserClient } from '@supabase/ssr'
-import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
+import { createClient } from '@/lib/supabase/client'
+import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
 import type { User, Session } from '@supabase/supabase-js'
 
 type AuthContextType = {
@@ -27,13 +27,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [session, setSession] = useState<Session | null>(null)
   const [loading, setLoading] = useState(true)
 
-  const supabase = useMemo(
-    () => createBrowserClient(
-      process.env.NEXT_PUBLIC_SUPABASE_URL!,
-      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-    ),
-    []
-  )
+  const supabase = createClient()
 
   useEffect(() => {
     console.log('AuthContext - Provider mounted')
@@ -62,7 +56,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     initializeAuth()
 
     // Listen for auth state changes
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event: any, session: any) => {
       console.log('AuthContext - Auth state change:', event, 'User:', session?.user?.id || 'none')
       if (mounted) {
         setSession(session)

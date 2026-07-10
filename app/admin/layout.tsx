@@ -56,7 +56,7 @@ export default function AdminLayout({
       .select('role, full_name')
       .eq('id', user.id)
       .single()
-      .then(({ data, error }) => {
+      .then(({ data, error }: any) => {
         console.log('AdminLayout - Profile fetch result:', { error, data })
         if (error) {
           console.error('AdminLayout - Error fetching profile:', error)
