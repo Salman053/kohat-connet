@@ -30,9 +30,7 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  const { data } = await supabase.auth.getClaims()
-
-  const user = data?.claims
+  const { data: { user } } = await supabase.auth.getUser()
 
   // Protected routes
   const protectedPaths = ['/admin', '/dashboard', '/business']
@@ -52,7 +50,7 @@ export async function updateSession(request: NextRequest) {
     const { data: profile } = await supabase
       .from('profiles')
       .select('role')
-      .eq('id', user.sub)
+      .eq('id', user.id)
       .single()
 
     if (profile?.role !== 'admin') {

@@ -31,7 +31,18 @@ function SignInForm() {
 
     try {
       const res = await signIn(email, password)
-      routeTo(res?.user?.user_metadata?.role || "/")
+      if (res?.user) {
+        // Fetch user profile to get role
+        const { createClient } = await import('@/lib/supabase/client')
+        const supabase = createClient()
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', res.user.id)
+          .single()
+        
+        routeTo(profile?.role || 'user')
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
     } finally {

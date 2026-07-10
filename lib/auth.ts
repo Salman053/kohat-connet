@@ -25,6 +25,24 @@ export async function signUp(email: string, password: string, fullName: string, 
   })
 
   if (error) throw error
+
+  // Create profile in profiles table
+  if (data.user) {
+    const { error: profileError } = await sb()
+      .from('profiles')
+      .insert({
+        id: data.user.id,
+        email: email,
+        full_name: fullName,
+        role: role
+      })
+
+    if (profileError) {
+      console.error('Error creating profile:', profileError)
+      // Don't throw error here as the auth user was created successfully
+    }
+  }
+
   return data
 }
 
@@ -66,7 +84,7 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
 
 export async function resetPassword(email: string) {
   const { error } = await sb().auth.resetPasswordForEmail(email, {
-    redirectTo: `${window.location.origin}/auth/reset-password`
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/reset-password`
   })
 
   if (error) throw error
