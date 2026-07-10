@@ -24,9 +24,6 @@ export async function updateSession(request: NextRequest) {
     }
   )
 
-  // Refresh session if it exists
-  await supabase.auth.getSession()
-
   const { data: { user } } = await supabase.auth.getUser()
 
   // Protected routes

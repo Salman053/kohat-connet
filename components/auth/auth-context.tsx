@@ -36,19 +36,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-      setLoading(false)
+    let mounted = true
+
+    // Get initial session and refresh if needed
+    const initializeAuth = async () => {
+      try {
+        const { data: { session } } = await supabase.auth.getSession()
+        
+        // Refresh session if it exists to ensure it's valid
+        if (session) {
+          const { data: { session: refreshedSession } } = await supabase.auth.refreshSession()
+          if (mounted) {
+            setSession(refreshedSession)
+            setUser(refreshedSession?.user ?? null)
+            setLoading(false)
+          }
+        } else {
+          if (mounted) {
+            setSession(null)
+            setUser(null)
+            setLoading(false)
+          }
+        }
+      } catch (error) {
+        console.error('Error getting session:', error)
+        if (mounted) {
+          setSession(null)
+          setUser(null)
+          setLoading(false)
+        }
+      }
+    }
+
+    initializeAuth()
+
+    // Listen for auth state changes
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
+      if (mounted) {
+        setSession(session)
+        setUser(session?.user ?? null)
+        setLoading(false)
+      }
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session)
-      setUser(session?.user ?? null)
-      setLoading(false)
-    })
-
-    return () => subscription.unsubscribe()
+    return () => {
+      mounted = false
+      subscription.unsubscribe()
+    }
   }, [supabase])
 
   const signUp = async (email: string, password: string) => {

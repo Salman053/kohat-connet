@@ -42,28 +42,29 @@ export default function AdminLayout({
   const supabase = createClient()
 
   useEffect(() => {
-    if (!user) {
-      setLoadingProfile(false)
-      return
-    }
+    if (!user) return
     
-    setLoadingProfile(true)
     supabase
       .from('profiles')
       .select('role, full_name')
       .eq('id', user.id)
       .single()
       .then(({ data, error }) => {
-        if (error || data?.role !== 'admin') {
-          router.replace('/dashboard')
-          return
+        if (error) {
+          console.error('Error fetching profile:', error)
+          setProfile(null)
+        } else {
+          setProfile(data)
+          // Only redirect if we successfully fetched profile and user is not admin
+          if (data?.role !== 'admin') {
+            router.replace('/dashboard')
+          }
         }
-        setProfile(data)
         setLoadingProfile(false)
       })
   }, [user, router])
 
-  if (!user || loadingProfile) {
+  if (!user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin h-8 w-8 border-4 border-indigo-600 border-t-transparent rounded-full" />
