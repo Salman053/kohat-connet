@@ -47,12 +47,17 @@ export async function signUp(email: string, password: string, fullName: string, 
 }
 
 export async function signIn(email: string, password: string) {
+  console.log('lib/auth - signIn called for:', email)
   const { data, error } = await sb().auth.signInWithPassword({
     email,
     password
   })
 
-  if (error) throw error
+  if (error) {
+    console.error('lib/auth - signIn error:', error)
+    throw error
+  }
+  console.log('lib/auth - signIn success, user:', data.user?.id || 'none')
   return data
 }
 

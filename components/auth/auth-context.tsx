@@ -36,6 +36,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   )
 
   useEffect(() => {
+    console.log('AuthContext - Provider mounted')
     let mounted = true
 
     // Get initial session
@@ -71,6 +72,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     })
 
     return () => {
+      console.log('AuthContext - Provider unmounted')
       mounted = false
       subscription.unsubscribe()
     }

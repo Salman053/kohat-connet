@@ -41,22 +41,32 @@ export default function AdminLayout({
 
   const supabase = createClient()
 
+  console.log('AdminLayout - Render, user:', user?.id || 'none', 'profile:', profile?.role || 'none')
+
   useEffect(() => {
-    if (!user) return
+    console.log('AdminLayout - useEffect triggered, user:', user?.id || 'none')
+    if (!user) {
+      console.log('AdminLayout - No user, skipping profile fetch')
+      return
+    }
     
+    console.log('AdminLayout - Fetching profile for user:', user.id)
     supabase
       .from('profiles')
       .select('role, full_name')
       .eq('id', user.id)
       .single()
       .then(({ data, error }) => {
+        console.log('AdminLayout - Profile fetch result:', { error, data })
         if (error) {
-          console.error('Error fetching profile:', error)
+          console.error('AdminLayout - Error fetching profile:', error)
           setProfile(null)
         } else {
           setProfile(data)
+          console.log('AdminLayout - Profile set:', data?.role)
           // Only redirect if we successfully fetched profile and user is not admin
           if (data?.role !== 'admin') {
+            console.log('AdminLayout - User is not admin, redirecting to dashboard')
             router.replace('/dashboard')
           }
         }
@@ -65,6 +75,7 @@ export default function AdminLayout({
   }, [user, router])
 
   if (!user) {
+    console.log('AdminLayout - No user, showing loading')
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="animate-spin h-8 w-8 border-4 border-indigo-600 border-t-transparent rounded-full" />

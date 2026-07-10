@@ -1,7 +1,7 @@
 'use client'
 
 import { Suspense, useState } from 'react'
-import { useSearchParams } from 'next/navigation'
+import { useSearchParams, useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { ArrowRight, Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -10,6 +10,7 @@ import { useAuth } from '@/components/auth/auth-context'
 
 function SignInForm() {
   const searchParams = useSearchParams()
+  const router = useRouter()
   const message = searchParams.get('message')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -19,18 +20,22 @@ function SignInForm() {
   const { signIn } = useAuth()
 
   const routeTo = (role: string) => {
+    console.log('SignIn - Routing to role:', role)
     if (role === "admin") {
-      window.location.href = "/admin";
+      router.push("/admin")
     }
-    else if (role == "business") window.location.href = "/dashboard"
+    else if (role == "business") router.push("/dashboard")
+    else router.push("/")
   }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
+    console.log('SignIn - Submitting login for:', email)
 
     try {
       const res = await signIn(email, password)
+      console.log('SignIn - Sign in result:', res?.user?.id || 'none')
       if (res?.user) {
         // Fetch user profile to get role
         const { createClient } = await import('@/lib/supabase/client')
@@ -41,9 +46,11 @@ function SignInForm() {
           .eq('id', res.user.id)
           .single()
         
+        console.log('SignIn - Profile role:', profile?.role || 'none')
         routeTo(profile?.role || 'user')
       }
     } catch (err: any) {
+      console.error('SignIn - Error:', err)
       setError(err.message || 'Failed to sign in')
     } finally {
       setLoading(false)
