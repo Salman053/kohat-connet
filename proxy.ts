@@ -4,9 +4,8 @@ import { NextResponse, type NextRequest } from 'next/server'
 export async function proxy(request: NextRequest) {
   const isPrefetch = request.headers.get('purpose') === 'prefetch' || request.headers.get('next-router-prefetch') === '1'
 
-  let supabaseResponse = NextResponse.next({
-    request,
-  })
+  // Collect cookie updates from token refresh; apply to final response once
+  const pendingCookies: { name: string; value: string; options?: any }[] = []
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -16,16 +15,11 @@ export async function proxy(request: NextRequest) {
         getAll() {
           return request.cookies.getAll()
         },
-        setAll(cookiesToSet: { name: string; value: string; options?: any }[]) {
+        setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) =>
             request.cookies.set(name, value)
           )
-          supabaseResponse = NextResponse.next({
-            request,
-          })
-          cookiesToSet.forEach(({ name, value, options }) =>
-            supabaseResponse.cookies.set(name, value, options)
-          )
+          pendingCookies.push(...cookiesToSet)
         },
       },
     }
@@ -36,6 +30,7 @@ export async function proxy(request: NextRequest) {
   } = await supabase.auth.getUser()
 
   let userRole = ''
+  const requestHeaders = new Headers(request.headers)
 
   if (user) {
     const { data: profile } = await supabase
@@ -46,18 +41,11 @@ export async function proxy(request: NextRequest) {
 
     userRole = profile?.role ?? 'user'
 
-    const requestHeaders = new Headers(request.headers)
     requestHeaders.set('x-user-id', user.id)
     requestHeaders.set('x-user-email', user.email ?? '')
     requestHeaders.set('x-user-role', userRole)
     if (profile?.full_name) requestHeaders.set('x-user-name', profile.full_name)
     if (profile?.business_name) requestHeaders.set('x-user-business-name', profile.business_name)
-
-    supabaseResponse = NextResponse.next({
-      request: {
-        headers: requestHeaders,
-      },
-    })
   }
 
   // Skip redirect checks during prefetch — session refresh still happens
@@ -80,7 +68,19 @@ export async function proxy(request: NextRequest) {
     }
   }
 
-  return supabaseResponse
+  // Build final response with modified request headers (visible to server components via headers())
+  const response = NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  })
+
+  // Apply cookie updates from token refresh to the final response
+  for (const { name, value, options } of pendingCookies) {
+    response.cookies.set(name, value, options)
+  }
+
+  return response
 }
 
 export const config = {
