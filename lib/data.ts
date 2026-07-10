@@ -1,7 +1,7 @@
-import { createClient as createBrowserClient } from '@/lib/supabase/client'
+import { createClient } from '@/lib/supabase/client'
 
 function getSupabase() {
-  return createBrowserClient()
+  return createClient()
 }
 
 export async function getFeaturedListings(limit = 6) {
