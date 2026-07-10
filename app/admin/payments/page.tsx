@@ -65,7 +65,7 @@ export default function AdminPaymentsPage() {
       .from('payments')
       .select(`
         *,
-        user:profiles(full_name, business_name, email),
+        user:profiles!payments_user_id_fkey(full_name, business_name, email),
         advertisement:advertisements(title, ad_type)
       `)
       .order('created_at', { ascending: false })
