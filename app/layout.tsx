@@ -5,7 +5,8 @@ import { cn } from "@/lib/utils";
 import { site } from "@/lib/site";
 import { keywords } from "@/lib/keywords";
 import LayoutShell from "@/components/shared/layout-shell";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 const geistSans = Geist({
@@ -62,6 +63,7 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col ">
         <LayoutShell>
+          <SpeedInsights />
           <Analytics />
 
           {children}</LayoutShell>
