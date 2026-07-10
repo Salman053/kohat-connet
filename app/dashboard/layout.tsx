@@ -1,5 +1,3 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import { 
@@ -8,42 +6,21 @@ import {
   Megaphone, 
   Settings,
   LogOut,
-  Plus
+  Plus,
 } from 'lucide-react'
 import Logo from '@/components/shared/logo'
+import { getAuthUser } from '@/lib/auth-server'
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll() {
-          // Proxy handles token refresh; do not set cookies during render
-        },
-      },
-    }
-  )
-
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
   if (!user) {
     redirect('/auth/signin')
   }
-
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role, full_name, business_name')
-    .eq('id', user.id)
-    .single()
 
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -56,14 +33,13 @@ export default async function DashboardLayout({
 
   return (
     <div className="min-h-screen bg-gray-50">
-      {/* Header */}
       <header className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center">
               <Logo variant="minimal" />
               <span className="ml-4 text-sm text-gray-500">
-                {profile?.business_name || profile?.full_name || 'Dashboard'}
+                {user.business_name || user.full_name || 'Dashboard'}
               </span>
             </div>
             <div className="flex items-center space-x-4">
@@ -86,7 +62,6 @@ export default async function DashboardLayout({
       </header>
 
       <div className="flex">
-        {/* Sidebar */}
         <aside className="w-64 bg-white border-r border-gray-200 min-h-screen">
           <nav className="p-4 space-y-1">
             {navItems.map((item) => {
@@ -105,7 +80,6 @@ export default async function DashboardLayout({
           </nav>
         </aside>
 
-        {/* Main content */}
         <main className="flex-1 p-8">
           {children}
         </main>

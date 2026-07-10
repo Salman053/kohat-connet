@@ -35,6 +35,31 @@ export async function proxy(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
+  let userRole = ''
+
+  if (user) {
+    const { data: profile } = await supabase
+      .from('profiles')
+      .select('role, full_name, business_name')
+      .eq('id', user.id)
+      .single()
+
+    userRole = profile?.role ?? 'user'
+
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set('x-user-id', user.id)
+    requestHeaders.set('x-user-email', user.email ?? '')
+    requestHeaders.set('x-user-role', userRole)
+    if (profile?.full_name) requestHeaders.set('x-user-name', profile.full_name)
+    if (profile?.business_name) requestHeaders.set('x-user-business-name', profile.business_name)
+
+    supabaseResponse = NextResponse.next({
+      request: {
+        headers: requestHeaders,
+      },
+    })
+  }
+
   // Skip redirect checks during prefetch — session refresh still happens
   if (!isPrefetch) {
     // Protected routes - require authentication
@@ -50,16 +75,8 @@ export async function proxy(request: NextRequest) {
     }
 
     // Admin-only routes
-    if (request.nextUrl.pathname.startsWith('/admin') && user) {
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single()
-
-      if (profile?.role !== 'admin') {
-        return NextResponse.redirect(new URL('/dashboard', request.url))
-      }
+    if (request.nextUrl.pathname.startsWith('/admin') && user && userRole !== 'admin') {
+      return NextResponse.redirect(new URL('/dashboard', request.url))
     }
   }
 

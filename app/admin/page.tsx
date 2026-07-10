@@ -1,31 +1,17 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import Link from 'next/link'
 import {
   Users,
   Building2,
   Megaphone,
   Eye,
-  Clock
+  Clock,
 } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
+import { supabaseAdmin } from '@/lib/supabase'
 
 export default async function AdminDashboard() {
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll() {
-        },
-      },
-    }
-  )
+  const supabase = supabaseAdmin()
 
   const [
     { count: totalUsers },
@@ -33,14 +19,14 @@ export default async function AdminDashboard() {
     { count: totalAds },
     { count: pendingListings },
     { count: pendingAds },
-    { data: recentListings }
+    { data: recentListings },
   ] = await Promise.all([
     supabase.from('profiles').select('*', { count: 'exact', head: true }),
     supabase.from('listings').select('*', { count: 'exact', head: true }),
     supabase.from('advertisements').select('*', { count: 'exact', head: true }),
     supabase.from('listings').select('*', { count: 'exact', head: true }).eq('status', 'pending'),
     supabase.from('advertisements').select('*', { count: 'exact', head: true }).eq('ad_status', 'pending'),
-    supabase.from('listings').select('*').order('created_at', { ascending: false }).limit(5)
+    supabase.from('listings').select('*').order('created_at', { ascending: false }).limit(5),
   ])
 
   const stats = [
@@ -51,7 +37,7 @@ export default async function AdminDashboard() {
       name: 'Pending Reviews',
       value: (pendingListings || 0) + (pendingAds || 0),
       icon: Clock,
-      color: 'bg-amber-500'
+      color: 'bg-amber-500',
     },
   ]
 

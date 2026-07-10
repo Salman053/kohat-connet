@@ -1,5 +1,4 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import Link from 'next/link'
 import { 
   Building2, 
   Megaphone, 
@@ -7,48 +6,34 @@ import {
   Star,
   TrendingUp,
   Calendar,
-  Plus
+  Plus,
 } from 'lucide-react'
-import Link from 'next/link'
+import { getAuthUser } from '@/lib/auth-server'
+import { supabaseAdmin } from '@/lib/supabase'
 
 export default async function DashboardPage() {
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll() {
-          // Ignore for read operations
-        },
-      },
-    }
-  )
-
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
   if (!user) {
     return null
   }
 
-  // Fetch user's listings and ads
+  const supabase = supabaseAdmin()
+
   const [
     { count: totalListings },
     { count: activeListings },
     { count: totalAds },
     { count: activeAds },
     { data: recentListings },
-    { data: recentAds }
+    { data: recentAds },
   ] = await Promise.all([
     supabase.from('listings').select('*', { count: 'exact', head: true }).eq('user_id', user.id),
     supabase.from('listings').select('*', { count: 'exact', head: true }).eq('user_id', user.id).eq('status', 'approved'),
     supabase.from('advertisements').select('*', { count: 'exact', head: true }).eq('user_id', user.id),
     supabase.from('advertisements').select('*', { count: 'exact', head: true }).eq('user_id', user.id).eq('ad_status', 'active'),
     supabase.from('listings').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5),
-    supabase.from('advertisements').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5)
+    supabase.from('advertisements').select('*').eq('user_id', user.id).order('created_at', { ascending: false }).limit(5),
   ])
 
   const stats = [
@@ -57,28 +42,28 @@ export default async function DashboardPage() {
       value: totalListings || 0,
       icon: Building2,
       color: 'bg-blue-500',
-      href: '/dashboard/listings'
+      href: '/dashboard/listings',
     },
     {
       name: 'Active Listings',
       value: activeListings || 0,
       icon: Building2,
       color: 'bg-green-500',
-      href: '/dashboard/listings'
+      href: '/dashboard/listings',
     },
     {
       name: 'Total Ads',
       value: totalAds || 0,
       icon: Megaphone,
       color: 'bg-purple-500',
-      href: '/dashboard/advertisements'
+      href: '/dashboard/advertisements',
     },
     {
       name: 'Active Ads',
       value: activeAds || 0,
       icon: Megaphone,
       color: 'bg-yellow-500',
-      href: '/dashboard/advertisements'
+      href: '/dashboard/advertisements',
     },
   ]
 
@@ -104,7 +89,6 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {stats.map((stat) => {
           const Icon = stat.icon
@@ -127,7 +111,6 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Listings */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 className="text-lg font-semibold text-gray-900">Recent Listings</h2>
@@ -163,7 +146,6 @@ export default async function DashboardPage() {
           </div>
         </div>
 
-        {/* Recent Ads */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200 flex justify-between items-center">
             <h2 className="text-lg font-semibold text-gray-900">Recent Ads</h2>
@@ -200,7 +182,6 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      {/* Quick Actions */}
       <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
         <Link
           href="/dashboard/listings/new"

@@ -7,6 +7,7 @@ import Link from 'next/link'
 import { ArrowRight, Eye, EyeOff } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from "@/components/ui/input"
+import { Session } from '@/types'
 
 function SignInForm() {
   const router = useRouter()
@@ -18,15 +19,23 @@ function SignInForm() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
 
+
+  const routeTo = (role:string) =>{
+    if(role === "admin"){
+       router.replace("/admin");
+      
+    }
+    else if(role == "business") router.replace("/dashboard")
+  }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
     setLoading(true)
 
     try {
-      await signIn(email, password)
-      const redirect = searchParams.get('redirect') || '/'
-      router.push(redirect)
+      await signIn(email, password).then((res:Session)=>{
+       routeTo(res.user.user_metadata.role);
+      })
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
     } finally {

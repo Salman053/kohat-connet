@@ -1,5 +1,3 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import Link from 'next/link'
 import {
@@ -16,45 +14,24 @@ import {
   Compass,
   Calendar,
   Heart,
-  Flag
+  Flag,
 } from 'lucide-react'
 import Logo from '@/components/shared/logo'
 import { Card } from '@/components/ui/card'
+import { getAuthUser } from '@/lib/auth-server'
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll() {
-          // Proxy handles token refresh; do not set cookies during render
-        },
-      },
-    }
-  )
-
-  const { data: { user } } = await supabase.auth.getUser()
+  const user = await getAuthUser()
 
   if (!user) {
     redirect('/auth/signin')
   }
 
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('role, full_name')
-    .eq('id', user.id)
-    .single()
-
-  if (profile?.role !== 'admin') {
+  if (user.role !== 'admin') {
     redirect('/dashboard')
   }
 
@@ -86,7 +63,7 @@ export default async function AdminLayout({
             </div>
             <div className="flex items-center gap-4">
               <span className="text-sm text-foreground">
-                {profile?.full_name || user.email}
+                {user.full_name || user.email}
               </span>
               <Link
                 href="/auth/signout"

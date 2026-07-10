@@ -20,7 +20,7 @@ export default function Hero() {
               text="Connecting the Heart of Kohat"
               className="text-2xl md:text-3xl  text-center font-extrabold tracking-tighter text-foreground"
             />
-            <p className="text-muted-foreground text-sm  max-w-3xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-700 fill-mode-both leading-relaxed">
+            <p className="text-muted-foreground text-sm  max-w-3xl mx-auto  slide-in-from-bottom-4 duration-1000 delay-700 fill-mode-both leading-relaxed">
               Find everything from local businesses and essential services to
               hidden historical gems in the soul of KPK.
             </p>
@@ -29,7 +29,7 @@ export default function Hero() {
           {/* Search Box */}
           <SearchBox />
 
-          <div className="flex flex-wrap justify-center gap-6 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-[1200ms] fill-mode-both">
+          <div className="flex flex-wrap justify-center gap-6  slide-in-from-bottom-4 duration-1000 delay-[1200ms] fill-mode-both">
             <Link href="/explore">
               <Button variant="ghost" size="lg" className=" text-base font-bold bg-background/80 backdrop-blur-md border-white/20 ">
                 Explore Categories
@@ -42,7 +42,7 @@ export default function Hero() {
             </Link>
           </div>
 
-          <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-20 animate-in fade-in duration-1000 delay-[1400ms] fill-mode-both">
+          <div className="pt-16 grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-20  duration-1000 delay-[1400ms] fill-mode-both">
             <div className="flex flex-col items-center group cursor-default">
               <span className="text-4xl font-black text-primary group-hover:scale-110 transition-transform">500+</span>
               <span className="text-[10px] text-muted-foreground font-bold uppercase tracking-[0.2em]">Businesses</span>

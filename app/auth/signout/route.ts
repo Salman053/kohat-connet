@@ -4,6 +4,8 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(request: NextRequest) {
   const cookieStore = await cookies()
+  let response = NextResponse.redirect(new URL('/', request.nextUrl.origin))
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -12,8 +14,10 @@ export async function GET(request: NextRequest) {
         getAll() {
           return cookieStore.getAll()
         },
-        setAll() {
-          // No-op - sign-out only needs to clear cookies
+        setAll(cookiesToSet) {
+          cookiesToSet.forEach(({ name, value, options }) => {
+            response.cookies.set(name, value, options)
+          })
         },
       },
     }
@@ -21,6 +25,5 @@ export async function GET(request: NextRequest) {
 
   await supabase.auth.signOut()
 
-  const origin = request.nextUrl.origin
-  return NextResponse.redirect(new URL('/', origin))
+  return response
 }

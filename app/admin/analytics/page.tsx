@@ -1,5 +1,4 @@
-import { createServerClient } from '@supabase/ssr'
-import { cookies } from 'next/headers'
+import { supabaseAdmin } from '@/lib/supabase'
 import { 
   TrendingUp, 
   Users, 
@@ -8,27 +7,12 @@ import {
   DollarSign,
   Eye,
   MousePointer2,
-  Calendar
+  Calendar,
 } from 'lucide-react'
 
 export default async function AdminAnalyticsPage() {
-  const cookieStore = await cookies()
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
-        },
-        setAll() {
-          // Ignore for read operations
-        },
-      },
-    }
-  )
+  const supabase = supabaseAdmin()
 
-  // Fetch analytics data
   const [
     { count: totalUsers },
     { count: totalListings },
@@ -38,7 +22,7 @@ export default async function AdminAnalyticsPage() {
     { data: recentUsers },
     { data: recentListings },
     { data: recentAds },
-    { data: categoryStats }
+    { data: categoryStats },
   ] = await Promise.all([
     supabase.from('profiles').select('*', { count: 'exact', head: true }),
     supabase.from('listings').select('*', { count: 'exact', head: true }),
@@ -52,10 +36,9 @@ export default async function AdminAnalyticsPage() {
       id,
       name,
       listings:listings(count)
-    `)
+    `),
   ])
 
-  // Calculate total views and clicks
   const { data: viewsData } = await supabase
     .from('listings')
     .select('views')
@@ -74,7 +57,7 @@ export default async function AdminAnalyticsPage() {
       icon: Users,
       color: 'bg-blue-500',
       change: '+12%',
-      changeType: 'positive'
+      changeType: 'positive',
     },
     {
       name: 'Total Listings',
@@ -82,7 +65,7 @@ export default async function AdminAnalyticsPage() {
       icon: Building2,
       color: 'bg-green-500',
       change: '+8%',
-      changeType: 'positive'
+      changeType: 'positive',
     },
     {
       name: 'Active Ads',
@@ -90,7 +73,7 @@ export default async function AdminAnalyticsPage() {
       icon: Megaphone,
       color: 'bg-purple-500',
       change: '+15%',
-      changeType: 'positive'
+      changeType: 'positive',
     },
     {
       name: 'Total Views',
@@ -98,7 +81,7 @@ export default async function AdminAnalyticsPage() {
       icon: Eye,
       color: 'bg-yellow-500',
       change: '+23%',
-      changeType: 'positive'
+      changeType: 'positive',
     },
   ]
 
@@ -106,7 +89,6 @@ export default async function AdminAnalyticsPage() {
     <div>
       <h1 className="text-3xl font-bold text-gray-900 mb-8">Analytics Dashboard</h1>
 
-      {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {stats.map((stat) => {
           const Icon = stat.icon
@@ -130,7 +112,6 @@ export default async function AdminAnalyticsPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        {/* Top Performing Listings */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">Top Performing Listings</h2>
@@ -157,7 +138,6 @@ export default async function AdminAnalyticsPage() {
           </div>
         </div>
 
-        {/* Top Performing Ads */}
         <div className="bg-white rounded-lg shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-200">
             <h2 className="text-lg font-semibold text-gray-900">Top Performing Ads</h2>
@@ -185,7 +165,6 @@ export default async function AdminAnalyticsPage() {
         </div>
       </div>
 
-      {/* Category Stats */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 mb-8">
         <div className="px-6 py-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900">Listings by Category</h2>
@@ -205,7 +184,7 @@ export default async function AdminAnalyticsPage() {
                     <div
                       className="bg-indigo-600 h-2 rounded-full"
                       style={{
-                        width: `${totalListings ? ((category.listings?.[0]?.count || 0) / totalListings) * 100 : 0}%`
+                        width: `${totalListings ? ((category.listings?.[0]?.count || 0) / totalListings) * 100 : 0}%`,
                       }}
                     />
                   </div>
@@ -218,7 +197,6 @@ export default async function AdminAnalyticsPage() {
         </div>
       </div>
 
-      {/* Recent Activity */}
       <div className="bg-white rounded-lg shadow-sm border border-gray-200">
         <div className="px-6 py-4 border-b border-gray-200">
           <h2 className="text-lg font-semibold text-gray-900">Recent Users</h2>
