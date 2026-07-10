@@ -8,17 +8,16 @@ import {
   Calendar,
   Plus,
 } from 'lucide-react'
-import { getAuthUser } from '@/lib/auth-server'
-import { supabaseAdmin } from '@/lib/supabase'
+import { createClient } from '@/lib/supabase/server'
 
 export default async function DashboardPage() {
-  const user = await getAuthUser()
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
     return null
   }
-
-  const supabase = supabaseAdmin()
 
   const [
     { count: totalListings },

@@ -19,12 +19,12 @@ function SignInForm() {
   const [loading, setLoading] = useState(false)
 
 
-  const routeTo = (role:string) =>{
-    if(role === "admin"){
-       window.location.href = "/admin";
-      
+  const routeTo = (role: string) => {
+    if (role === "admin") {
+      window.location.href = "/admin";
+
     }
-    else if(role == "business") window.location.href = "/dashboard"
+    else if (role == "business") window.location.href = "/dashboard"
   }
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -32,8 +32,8 @@ function SignInForm() {
     setLoading(true)
 
     try {
-      const res: Session = await signIn(email, password)
-      routeTo(res.user.user_metadata.role)
+      const res = await signIn(email, password)
+      routeTo(res?.user?.user_metadata?.role || "/")
     } catch (err: any) {
       setError(err.message || 'Failed to sign in')
     } finally {

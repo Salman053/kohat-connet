@@ -18,20 +18,28 @@ import {
 } from 'lucide-react'
 import Logo from '@/components/shared/logo'
 import { Card } from '@/components/ui/card'
-import { getAuthUser } from '@/lib/auth-server'
+import { createClient } from '@/lib/supabase/server'
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const user = await getAuthUser()
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
     redirect('/auth/signin')
   }
 
-  if (user.role !== 'admin') {
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role, full_name')
+    .eq('id', user.id)
+    .single()
+
+  if (profile?.role !== 'admin') {
     redirect('/dashboard')
   }
 
@@ -63,7 +71,7 @@ export default async function AdminLayout({
             </div>
             <div className="flex items-center gap-4">
               <span className="text-sm text-foreground">
-                {user.full_name || user.email}
+                {profile?.full_name || user.email}
               </span>
               <Link
                 href="/auth/signout"

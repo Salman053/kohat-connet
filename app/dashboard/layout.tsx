@@ -9,18 +9,26 @@ import {
   Plus,
 } from 'lucide-react'
 import Logo from '@/components/shared/logo'
-import { getAuthUser } from '@/lib/auth-server'
+import { createClient } from '@/lib/supabase/server'
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const user = await getAuthUser()
+  const supabase = await createClient()
+
+  const { data: { user } } = await supabase.auth.getUser()
 
   if (!user) {
     redirect('/auth/signin')
   }
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role, full_name, business_name')
+    .eq('id', user.id)
+    .single()
 
   const navItems = [
     { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -39,7 +47,7 @@ export default async function DashboardLayout({
             <div className="flex items-center">
               <Logo variant="minimal" />
               <span className="ml-4 text-sm text-gray-500">
-                {user.business_name || user.full_name || 'Dashboard'}
+                {profile?.business_name || profile?.full_name || 'Dashboard'}
               </span>
             </div>
             <div className="flex items-center space-x-4">

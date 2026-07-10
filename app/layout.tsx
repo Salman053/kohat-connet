@@ -7,7 +7,6 @@ import { keywords } from "@/lib/keywords";
 import LayoutShell from "@/components/shared/layout-shell";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { AuthProvider } from "@/lib/auth-context";
 const jetbrainsMono = JetBrains_Mono({ subsets: ['latin'], variable: '--font-mono' });
 
 const geistSans = Geist({
@@ -66,9 +65,7 @@ export default function RootLayout({
         <SpeedInsights />
         <Analytics />
         <LayoutShell>
-          <AuthProvider>
-            {children}
-          </AuthProvider>
+          {children}
         </LayoutShell>
       </body>
     </html>
