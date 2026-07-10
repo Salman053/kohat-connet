@@ -87,4 +87,40 @@ describe('updateSession (proxy)', () => {
     expect(response.status).toBe(307)
     expect(response.headers.get('location')).toContain('/dashboard')
   })
+
+  describe('prefetch handling', () => {
+    it('redirects unauthenticated users on prefetch requests', async () => {
+      mockGetUser.mockResolvedValue({ data: { user: null }, error: null })
+
+      const request = createRequest('/admin/payments')
+      const response = await updateSession(request, true)
+
+      expect(response.status).toBe(307)
+      expect(response.headers.get('location')).toContain('/auth/signin')
+    })
+
+    it('allows authenticated users on prefetch requests', async () => {
+      const request = createRequest('/dashboard')
+      const response = await updateSession(request, true)
+
+      expect(response.status).toBe(200)
+    })
+  })
+
+  describe('cache control', () => {
+    it('sets no-cache headers on protected routes', async () => {
+      const request = createRequest('/admin')
+      const response = await updateSession(request)
+
+      expect(response.headers.get('Cache-Control')).toContain('no-cache')
+      expect(response.headers.get('Cache-Control')).toContain('no-store')
+    })
+
+    it('does not set no-cache headers on public routes', async () => {
+      const request = createRequest('/')
+      const response = await updateSession(request)
+
+      expect(response.headers.get('Cache-Control')).toBeNull()
+    })
+  })
 })

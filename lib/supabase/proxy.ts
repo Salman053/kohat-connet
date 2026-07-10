@@ -1,7 +1,10 @@
 import { createServerClient } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
-export async function updateSession(request: NextRequest) {
+export async function updateSession(
+  request: NextRequest,
+  isPrefetch = false
+) {
   let supabaseResponse = NextResponse.next({
     request,
   })
@@ -17,14 +20,26 @@ export async function updateSession(request: NextRequest) {
         setAll(cookiesToSet) {
           cookiesToSet.forEach(({ name, value, options }) => {
             request.cookies.set(name, value)
-            supabaseResponse.cookies.set(name, value, options)
           })
+
+          if (isPrefetch) {
+            // For prefetches, update request cookies for internal consistency
+            // but skip response cookie setting to avoid token rotation race
+            // conditions during speculative navigation
+          } else {
+            supabaseResponse = NextResponse.next({ request })
+            cookiesToSet.forEach(({ name, value, options }) => {
+              supabaseResponse.cookies.set(name, value, options)
+            })
+          }
         },
       },
     }
   )
 
   const { data: { user } } = await supabase.auth.getUser()
+
+  console.log('Middleware - Path:', request.nextUrl.pathname, 'User:', user?.id || 'none')
 
   // Protected routes
   const protectedPaths = ['/admin', '/dashboard', '/business']
@@ -54,6 +69,11 @@ export async function updateSession(request: NextRequest) {
         headers: supabaseResponse.headers
       })
     }
+  }
+
+  // Prevent caching of protected pages so stale prefetches aren't served
+  if (isProtectedPath) {
+    supabaseResponse.headers.set('Cache-Control', 'private, no-cache, no-store, must-revalidate')
   }
 
   return supabaseResponse
