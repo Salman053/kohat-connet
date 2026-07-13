@@ -50,7 +50,7 @@ export interface SystemAuditInterface extends BaseInterface {
 
 
 export interface BusinessProfileInterface extends BaseInterface {
-    user_id: number;
+    user_id: number;  // this may be i change in the future ....
     business_name: string;
     business_email: string;
     business_mobile_number: string;
