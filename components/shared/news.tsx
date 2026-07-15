@@ -4,9 +4,11 @@ import React, { useState } from 'react';
 import { Newspaper, Clock, TrendingUp,  ArrowRight, ExternalLink, Zap } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import type { NewsItem } from "@/types";
+import { NewsItem } from '@/types';
 
-export interface NewsSectionProps {
+
+
+interface NewsSectionProps {
   items: NewsItem[];
   className?: string;
   isLoading?: boolean;
