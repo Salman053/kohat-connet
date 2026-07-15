@@ -31,7 +31,7 @@ export default function EventDetailPage() {
   return (
     <>
       <section className="relative h-[50dvh] min-h-[320px]">
-        <Image src={event.image} alt={event.title} fill className="object-cover" priority />
+        <Image  src={event.image} alt={event.title} fill className="object-cover" priority />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
         <div className="absolute bottom-0 left-0 right-0 p-6 md:p-12">
           <div className="container mx-auto">

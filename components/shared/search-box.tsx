@@ -72,7 +72,7 @@ const SearchBox = () => {
         <motion.div variants={itemVariants} className="md:w-auto">
           <Button
             size="lg"
-            className="w-full md:w-auto  h-fit m-auto px-8 font-semibold text-sm bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
+            className="w-full md:w-auto   m-auto px-8 font-semibold text-sm bg-primary hover:bg-primary/90 shadow-lg shadow-primary/20 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300"
           >
             Search Now
           </Button>
