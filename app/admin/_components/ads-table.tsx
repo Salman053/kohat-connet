@@ -7,6 +7,7 @@ import DataTable from '@/components/dashboard/data-table'
 import type { Column } from '@/components/dashboard/data-table'
 import StatusBadge from '@/components/dashboard/status-badge'
 import { Eye, MousePointer2, Calendar, Check, X, Megaphone } from 'lucide-react'
+import Image from 'next/image'
 
 type Props = { initialAds: any[] }
 
@@ -36,7 +37,7 @@ export default function AdminAdsTable({ initialAds }: Props) {
       render: (item) => (
         <div className="flex items-start gap-3">
           {item.image_url && (
-            <img src={item.image_url} alt={item.title} className="h-12 w-20 object-cover rounded-lg shrink-0" />
+            <Image fill src={item.image_url} alt={item.title} className="h-12 w-20 object-cover rounded-lg shrink-0" />
           )}
           <div>
             <p className="font-medium text-gray-900">{item.title}</p>

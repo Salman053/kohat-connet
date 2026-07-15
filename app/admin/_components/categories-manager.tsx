@@ -1,14 +1,11 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { useToast } from '@/components/dashboard/toast'
 import DataTable from '@/components/dashboard/data-table'
 import type { Column } from '@/components/dashboard/data-table'
 import PageHeader from '@/components/dashboard/page-header'
-import StatusBadge from '@/components/dashboard/status-badge'
-import ActionButtons from '@/components/dashboard/action-buttons'
 import ImageUpload from '@/components/dashboard/image-upload'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"

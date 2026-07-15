@@ -6,7 +6,6 @@ import { useToast } from '@/components/dashboard/toast'
 import DataTable from '@/components/dashboard/data-table'
 import type { Column } from '@/components/dashboard/data-table'
 import StatusBadge from '@/components/dashboard/status-badge'
-import ActionButtons from '@/components/dashboard/action-buttons'
 import { Building2, Eye, Star, Check, X } from 'lucide-react'
 
 type Props = {
