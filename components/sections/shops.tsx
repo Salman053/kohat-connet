@@ -1,13 +1,12 @@
 "use client"
 
 import Image from 'next/image'
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
 import { Store, ArrowRight, Star, TrendingUp, Users, Zap, CheckCircle2, Sparkles, Building2, Eye, MessageSquare, Award, Activity } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs'
-import { fallbackShops, getShops } from '@/lib/data-fallback'
 import type { ShopItem } from '@/lib/data-fallback'
 
 const categories = ["All", "Electronics", "Clothing", "Home", "Groceries", "Sports", "Beauty"];

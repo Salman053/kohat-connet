@@ -50,7 +50,7 @@ export interface SystemAuditInterface extends BaseInterface {
 
 
 export interface BusinessProfileInterface extends BaseInterface {
-    user_id: number;  // this may be i change in the future ....
+    user_id: number;
     business_name: string;
     business_email: string;
     business_mobile_number: string;
@@ -103,6 +103,7 @@ export interface ListingInterface extends BaseInterface {
     views_count: number;
     featured: boolean;
     expires_at?: Date;
+    views?:number;
 }
 
 export enum EventStatus {
@@ -404,6 +405,8 @@ export interface AdvertisementInterface extends BaseInterface {
     tags: string[];
     target_city?: string;
     target_state?: string;
+    image_url: string;
+    ad_type: string;
 }
 
 export interface PageInterface extends BaseInterface {
@@ -489,44 +492,59 @@ export interface MediaInterface extends BaseInterface {
 
 
 export interface UserMetadata {
-  full_name: string;
-  role: string;
+    full_name: string;
+    role: string;
 }
 
 export interface AppMetadata {
-  provider: string;
-  providers: string[];
+    provider: string;
+    providers: string[];
 }
 
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface Identity {
-  // Add properties based on your identity structure if needed
-  // Currently empty array, so optional
+    // Add properties based on your identity structure if needed
+    // Currently empty array, so optional
 }
 
 export interface User {
-  app_metadata: AppMetadata;
-  aud: string;
-  confirmation_sent_at: string;
-  confirmed_at: string;
-  created_at: string;
-  email: string;
-  email_confirmed_at: string;
-  id: string;
-  identities: Identity[];
-  is_anonymous: boolean;
-  last_sign_in_at: string;
-  phone: string;
-  role: string;
-  updated_at: string;
-  user_metadata: UserMetadata;
+    app_metadata: AppMetadata;
+    aud: string;
+    confirmation_sent_at: string;
+    confirmed_at: string;
+    created_at: string;
+    email: string;
+    email_confirmed_at: string;
+    id: string;
+    identities: Identity[];
+    is_anonymous: boolean;
+    last_sign_in_at: string;
+    phone: string;
+    role: string;
+    updated_at: string;
+    user_metadata: UserMetadata;
 }
 
 export interface Session {
-  access_token: string;
-  expires_at: number;
-  expires_in: number;
-  refresh_token: string;
-  token_type: string;
-  user: User;
-  weak_password: null | string;
+    access_token: string;
+    expires_at: number;
+    expires_in: number;
+    refresh_token: string;
+    token_type: string;
+    user: User;
+    weak_password: null | string;
+}
+
+
+export interface NewsItem {
+  id: string | number;
+  title: string;
+  category: string;
+  time: string;
+  isBreaking?: boolean;
+  isTrending?: boolean;
+  readTime?: string;
+  source?: string;
+  excerpt?: string;
+  href: string;
 }

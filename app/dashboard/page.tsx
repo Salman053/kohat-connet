@@ -5,7 +5,6 @@ import {
   Eye, 
   Star,
   TrendingUp,
-  Calendar,
   Plus,
 } from 'lucide-react'
 import { createClient } from '@/lib/supabase/server'
@@ -119,7 +118,7 @@ export default async function DashboardPage() {
           </div>
           <div className="divide-y divide-gray-200">
             {recentListings && recentListings.length > 0 ? (
-              recentListings.map((listing: any) => (
+              recentListings.map((listing: {id: string; title: string; status: string; views?: number; rating?: number}) => (
                 <div key={listing.id} className="px-6 py-4">
                   <div className="flex items-center justify-between">
                     <div>
@@ -154,7 +153,7 @@ export default async function DashboardPage() {
           </div>
           <div className="divide-y divide-gray-200">
             {recentAds && recentAds.length > 0 ? (
-              recentAds.map((ad: any) => (
+              recentAds.map((ad: {id: string; title: string; ad_status: string; impressions?: number; clicks?: number}) => (
                 <div key={ad.id} className="px-6 py-4">
                   <div className="flex items-center justify-between">
                     <div>

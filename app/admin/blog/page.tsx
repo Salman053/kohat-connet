@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { FormField, FormActions } from '@/components/shared/form-field'
+import Image from 'next/image'
 
 const supabase = createSupabaseClient()
 
@@ -41,7 +42,6 @@ export default function AdminBlogPage() {
     is_featured: false,
   })
 
-  useEffect(() => { fetchPosts() }, [])
 
   const fetchPosts = async () => {
     setLoading(true)
@@ -110,6 +110,7 @@ export default function AdminBlogPage() {
       default: return 'bg-yellow-100 text-yellow-800'
     }
   }
+  useEffect(() => { fetchPosts() }, [])
 
   return (
     <div>
@@ -157,7 +158,7 @@ export default function AdminBlogPage() {
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
                       {post.cover_image && (
-                        <img src={post.cover_image} alt={post.title} className="h-12 w-16 object-cover rounded" />
+                        <Image width={64} height={48} src={post.cover_image} alt={post.title} className="h-12 w-16 object-cover rounded" />
                       )}
                       <div>
                         <div className="text-sm font-medium text-gray-900">{post.title}</div>

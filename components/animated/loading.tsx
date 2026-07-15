@@ -42,11 +42,11 @@ export const Loader: React.FC<{ width?: number; height?: number; className?: str
         x: number,
         y: number,
         time: number,
-        config: any
+        cfg: { pattern: string; gridSize: number; speed: number; patternScale?: number }
     ): { active: boolean; opacity: number } => {
-        const { pattern, gridSize, speed } = config;
+        const { pattern, gridSize, speed } = cfg;
         const t = time * (speed * 0.7);
-        const scale = config.patternScale ?? 1;
+        const scale = cfg.patternScale ?? 1;
 
         switch (pattern) {
             case 'wave': {
@@ -135,25 +135,28 @@ export const Loader: React.FC<{ width?: number; height?: number; className?: str
     
 
     useEffect(() => {
-        const canvas = canvasRef.current;
-        if (!canvas) return;
+        const canvasElement = canvasRef.current;
+        if (!canvasElement) return;
 
-        const ctx :any = canvas.getContext('2d');
+        const ctx = canvasElement.getContext('2d') as CanvasRenderingContext2D;
         if (!ctx) return;
 
         
         const dpr = window.devicePixelRatio || 1;
-        canvas.width = width * dpr;
-        canvas.height = height * dpr;
+        canvasElement.width = width * dpr;
+        canvasElement.height = height * dpr;
         ctx.scale(dpr, dpr);
-        canvas.style.width = `${width}px`;
-        canvas.style.height = `${height}px`;
+        canvasElement.style.width = `${width}px`;
+        canvasElement.style.height = `${height}px`;
 
-        let startTime = performance.now();
+        const startTimeRef = { current: 0 };
         let animationFrameId: number;
 
         const render = (time: number) => {
-            const { gridSize, colors, effects, cellShape, animationStyle } = config as any;
+            if (startTimeRef.current === 0) startTimeRef.current = time;
+            const startTime = startTimeRef.current;
+            const { gridSize, colors, effects, cellShape, animationStyle } = config as unknown as { gridSize: number; colors: Record<string, string>; effects: { glow?: number; blur?: number; bloom?: boolean; enableTrails?: boolean; colorMap?: string }; cellShape: string; animationStyle: string };
+            const glow = effects.glow ?? 0;
 
             if (effects.enableTrails) {
                 ctx.globalCompositeOperation = 'destination-out';
@@ -254,8 +257,8 @@ export const Loader: React.FC<{ width?: number; height?: number; className?: str
                                     ctx.strokeStyle = colors.primary;
                                     ctx.globalAlpha = lineOpacity;
 
-                                    if (effects.glow > 0) {
-                                        ctx.shadowBlur = effects.glow * 0.3;
+                                    if (glow > 0) {
+                                        ctx.shadowBlur = glow * 0.3;
                                         ctx.shadowColor = colors.primary;
                                     } else {
                                         ctx.shadowBlur = 0;
@@ -276,7 +279,8 @@ export const Loader: React.FC<{ width?: number; height?: number; className?: str
                     const maskActive = hasMask ? (config.activeCells[y] && config.activeCells[y][x]) : true;
                     if (!maskActive) continue;
 
-                    let { active, opacity, px, py, drawSize, drawAlpha } = cellStates[y][x];
+                    const { active, opacity, px, py, drawSize } = cellStates[y][x];
+                    let drawAlpha = cellStates[y][x].drawAlpha;
 
                     ctx.fillStyle = active ? colors.primary : colors.inactive;
                     const colormaps: Record<string, { r: number, g: number, b: number }[]> = {
@@ -312,8 +316,8 @@ export const Loader: React.FC<{ width?: number; height?: number; className?: str
 
                     ctx.globalAlpha = drawAlpha;
 
-                    if (active && effects.glow > 0) {
-                        ctx.shadowBlur = effects.glow * 0.5 * (animationStyle === 'glow' && (!colors.colorMap || colors.colorMap === 'none') ? opacity * 2 : 1);
+                    if (active && glow > 0) {
+                        ctx.shadowBlur = glow * 0.5 * (animationStyle === 'glow' && (!colors.colorMap || colors.colorMap === 'none') ? opacity * 2 : 1);
                         ctx.shadowColor = finalColor;
                     } else {
                         ctx.shadowBlur = 0;
@@ -349,7 +353,7 @@ export const Loader: React.FC<{ width?: number; height?: number; className?: str
                         const innerRadius = drawSize / 4;
                         const spikes = 5;
                         let rot = Math.PI / 2 * 3;
-                        let step = Math.PI / spikes;
+                        const step = Math.PI / spikes;
 
                         ctx.moveTo(cx, cy - outerRadius);
                         for (let i = 0; i < spikes; i++) {

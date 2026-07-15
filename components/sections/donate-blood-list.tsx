@@ -1,13 +1,12 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Search, Filter, Phone, MapPin, CheckCircle2 } from 'lucide-react'
+import { Search, Filter, Phone } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
 import { bloodTypeColors } from '@/lib/donate-blood-data'
 import { createClient } from '@supabase/supabase-js'
-
 function getSupabase() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -20,10 +19,6 @@ export const DonorList = () => {
   const [selectedBloodType, setSelectedBloodType] = useState<string>('All')
   const [donors, setDonors] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    fetchDonors()
-  }, [])
 
   const fetchDonors = async () => {
     try {
@@ -42,12 +37,17 @@ export const DonorList = () => {
     }
   }
 
+
+
   const filteredDonors = donors.filter(donor => {
-    const matchesSearch = donor.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const matchesSearch = donor.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          (donor.phone && donor.phone.includes(searchQuery))
-    const matchesBlood = selectedBloodType === 'All' || donor.blood_type === selectedBloodType
+    const matchesBlood = selectedBloodType === 'All' || donor.blood_group === selectedBloodType
     return matchesSearch && matchesBlood
   })
+    useEffect(() => {
+    fetchDonors()
+  }, [])
 
   return (
     <div className="lg:col-span-8">
@@ -102,7 +102,7 @@ export const DonorList = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {filteredDonors.map(donor => {
-            const colors = bloodTypeColors[donor.blood_type as keyof typeof bloodTypeColors] || bloodTypeColors['O+']
+            const colors = bloodTypeColors[donor.blood_group as keyof typeof bloodTypeColors] || bloodTypeColors['O+']
             return (
               <div 
                 key={donor.id} 
@@ -122,11 +122,11 @@ export const DonorList = () => {
                     "w-14 h-14 rounded-xl flex items-center justify-center font-black text-lg flex-shrink-0",
                     colors.bg, colors.text, colors.border, "border-2"
                   )}>
-                    {donor.blood_type}
+                    {donor.blood_group}
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-1">
-                      <h4 className="font-bold text-base text-foreground truncate">{donor.name}</h4>
+                      <h4 className="font-bold text-base text-foreground truncate">{donor.full_name}</h4>
                     </div>
                     <div className="text-xs text-muted-foreground">
                       Age: {donor.age || 'N/A'}
@@ -148,7 +148,7 @@ export const DonorList = () => {
                 <Button 
                   variant="outline" 
                   className="w-full gap-2 group-hover:bg-red-500 group-hover:text-white group-hover:border-red-500 transition-all"
-                  aria-label={`Call ${donor.name} at ${donor.phone}`}
+                  aria-label={`Call ${donor.full_name} at ${donor.phone}`}
                 >
                   <Phone className="w-4 h-4" />
                   {donor.phone}

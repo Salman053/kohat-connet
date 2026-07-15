@@ -2,19 +2,10 @@
 
 import { useState, useEffect } from 'react'
 import { supabase as createSupabaseClient } from '@/lib/supabase'
-import { 
-  Search, 
-  Filter, 
-  Eye, 
-  Check, 
-  X, 
-  MousePointer2,
-  Calendar,
-  DollarSign,
-  Megaphone
-} from 'lucide-react'
+import { Filter, Eye, Check, X, MousePointer2, Calendar, Megaphone } from 'lucide-react';
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import Image from 'next/image';
 
 const supabase = createSupabaseClient()
 
@@ -222,7 +213,7 @@ export default function AdminAdvertisementsPage() {
                   <td className="px-6 py-4">
                     <div className="flex items-start space-x-3">
                       {ad.image_url && (
-                        <img 
+                        <Image width={200} height={200} 
                           src={ad.image_url} 
                           alt={ad.title}
                           className="h-16 w-24 object-cover rounded"

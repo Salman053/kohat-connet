@@ -22,7 +22,6 @@ export default function AdminReportsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<'all' | 'open' | 'resolved'>('all')
 
-  useEffect(() => { fetchReports() }, [])
 
   const fetchReports = async () => {
     setLoading(true)
@@ -50,6 +49,7 @@ export default function AdminReportsPage() {
       (statusFilter === 'resolved' && report.is_resolved)
     return matchesSearch && matchesStatus
   })
+  useEffect(() => { fetchReports() }, [])
 
   return (
     <div>

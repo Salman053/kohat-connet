@@ -42,9 +42,9 @@ export async function GET(request: NextRequest) {
       limit,
       offset
     })
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
-      { error: error.message },
+      { error: error instanceof Error ? error.message : 'Unknown error' },
       { status: 500 }
     )
   }

@@ -2,16 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { supabase as createSupabaseClient } from '@/lib/supabase'
-import { 
-  Search, 
-  Filter, 
-  Eye, 
-  Check, 
-  X, 
-  Star,
-  Calendar,
-  Building2
-} from 'lucide-react'
+import { Filter, Eye, Check, X, Star, Building2 } from 'lucide-react';
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 
@@ -45,9 +36,7 @@ export default function AdminListingsPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [statusFilter, setStatusFilter] = useState<ListingStatus | 'all'>('all')
 
-  useEffect(() => {
-    fetchListings()
-  }, [])
+
 
   const fetchListings = async () => {
     setLoading(true)
@@ -123,7 +112,9 @@ export default function AdminListingsPage() {
         return 'bg-yellow-100 text-yellow-800'
     }
   }
-
+  useEffect(() => {
+    fetchListings()
+  }, [])
   return (
     <div>
       <div className="flex justify-between items-center mb-8">

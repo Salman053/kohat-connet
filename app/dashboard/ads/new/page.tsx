@@ -8,7 +8,6 @@ import {
   Calendar, 
   Image as ImageIcon,
   Globe,
-  CreditCard,
   Check,
   DollarSign
 } from 'lucide-react'
@@ -16,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import Image from 'next/image'
 
 const supabase = createSupabaseClient()
 
@@ -26,7 +26,7 @@ interface AdPackage {
   ad_type: string
   duration_days: number
   price: number
-  features: any
+  features: Record<string, unknown>
 }
 
 export default function NewAdPage() {
@@ -49,10 +49,6 @@ export default function NewAdPage() {
     notes: ''
   })
 
-  useEffect(() => {
-    fetchPackages()
-  }, [])
-
   const fetchPackages = async () => {
     const { data, error } = await supabase
       .from('ad_packages')
@@ -66,6 +62,8 @@ export default function NewAdPage() {
       setPackages(data || [])
     }
   }
+
+
 
   const handlePackageSelect = (pkg: AdPackage) => {
     setSelectedPackage(pkg)
@@ -180,6 +178,9 @@ export default function NewAdPage() {
     }
   }
 
+    useEffect(() => {
+    fetchPackages()
+  }, [])
   return (
     <div>
       <div className="mb-8">
@@ -293,7 +294,7 @@ export default function NewAdPage() {
                   />
                 </div>
                 {formData.image_url && (
-                  <img
+                  <Image width={200} height={150}
                     src={formData.image_url}
                     alt="Preview"
                     className="mt-2 w-full h-48 object-cover rounded-md"
@@ -414,7 +415,8 @@ export default function NewAdPage() {
                         />
                       </div>
                       {formData.receipt_url && (
-                        <img
+                        <Image
+                        width={200} height={150}
                           src={formData.receipt_url}
                           alt="Receipt preview"
                           className="w-full h-48 object-cover rounded-md border border-gray-200"

@@ -46,10 +46,6 @@ export default function NewListingPage() {
     price_range: ''
   })
 
-  useEffect(() => {
-    fetchCategories()
-  }, [])
-
   const fetchCategories = async () => {
     const { data, error } = await supabase
       .from('categories')
@@ -63,6 +59,10 @@ export default function NewListingPage() {
       setCategories(data || [])
     }
   }
+
+  useEffect(() => {
+    fetchCategories()
+  }, [])
 
   const handleAddImage = () => {
     if (currentImageUrl.trim()) {
@@ -107,9 +107,9 @@ export default function NewListingPage() {
       }
 
       router.push('/dashboard/listings')
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error('Error creating listing:', error)
-      alert(error.message || 'Failed to create listing')
+      alert(error instanceof Error ? error.message : 'Failed to create listing')
     } finally {
       setLoading(false)
     }

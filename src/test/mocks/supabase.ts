@@ -131,7 +131,7 @@ export function createMockSupabaseClient() {
   }
 
   let currentUser: typeof mockUser | null = mockUser
-  let currentSession: any = {
+  let currentSession = {
     access_token: 'test-access-token',
     refresh_token: 'test-refresh-token',
     expires_in: 3600,

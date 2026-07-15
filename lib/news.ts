@@ -1,4 +1,4 @@
-import { NewsItem } from "@/components/shared/news";
+import type { NewsItem } from "@/types";
 
 // Helper function to determine news category based on content
 export const determineCategory = (text: string): string => {

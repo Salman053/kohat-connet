@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { supabase as createSupabaseClient } from '@/lib/supabase'
-import { Search, Filter, Phone, MapPin, Droplets, Check, X } from 'lucide-react'
+import { Search, Filter, Phone, Check, X } from 'lucide-react';
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'

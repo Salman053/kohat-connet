@@ -1,7 +1,6 @@
-import React from 'react'
 import Link from 'next/link'
 import { navigationLinks, footerLinks, categories } from '@/lib/site'
-import { Network, Home, Compass, Info, Award } from 'lucide-react'
+import { Network, Home, Compass, Award } from 'lucide-react';
 
 export default function SitemapPage() {
   return (

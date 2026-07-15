@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { signUp } from '@/lib/auth'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { UserPlus, ArrowRight, Eye, EyeOff } from 'lucide-react'
+import { ArrowRight, Eye, EyeOff } from 'lucide-react'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -27,8 +27,8 @@ export default function SignUpPage() {
     try {
       await signUp(email, password, fullName, role)
       router.push('/auth/signin?message=Check your email to confirm your account')
-    } catch (err: any) {
-      setError(err.message || 'Failed to sign up')
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Failed to sign up')
     } finally {
       setLoading(false)
     }

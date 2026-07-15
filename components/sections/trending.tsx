@@ -11,6 +11,7 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from '@/components/ui/tabs';
 import { cn } from '@/lib/utils';
 import { fallbackTrending, getTrendingItems } from '@/lib/data-fallback';
 import type { TrendingItem } from '@/lib/data-fallback';
+import { NewsItem } from '@/types';
 
 const popularSearches = [
   "best restaurant in kohat",
@@ -25,7 +26,7 @@ const popularSearches = [
 export default function Trending() {
   const [items, setItems] = useState<TrendingItem[]>(fallbackTrending)
   const [activeTab, setActiveTab] = useState("All")
-  const [newsItems, setNewsItems] = useState<any[]>([])
+  const [newsItems, setNewsItems] = useState<Array<NewsItem>>([])
 
   useEffect(() => {
     getTrendingItems().then(setItems)

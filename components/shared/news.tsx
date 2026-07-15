@@ -4,21 +4,9 @@ import React, { useState } from 'react';
 import { Newspaper, Clock, TrendingUp,  ArrowRight, ExternalLink, Zap } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import type { NewsItem } from "@/types";
 
-export interface NewsItem {
-  id: string | number;
-  title: string;
-  category: string;
-  time: string;
-  isBreaking?: boolean;
-  isTrending?: boolean;
-  readTime?: string;
-  source?: string;
-  excerpt?: string;
-  href: string;
-}
-
-interface NewsSectionProps {
+export interface NewsSectionProps {
   items: NewsItem[];
   className?: string;
   isLoading?: boolean;

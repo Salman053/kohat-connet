@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react'
-import { LifeBuoy, Check, Mail, Phone, ExternalLink } from 'lucide-react'
+import { LifeBuoy, Check } from 'lucide-react';
 import { site } from '@/lib/site'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { Input } from '@/components/ui/input'

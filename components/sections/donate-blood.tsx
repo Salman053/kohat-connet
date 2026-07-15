@@ -6,7 +6,7 @@ import { Heart, AlertCircle, Clock, Building2, Star, ArrowRight, Zap, Plus, Shie
 import { DonorList } from './donate-blood-list'
 
 // Sub-components to keep the main component cleaner
-const StatisticCard = ({ stat }: { stat: any }) => {
+const StatisticCard = ({ stat }: { stat: { icon: string; label: string; value: string; suffix?: string,change:string } }) => {
   const Icon = IconMap[stat.icon] || Heart;
   return (
     <div className="relative group bg-card border border-border rounded-xl sm:rounded-2xl p-4 sm:p-6 hover:shadow-xl transition-all duration-300 overflow-hidden">

@@ -5,8 +5,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { 
-  Home, Search, ArrowLeft, MapPin, Building2, 
-  Calendar, Newspaper, Heart, Phone, Compass
+  Home, Search, ArrowLeft, Building2, 
+  Calendar, Newspaper, Heart, Compass
 } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
 import { Input } from '@/components/ui/input'

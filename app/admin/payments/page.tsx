@@ -2,18 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { supabase as createSupabaseClient } from '@/lib/supabase'
-import { 
-  Search, 
-  Filter, 
-  Check, 
-  X, 
-  DollarSign,
-  Calendar,
-  Image as ImageIcon,
-  FileText,
-  Clock,
-  AlertCircle
-} from 'lucide-react'
+import { Filter, Check, X, DollarSign, Image as ImageIcon, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
@@ -55,9 +44,6 @@ export default function AdminPaymentsPage() {
   const [showModal, setShowModal] = useState(false)
   const [rejectionReason, setRejectionReason] = useState('')
 
-  useEffect(() => {
-    fetchPayments()
-  }, [])
 
   const fetchPayments = async () => {
     setLoading(true)
@@ -159,6 +145,9 @@ export default function AdminPaymentsPage() {
     }
   }
 
+  useEffect(() => {
+    fetchPayments()
+  }, [])
   return (
     <div>
       <div className="flex justify-between items-center mb-8">

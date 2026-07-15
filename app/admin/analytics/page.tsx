@@ -1,14 +1,5 @@
 import { supabaseAdmin } from '@/lib/supabase'
-import { 
-  TrendingUp, 
-  Users, 
-  Building2, 
-  Megaphone, 
-  DollarSign,
-  Eye,
-  MousePointer2,
-  Calendar,
-} from 'lucide-react'
+import { Users, Building2, Megaphone, Eye, MousePointer2 } from 'lucide-react';
 
 export default async function AdminAnalyticsPage() {
   const supabase = supabaseAdmin()

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { memo, useEffect, useRef } from 'react';
 
 interface HeartWaveConfig {
     name: string;
@@ -228,4 +228,4 @@ export const HeartWave: React.FC<HeartWaveProps> = ({
     );
 };
 
-export default HeartWave;
+export default memo(HeartWave);

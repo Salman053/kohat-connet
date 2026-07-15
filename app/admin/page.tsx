@@ -9,6 +9,7 @@ import {
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { supabaseAdmin } from '@/lib/supabase'
+import { ListingInterface } from '@/types'
 
 export default async function AdminDashboard() {
   const supabase = supabaseAdmin()
@@ -76,11 +77,11 @@ export default async function AdminDashboard() {
         <CardContent>
           <div className="divide-y divide-border">
             {recentListings && recentListings.length > 0 ? (
-              recentListings.map((listing: any) => (
+              recentListings.map((listing: ListingInterface) => (
                 <div key={listing.id} className="py-3 flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-foreground">{listing.title}</p>
-                    <Badge variant={listing.status === 'approved' ? 'default' : listing.status === 'pending' ? 'outline' : 'destructive'}>
+                    <Badge variant={listing.status === 'active' ? 'default' : listing.status === 'pending' ? 'outline' : 'destructive'}>
                       {listing.status}
                     </Badge>
                   </div>

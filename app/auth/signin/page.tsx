@@ -19,21 +19,6 @@ function SignInForm() {
   const [loading, setLoading] = useState(false)
   const { signIn, user } = useAuth()
 
-  useEffect(() => {
-    if (user) {
-      const { createClient } = require('@/lib/supabase/client')
-      const supabase = createClient()
-      supabase
-        .from('profiles')
-        .select('role')
-        .eq('id', user.id)
-        .single()
-        .then(({ data }: any) => {
-          routeTo(data?.role || 'user')
-        })
-    }
-  }, [user])
-
   const routeTo = (role: string) => {
     console.log('SignIn - Routing to role:', role)
     if (role === "admin") {
@@ -42,6 +27,23 @@ function SignInForm() {
     else if (role == "business") router.push("/dashboard")
     else router.push("/")
   }
+
+  useEffect(() => {
+    if (user) {
+      const fetchRole = async () => {
+        const { createClient } = await import('@/lib/supabase/client')
+        const supabase = createClient()
+        const { data } = await supabase
+          .from('profiles')
+          .select('role')
+          .eq('id', user.id)
+          .single()
+        routeTo(data?.role || 'user')
+      }
+      fetchRole()
+    }
+  }, [user])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
@@ -64,9 +66,9 @@ function SignInForm() {
         console.log('SignIn - Profile role:', profile?.role || 'none')
         routeTo(profile?.role || 'user')
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('SignIn - Error:', err)
-      setError(err.message || 'Failed to sign in')
+      setError(err instanceof Error ? err.message : 'Failed to sign in')
     } finally {
       setLoading(false)
     }

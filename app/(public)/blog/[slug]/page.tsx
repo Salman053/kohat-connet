@@ -1,10 +1,10 @@
 "use client"
 
-import React, { use, useState, useEffect } from 'react'
+import { use, useState, useEffect } from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, User, Clock, Tag } from 'lucide-react'
-import { fallbackBlogPosts, getBlogPostBySlug, getBlogPosts } from '@/lib/data-fallback'
+import { getBlogPostBySlug } from '@/lib/data-fallback';
 import type { BlogPost } from '@/lib/data-fallback'
 
 interface FullBlogPost extends BlogPost {

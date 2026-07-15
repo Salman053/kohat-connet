@@ -2,6 +2,7 @@ import React from 'react'
 import { Store, ShieldCheck, Star, Search } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { getFeaturedListings } from '@/lib/data'
+interface Listing { id: string; title: string; rating: number; category?: { name: string } }
 
 const BusinessDirectory = async () => {
   const listings = await getFeaturedListings(4)
@@ -22,7 +23,7 @@ const BusinessDirectory = async () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {listings.length > 0 ? (
-            listings.map((listing: any) => (
+            listings.map((listing: Listing) => (
               <div key={listing.id} className="bg-card p-5 rounded-3xl border border-border flex items-center gap-4 hover:border-primary/50 transition-all">
                 <div className="w-12 h-12 rounded-2xl bg-primary/10 text-primary flex items-center justify-center font-black">
                   <ShieldCheck className="w-6 h-6" />

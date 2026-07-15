@@ -1,5 +1,4 @@
-"use client"
-
+"use client";
 import React, { useState } from 'react'
 import { Handshake, ShieldCheck, Target, Award, Users } from 'lucide-react'
 import PageHeader from '@/components/shared/page-header'
@@ -7,9 +6,6 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import AnimatedGradientOrbs from '@/components/animated/animated-gradient-Orbs'
-import AnimatedGridPattern from '@/components/animated/animated-grid-pattern'
-import FloatingParticles from '@/components/animated/floating-particles'
 
 export default function BecomeAPartnerPage() {
   const [partnerName, setPartnerName] = useState("")

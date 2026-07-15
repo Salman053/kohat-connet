@@ -2,16 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { supabase as createSupabaseClient } from '@/lib/supabase'
-import { 
-  Search, 
-  Filter, 
-  MoreVertical, 
-  Shield, 
-  Building2,
-  User,
-  Check,
-  X
-} from 'lucide-react'
+import { Filter, Shield, Building2, User, Check, X } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -36,9 +27,6 @@ export default function AdminUsersPage() {
   const [searchTerm, setSearchTerm] = useState('')
   const [roleFilter, setRoleFilter] = useState<UserRole | 'all'>('all')
 
-  useEffect(() => {
-    fetchUsers()
-  }, [])
 
   const fetchUsers = async () => {
     setLoading(true)
@@ -109,6 +97,9 @@ export default function AdminUsersPage() {
         return 'bg-gray-100 text-gray-800'
     }
   }
+  useEffect(() => {
+    fetchUsers()
+  }, [])
 
   return (
     <div>

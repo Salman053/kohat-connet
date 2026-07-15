@@ -1,4 +1,3 @@
-import Header from "@/components/shared/header";
 import Hero from "@/components/landing/hero";
 import Emergency from "@/components/sections/emergency";
 import Trending from "@/components/sections/trending";
@@ -11,7 +10,6 @@ import Community from "@/components/sections/community";
 import RealEstateHub from "@/components/sections/real-estate";
 import BusinessDirectory from "@/components/sections/directory";
 import DonateBlood from "@/components/sections/donate-blood";
-import Footer from "@/components/shared/footer";
 import KineticScrollGallery from "@/components/landing/kinetic-gallery";
 
 export default function Home() {

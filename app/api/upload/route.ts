@@ -73,10 +73,11 @@ export async function POST(request: NextRequest) {
       path: filePath,
       filename: data.path
     })
-  } catch (error: any) {
-    console.error('Upload error:', error)
+  } catch (error: unknown) {
+    const message = error instanceof Error ? error.message : String(error)
+    console.error('Upload error:', message)
     return NextResponse.json(
-      { error: error.message || 'Failed to upload file' },
+      { error: message || 'Failed to upload file' },
       { status: 500 }
     )
   }

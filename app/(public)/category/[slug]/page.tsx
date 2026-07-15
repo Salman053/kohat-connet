@@ -1,6 +1,6 @@
 "use client"
 
-import React, { use } from 'react'
+import { use } from 'react';
 import { categories } from '@/lib/site'
 import Link from 'next/link'
 import Image from 'next/image'

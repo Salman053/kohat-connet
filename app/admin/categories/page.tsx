@@ -2,18 +2,11 @@
 
 import { useState, useEffect } from 'react'
 import { supabase as createSupabaseClient } from '@/lib/supabase'
-import { 
-  Search, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  FolderTree,
-  Eye,
-  EyeOff
-} from 'lucide-react'
+import { Plus, Edit, Trash2, Eye, EyeOff } from 'lucide-react';
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import Image from 'next/image';
 
 const supabase = createSupabaseClient()
 
@@ -48,9 +41,7 @@ export default function AdminCategoriesPage() {
     sort_order: 0
   })
 
-  useEffect(() => {
-    fetchCategories()
-  }, [])
+
 
   const fetchCategories = async () => {
     setLoading(true)
@@ -151,6 +142,10 @@ export default function AdminCategoriesPage() {
     (category.description && category.description.toLowerCase().includes(searchTerm.toLowerCase()))
   )
 
+    useEffect(() => {
+    fetchCategories()
+  }, [])
+
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
@@ -215,7 +210,7 @@ export default function AdminCategoriesPage() {
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
                       {category.image_url && (
-                        <img 
+                        <Image width={48} height={48} 
                           src={category.image_url} 
                           alt={category.name}
                           className="h-12 w-12 object-cover rounded"

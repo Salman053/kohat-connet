@@ -18,7 +18,7 @@ import {
   Heart,
   Flag,
 } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Logo from '@/components/shared/logo'
 import { Card } from '@/components/ui/card'
 import { useAuth } from '@/components/auth/auth-context'
@@ -41,58 +41,61 @@ export default function AdminLayout({
 
   const supabase = createClient()
 
-  console.log('AdminLayout - Render, user:', user?.id || 'none', 'profile:', profile?.role || 'none')
 
-  // 1. Redirect if authentication load completes and no user is found
+  const showSpinner = loadingAuth || (user && loadingProfile) || !user || profile?.role !== 'admin'
   useEffect(() => {
     if (!loadingAuth && !user) {
-      console.log('AdminLayout - No user, redirecting to signin')
       router.replace('/auth/signin')
     }
   }, [user, loadingAuth, router])
 
-  // 2. Fetch profile and role details
   useEffect(() => {
     if (!user) {
+      setLoadingProfile(false)
       return
     }
-    
-    console.log('AdminLayout - Fetching profile for user:', user.id)
-    setLoadingProfile(true)
-    supabase
-      .from('profiles')
-      .select('role, full_name')
-      .eq('id', user.id)
-      .single()
-      .then(({ data, error }: any) => {
-        console.log('AdminLayout - Profile fetch result:', { error, data })
+
+    let isMounted = true
+
+    const fetchProfile = async () => {
+      try {
+        const { data, error } = await supabase
+          .from('profiles')
+          .select('role, full_name')
+          .eq('id', user.id)
+          .single()
+
+        if (!isMounted) return
+
         if (error) {
           console.error('AdminLayout - Error fetching profile:', error)
           setProfile(null)
         } else {
-          setProfile(data)
-          console.log('AdminLayout - Profile set:', data?.role)
+          setProfile(data as Profile)
           if (data?.role !== 'admin') {
-            console.log('AdminLayout - User is not admin, redirecting to dashboard')
             router.replace('/dashboard')
           }
         }
-        setLoadingProfile(false)
-      })
-  }, [user, router])
+      } catch (error) {
+        console.error('AdminLayout - Unexpected error:', error)
+        if (isMounted) {
+          setProfile(null)
+        }
+      } finally {
+        if (isMounted) {
+          setLoadingProfile(false)
+        }
+      }
+    }
 
-  const showSpinner = loadingAuth || (user && loadingProfile) || !user || profile?.role !== 'admin'
+    fetchProfile()
 
-  if (showSpinner) {
-    console.log('AdminLayout - Showing loading spinner')
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin h-8 w-8 border-4 border-indigo-600 border-t-transparent rounded-full" />
-      </div>
-    )
-  }
+    return () => {
+      isMounted = false
+    }
+  }, [user, router, supabase])
 
-  const navItems = [
+  const navItems = useMemo(() => [
     { href: '/admin', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/admin/users', label: 'Users', icon: Users },
     { href: '/admin/listings', label: 'Listings', icon: Building2 },
@@ -106,7 +109,17 @@ export default function AdminLayout({
     { href: '/admin/analytics', label: 'Analytics', icon: BarChart3 },
     { href: '/admin/reports', label: 'Reports', icon: Flag },
     { href: '/admin/settings', label: 'Settings', icon: Settings },
-  ]
+  ], []);
+  if (showSpinner) {
+    console.log('AdminLayout - Showing loading spinner')
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin h-8 w-8 border-4 border-indigo-600 border-t-transparent rounded-full" />
+      </div>
+    )
+  }
+
+
 
   return (
     <div className="min-h-screen bg-muted/30">

@@ -45,17 +45,16 @@ export default function DashboardLayout({
   useEffect(() => {
     if (!user) return
     
-    setLoadingProfile(true)
     supabase
       .from('profiles')
       .select('role, full_name, business_name')
       .eq('id', user.id)
       .single()
-      .then(({ data }:{data:any}) => {
+      .then(({ data }: { data: { role: string; full_name: string | null; business_name: string | null } | null }) => {
         if (data) setProfile(data)
         setLoadingProfile(false)
       })
-  }, [user])
+  }, [user,supabase])
 
   const showSpinner = loadingAuth || (user && loadingProfile) || !user
 

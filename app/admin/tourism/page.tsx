@@ -42,7 +42,6 @@ export default function AdminTourismPage() {
     is_featured: false, tags: '',
   })
 
-  useEffect(() => { fetchPlaces() }, [])
 
   const fetchPlaces = async () => {
     setLoading(true)
@@ -106,6 +105,7 @@ export default function AdminTourismPage() {
     place.location?.toLowerCase().includes(searchTerm.toLowerCase()) ||
     place.category?.toLowerCase().includes(searchTerm.toLowerCase())
   )
+  useEffect(() => { fetchPlaces() }, [])
 
   return (
     <div>

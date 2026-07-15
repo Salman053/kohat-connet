@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
-import { fallbackListingDetails, getListingBySlug } from '@/lib/data-fallback'
+import { getListingBySlug } from '@/lib/data-fallback';
 import type { ListingDetail } from '@/lib/data-fallback'
 
 interface PageProps {

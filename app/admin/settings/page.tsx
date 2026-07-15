@@ -40,10 +40,6 @@ export default function AdminSettingsPage() {
     youtube_channel: '',
   })
 
-  useEffect(() => {
-    fetchSettings()
-  }, [])
-
   const fetchSettings = async () => {
     setLoading(true)
     const { data, error } = await supabase
@@ -102,6 +98,10 @@ export default function AdminSettingsPage() {
     setSaving(false)
     fetchSettings()
   }
+
+  useEffect(() => {
+    fetchSettings()
+  }, [])
 
   if (loading) {
     return (

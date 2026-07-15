@@ -41,7 +41,7 @@ export function AuthProvider({
 
     // Listen for auth state changes
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      (event: any, session: any) => {
+      (event: string, session: Session | null) => {
         console.log('AuthContext - Auth state change:', event, 'User:', session?.user?.id || 'none')
         if (mounted) {
           setSession(session)
@@ -53,7 +53,7 @@ export function AuthProvider({
 
     // Get initial session if we didn't have one from server
     if (!initialSession) {
-      supabase.auth.getSession().then(({ data: { session } }: any) => {
+      supabase.auth.getSession().then(({ data: { session } }: { data: { session: Session | null } }) => {
         console.log('AuthContext - Initial session:', session?.user?.id || 'none')
         if (mounted) {
           setSession(session)

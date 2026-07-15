@@ -10,6 +10,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Checkbox } from '@/components/ui/checkbox'
 import { Label } from '@/components/ui/label'
 import { FormField, FormActions } from '@/components/shared/form-field'
+import Image from 'next/image'
 
 const supabase = createSupabaseClient()
 
@@ -50,7 +51,6 @@ export default function AdminEventsPage() {
     status: 'draft', is_free: true, ticket_price: '', max_attendees: '', tags: '',
   })
 
-  useEffect(() => { fetchEvents() }, [])
 
   const fetchEvents = async () => {
     setLoading(true)
@@ -126,6 +126,7 @@ export default function AdminEventsPage() {
       default: return 'bg-gray-100 text-gray-800'
     }
   }
+  useEffect(() => { fetchEvents() }, [])
 
   return (
     <div>
@@ -163,7 +164,7 @@ export default function AdminEventsPage() {
                 <tr key={event.id} className="hover:bg-gray-50">
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
-                      {event.cover_image && <img src={event.cover_image} alt={event.title} className="h-12 w-16 object-cover rounded" />}
+                      {event.cover_image && <Image width={64} height={48} src={event.cover_image} alt={event.title} className="h-12 w-16 object-cover rounded" />}
                       <div>
                         <div className="text-sm font-medium text-gray-900">{event.title}</div>
                         <div className="text-sm text-gray-500 truncate max-w-xs">{event.description?.slice(0, 60)}</div>

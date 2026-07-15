@@ -3,7 +3,6 @@
 import { WordsPullUp } from "./words-pull-up";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Search, MapPin } from "lucide-react";
 import SearchBox from "../shared/search-box";
 
 export default function Hero() {

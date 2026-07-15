@@ -4,7 +4,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(request: NextRequest) {
   const cookieStore = await cookies()
-  let response = NextResponse.redirect(new URL('/', request.nextUrl.origin))
+  const response = NextResponse.redirect(new URL('/', request.nextUrl.origin))
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
