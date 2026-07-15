@@ -1,10 +1,9 @@
 "use client"
 
-import { use, useState, useEffect } from 'react';
+import { use } from 'react';
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, Calendar, User, Clock, Tag } from 'lucide-react'
-import { getBlogPostBySlug } from '@/lib/data-fallback';
 import type { BlogPost } from '@/lib/data-fallback'
 
 interface FullBlogPost extends BlogPost {
@@ -15,7 +14,7 @@ const fullBlogPosts: FullBlogPost[] = [
   {
     slug: "historic-landmarks-kohat", title: "10 Must-Visit Historic Landmarks in Kohat", excerpt: "Kohat is rich in cultural heritage. Explore the ancient Garrison Fort, the majestic Cavagnari Tunnel, and the historic British-era bungalows.",
     content: `<p>Kohat, one of the oldest cities in Khyber Pakhtunkhwa, is steeped in history dating back to the British colonial era and beyond. For history enthusiasts and curious travelers, the city offers a treasure trove of architectural marvels and historic sites that tell the story of the region's rich past.</p><h3>1. Kohat Garrison Fort</h3><p>Built during the British Raj, the Kohat Garrison Fort stands as a testament to colonial military architecture.</p><h3>2. Cavagnari Tunnel</h3><p>Named after Sir Louis Cavagnari, this tunnel is an engineering marvel of its time.</p><h3>3. British Era Bungalows</h3><p>Scattered across Kohat Cantt are beautiful colonial-era bungalows with distinctive architecture.</p><h3>4. Kohat Museum</h3><p>The Kohat Museum houses an impressive collection of artifacts and photographs.</p><h3>5. Tanda Dam</h3><p>While primarily known as a recreational spot, Tanda Dam has historical significance as a major irrigation project.</p><p>These landmarks represent just a fraction of Kohat's rich historical tapestry.</p>`,
-    image: "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=800&q=80", date: "June 28, 2026", author: "Salman Khan", category: "Tourism", readTime: "6 min read"
+     image: "https://images.unsplash.com/photo-1605649487212-47bdab064df7?auto=format&fit=crop&w=800&q=80", date: "June 28, 2026", author: "Salman Khan", category: "Tourism", readTime: "6 min read"
   },
   {
     slug: "best-chapli-kababs-kohat", title: "The Ultimate Guide to Kohat's Best Chapli Kababs", excerpt: "Looking for the juiciest, most authentic chapli kababs? We've visited every major spot in Kohat and ranked the top 5 places you must try.",
@@ -44,10 +43,7 @@ export default function BlogPostPage({ params }: PageProps) {
   const resolvedParams = use(params)
   const slug = resolvedParams.slug
 
-  const initialPost = fullBlogPosts.find(p => p.slug === slug) || null
-  const [post, setPost] = useState<FullBlogPost | null>(initialPost)
-
-  useEffect(() => { getBlogPostBySlug(slug).then(p => { if (p) setPost(p as FullBlogPost) }) }, [slug])
+  const post = fullBlogPosts.find(p => p.slug === slug) || null
 
   if (!post) {
     return (
@@ -74,11 +70,11 @@ export default function BlogPostPage({ params }: PageProps) {
           className="object-cover"
           priority
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
       </div>
 
       <div className="container mx-auto px-6 -mt-32 relative z-10">
-        <div className="max-w-3xl mx-auto">
+        <div className=" mx-auto">
           {/* Breadcrumb */}
           <Link
             href="/blog"

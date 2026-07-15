@@ -27,23 +27,6 @@ export async function signUp(email: string, password: string, fullName: string, 
 
   if (error) throw error
 
-  // Create profile in profiles table
-  if (data.user) {
-    const { error: profileError } = await sb()
-      .from('profiles')
-      .insert({
-        id: data.user.id,
-        email: email,
-        full_name: fullName,
-        role: role
-      })
-
-    if (profileError) {
-      console.error('Error creating profile:', profileError)
-      // Don't throw error here as the auth user was created successfully
-    }
-  }
-
   return data
 }
 

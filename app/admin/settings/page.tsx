@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { supabase as createSupabaseClient } from '@/lib/supabase'
 import { Save, AlertCircle } from 'lucide-react'
+import PageHeader from '@/components/dashboard/page-header'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
@@ -113,10 +114,7 @@ export default function AdminSettingsPage() {
 
   return (
     <div className="space-y-6">
-      <div>
-        <h1 className="text-2xl font-bold text-foreground">Site Settings</h1>
-        <p className="text-sm text-muted-foreground mt-1">Manage your site configuration</p>
-      </div>
+      <PageHeader title="Site Settings" subtitle="Manage your site configuration" />
 
       <Card size="sm">
         <CardHeader>

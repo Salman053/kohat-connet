@@ -2,7 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { supabase as createSupabaseClient } from '@/lib/supabase'
-import { Filter, Shield, Building2, User, Check, X } from 'lucide-react';
+import { Filter, Shield, Building2, User, Check, X } from 'lucide-react'
+import PageHeader from '@/components/dashboard/page-header'
+import StatusBadge from '@/components/dashboard/status-badge'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -103,16 +105,13 @@ export default function AdminUsersPage() {
 
   return (
     <div>
-      <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold text-gray-900">User Management</h1>
-      </div>
+      <PageHeader title="User Management" subtitle="Manage platform users and their roles" />
 
       {/* Filters */}
       <div className="bg-white rounded-lg shadow-sm p-4 border border-gray-200 mb-6">
         <div className="flex flex-col md:flex-row gap-4">
           <div className="flex-1">
             <div className="relative">
-               
               <Input
                 type="text"
                 placeholder="Search users..."
@@ -186,19 +185,11 @@ export default function AdminUsersPage() {
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="flex items-center space-x-2">
                       {getRoleIcon(user.role)}
-                      <span className={`px-2 py-1 text-xs font-medium rounded ${getRoleBadgeColor(user.role)}`}>
-                        {user.role}
-                      </span>
+                      <StatusBadge value={user.role} />
                     </div>
                   </td>
-                  <td className="px-6 py-4 whitespace-nowrap capitalize">
-                    <Button
-                      onClick={() => handleVerificationToggle(user.id, user.is_verified)}
-                      className={`flex items-center space-x-1 text-white`}
-                    >
-                      {user.is_verified ? <Check className="h-2 w-2" /> : <X className="h-2 w-2" />}
-                      <span className="">{user.is_verified ? 'Verified' : 'Unverified'}</span>
-                    </Button>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <StatusBadge value={user.is_verified ? 'verified' : 'unverified'} />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     {new Date(user.created_at).toLocaleDateString()}

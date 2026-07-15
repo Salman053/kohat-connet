@@ -1,19 +1,13 @@
 'use client'
 
-import Link from 'next/link'
-import { 
-  LayoutDashboard, 
-  Building2, 
-  Megaphone, 
-  Settings,
-  LogOut,
-  Plus,
-} from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Logo from '@/components/shared/logo'
+import Link from 'next/link'
+import { LogOut, ExternalLink } from 'lucide-react'
 import { useAuth } from '@/components/auth/auth-context'
 import { createClient } from '@/lib/supabase/client'
+import DashboardSidebar from '@/components/dashboard/dashboard-sidebar'
+import { ToastProvider } from '@/components/dashboard/toast'
 
 type Profile = {
   role: string
@@ -21,30 +15,21 @@ type Profile = {
   business_name: string | null
 }
 
-export default function DashboardLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
+export default function DashboardLayout({ children }: { children: React.ReactNode }) {
   const { user, loading: loadingAuth, signOut } = useAuth()
   const router = useRouter()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [loadingProfile, setLoadingProfile] = useState(true)
-
   const supabase = createClient()
 
-  // 1. Redirect if authentication load completes and no user is found
   useEffect(() => {
     if (!loadingAuth && !user) {
-      console.log('DashboardLayout - No user, redirecting to signin')
       router.replace('/auth/signin')
     }
   }, [user, loadingAuth, router])
 
-  // 2. Fetch profile details
   useEffect(() => {
     if (!user) return
-    
     supabase
       .from('profiles')
       .select('role, full_name, business_name')
@@ -54,81 +39,55 @@ export default function DashboardLayout({
         if (data) setProfile(data)
         setLoadingProfile(false)
       })
-  }, [user,supabase])
+  }, [user, supabase])
 
   const showSpinner = loadingAuth || (user && loadingProfile) || !user
 
   if (showSpinner) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="animate-spin h-8 w-8 border-4 border-indigo-600 border-t-transparent rounded-full" />
       </div>
     )
   }
 
-  const navItems = [
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { href: '/dashboard/listings', label: 'My Listings', icon: Building2 },
-    { href: '/dashboard/listings/new', label: 'Add Listing', icon: Plus },
-    { href: '/dashboard/advertisements', label: 'My Ads', icon: Megaphone },
-    { href: '/dashboard/ads/new', label: 'Book Ad', icon: Megaphone },
-    { href: '/dashboard/settings', label: 'Settings', icon: Settings },
-  ]
+  const handleSignOut = async () => {
+    await signOut()
+    router.push('/auth/signin')
+  }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center">
-              <Logo variant="minimal" />
-              <span className="ml-4 text-sm text-gray-500">
-                {profile?.business_name || profile?.full_name || 'Dashboard'}
-              </span>
-            </div>
-            <div className="flex items-center space-x-4">
-              <Link
-                href="/"
-                className="text-sm text-gray-600 hover:text-gray-900"
-              >
-                View Site
-              </Link>
-              <button
-                type="button"
-                onClick={signOut}
-                className="flex items-center space-x-1 text-sm "
-              >
-                <LogOut className="h-4 w-4" />
-                <span>Sign out</span>
-              </button>
-            </div>
+      <ToastProvider>
+        <div className="min-h-screen bg-gray-50 flex">
+          <DashboardSidebar businessName={profile?.business_name || profile?.full_name} />
+          <div className="flex-1 flex flex-col min-w-0">
+            <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
+              <div className="flex items-center justify-between h-16 px-4 lg:px-8">
+                <div className="lg:hidden w-8" />
+                <div className="flex items-center gap-4 ml-auto">
+                  <Link
+                    href="/"
+                    className="inline-flex items-center gap-1.5 text-sm text-gray-500 hover:text-gray-700 transition-colors"
+                  >
+                    <ExternalLink className="h-4 w-4" />
+                    <span className="hidden sm:inline">View Site</span>
+                  </Link>
+                  <button
+                    type="button"
+                    onClick={handleSignOut}
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                  >
+                    <LogOut className="h-4 w-4" />
+                    <span className="hidden sm:inline">Sign out</span>
+                  </button>
+                </div>
+              </div>
+            </header>
+            <main className="flex-1 p-4 lg:p-8 overflow-auto">
+              {children}
+            </main>
           </div>
         </div>
-      </header>
-
-      <div className="flex">
-        <aside className="w-64 bg-white border-r border-gray-200 min-h-screen">
-          <nav className="p-4 space-y-1">
-            {navItems.map((item) => {
-              const Icon = item.icon
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="flex items-center space-x-3 px-3 py-2 rounded-md text-sm font-medium text-foreground hover:bg-gray-100 hover:text-gray-900"
-                >
-                  <Icon className="h-5 w-5" />
-                  <span>{item.label}</span>
-                </Link>
-              )
-            })}
-          </nav>
-        </aside>
-
-        <main className="flex-1 p-8">
-          {children}
-        </main>
-      </div>
-    </div>
+      </ToastProvider>
   )
 }
