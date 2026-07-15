@@ -1,4 +1,5 @@
 import { supabase } from './supabase'
+import { SYSTEM_DOMAIN } from './utils'
 
 export interface AuthUser {
   id: string
@@ -89,7 +90,7 @@ export async function getCurrentUser(): Promise<AuthUser | null> {
 
 export async function resetPassword(email: string) {
   const { error } = await sb().auth.resetPasswordForEmail(email, {
-    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'}/auth/reset-password`
+    redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || SYSTEM_DOMAIN}/auth/reset-password`
   })
 
   if (error) throw error

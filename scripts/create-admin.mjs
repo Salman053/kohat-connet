@@ -3,7 +3,7 @@ import { readFileSync, existsSync } from 'fs'
 import { resolve, dirname } from 'path'
 import { fileURLToPath } from 'url'
 import readline from 'readline'
-
+import SYSTEM_DOMAIN from "../lib/utils"
 const __dirname = dirname(fileURLToPath(import.meta.url))
 
 function loadEnv() {
@@ -183,7 +183,7 @@ async function main() {
   console.log(`  Email: ${email}`)
   console.log(`  Name:  ${fullName}`)
   console.log(`  Role:  admin`)
-  console.log(`\nSign in at: http://localhost:3000/auth/signin`)
+  console.log(`\nSign in at: ${SYSTEM_DOMAIN}auth/signin`)
 }
 
 main().catch((err) => { console.error(`\n✗ ${err.message}`); process.exit(1) })

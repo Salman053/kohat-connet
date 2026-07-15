@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { NextRequest } from 'next/server'
 import { createMockSupabaseClient } from '@/src/test/mocks/supabase'
+import { SYSTEM_DOMAIN } from '@/lib/utils'
 
 const singletonClient = createMockSupabaseClient()
 
@@ -17,7 +18,7 @@ describe('payments API', () => {
 
   describe('GET', () => {
     it('returns payments list with user and advertisement data', async () => {
-      const request = new NextRequest(new URL('http://localhost:3000/api/payments'))
+      const request = new NextRequest(new URL(SYSTEM_DOMAIN+'api/payments'))
       const response = await GET(request)
       const body = await response.json()
 
@@ -29,7 +30,7 @@ describe('payments API', () => {
 
     it('filters payments by status', async () => {
       const request = new NextRequest(
-        new URL('http://localhost:3000/api/payments?status=under_review')
+        new URL(SYSTEM_DOMAIN+'api/payments?status=under_review')
       )
       const response = await GET(request)
       const body = await response.json()
@@ -40,7 +41,7 @@ describe('payments API', () => {
 
     it('handles pagination parameters', async () => {
       const request = new NextRequest(
-        new URL('http://localhost:3000/api/payments?limit=5&offset=0')
+        new URL(SYSTEM_DOMAIN+'api/payments?limit=5&offset=0')
       )
       const response = await GET(request)
       const body = await response.json()
@@ -55,7 +56,7 @@ describe('payments API', () => {
         throw new Error('Database error')
       })
 
-      const request = new NextRequest(new URL('http://localhost:3000/api/payments'))
+      const request = new NextRequest(new URL(SYSTEM_DOMAIN+'api/payments'))
       const response = await GET(request)
       const body = await response.json()
 
@@ -66,7 +67,7 @@ describe('payments API', () => {
 
   describe('POST', () => {
     it('creates a new payment', async () => {
-      const request = new NextRequest('http://localhost:3000/api/payments', {
+      const request = new NextRequest(SYSTEM_DOMAIN+'api/payments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +91,7 @@ describe('payments API', () => {
     })
 
     it('rejects unauthorized requests', async () => {
-      const request = new NextRequest('http://localhost:3000/api/payments', {
+      const request = new NextRequest(SYSTEM_DOMAIN+'api/payments', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ advertisement_id: 'ad-1', amount: 5000 }),
@@ -106,7 +107,7 @@ describe('payments API', () => {
         error: new Error('Invalid token'),
       } as any)
 
-      const request = new NextRequest('http://localhost:3000/api/payments', {
+      const request = new NextRequest(SYSTEM_DOMAIN+'api/payments', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { NextRequest } from 'next/server'
 import { createMockSupabaseClient } from '@/src/test/mocks/supabase'
+import { SYSTEM_DOMAIN } from '@/lib/utils'
 
 const mockSupabase = createMockSupabaseClient()
 
@@ -16,7 +17,7 @@ describe('payments [id] API', () => {
   })
 
   it('rejects unauthorized requests', async () => {
-    const request = new NextRequest('http://localhost:3000/api/payments/payment-1', {
+    const request = new NextRequest(SYSTEM_DOMAIN+'api/payments/payment-1', {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ status: 'completed' }),
@@ -40,7 +41,7 @@ describe('payments [id] API', () => {
       return {} as any
     })
 
-    const request = new NextRequest('http://localhost:3000/api/payments/payment-1', {
+    const request = new NextRequest(SYSTEM_DOMAIN+'api/payments/payment-1', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',

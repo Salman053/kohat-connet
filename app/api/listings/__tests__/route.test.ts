@@ -1,6 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { NextRequest } from 'next/server'
 import { createMockSupabaseClient } from '@/src/test/mocks/supabase'
+import { SYSTEM_DOMAIN } from '@/lib/utils'
 
 const singletonClient = createMockSupabaseClient()
 
@@ -17,7 +18,7 @@ describe('listings API', () => {
 
   describe('GET', () => {
     it('returns listings with category and user data', async () => {
-      const request = new NextRequest(new URL('http://localhost:3000/api/listings'))
+      const request = new NextRequest(new URL(SYSTEM_DOMAIN + 'api/listings'))
       const response = await GET(request)
       const body = await response.json()
 
@@ -30,7 +31,7 @@ describe('listings API', () => {
 
     it('filters by category', async () => {
       const request = new NextRequest(
-        new URL('http://localhost:3000/api/listings?category=restaurants')
+        new URL(SYSTEM_DOMAIN + 'api/listings?category=restaurants')
       )
       const response = await GET(request)
       const body = await response.json()
@@ -41,7 +42,7 @@ describe('listings API', () => {
 
     it('filters featured listings', async () => {
       const request = new NextRequest(
-        new URL('http://localhost:3000/api/listings?featured=true')
+        new URL(SYSTEM_DOMAIN + 'api/listings?featured=true')
       )
       const response = await GET(request)
       const body = await response.json()
@@ -52,7 +53,7 @@ describe('listings API', () => {
 
     it('paginates results', async () => {
       const request = new NextRequest(
-        new URL('http://localhost:3000/api/listings?limit=5&offset=0')
+        new URL(SYSTEM_DOMAIN + 'api/listings?limit=5&offset=0')
       )
       const response = await GET(request)
       const body = await response.json()
@@ -65,7 +66,7 @@ describe('listings API', () => {
 
   describe('POST', () => {
     it('creates a new listing', async () => {
-      const request = new NextRequest('http://localhost:3000/api/listings', {
+      const request = new NextRequest(SYSTEM_DOMAIN + 'api/listings', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +88,7 @@ describe('listings API', () => {
     })
 
     it('rejects unauthorized requests', async () => {
-      const request = new NextRequest('http://localhost:3000/api/listings', {
+      const request = new NextRequest(SYSTEM_DOMAIN + 'api/listings', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ title: 'New Listing' }),

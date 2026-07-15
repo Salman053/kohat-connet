@@ -1,7 +1,9 @@
+import { SYSTEM_DOMAIN } from "./utils";
+
 export const site = {
     name: "Kohat Connect",
     description: "Kohat Connect is a platform that connects people in Kohat, Pakistan. It provides a space for people to share information, news, and events happening in the city. The platform also allows users to connect with each other and build a community.",
-    url: "http:localhost:3000",
+    url: SYSTEM_DOMAIN,
     owner: "Kohat Connect Team",
     contactEmail: "salmankhanm859@gmail.com",
     watsappNumber: "+923352313245",

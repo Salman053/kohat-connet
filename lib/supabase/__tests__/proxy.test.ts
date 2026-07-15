@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 import { NextRequest } from 'next/server'
+import { SYSTEM_DOMAIN } from '@/lib/utils'
 
 const mockGetUser = vi.fn()
 const mockFrom = vi.fn()
@@ -24,7 +25,7 @@ function createRequest(url: string, cookies: Record<string, string> = {}) {
   const cookieStr = Object.entries(cookies)
     .map(([k, v]) => `${k}=${v}`)
     .join('; ')
-  return new NextRequest(new URL(url, 'http://localhost:3000'), {
+  return new NextRequest(new URL(url, SYSTEM_DOMAIN), {
     headers: { cookie: cookieStr },
   })
 }
