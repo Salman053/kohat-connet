@@ -39,7 +39,6 @@ export async function updateSession(
 
   const { data: { user } } = await supabase.auth.getUser()
 
-  console.log('Middleware - Path:', request.nextUrl.pathname, 'User:', user?.id || 'none')
 
   // Protected routes
   const protectedPaths = ['/admin', '/dashboard', '/business']
