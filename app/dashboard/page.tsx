@@ -61,7 +61,7 @@ export default async function DashboardPage() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <h2 className="text-base font-semibold text-gray-900">Recent Listings</h2>
-            <Link href="/dashboard/listings" className="text-xs font-medium text-primary hover:text-indigo-500">View all</Link>
+            <Link href="/dashboard/listings" className="text-xs font-medium text-primary hover:text-primary">View all</Link>
           </div>
           <div className="divide-y divide-gray-50">
             {recentListings && recentListings.length > 0 ? (
@@ -86,7 +86,7 @@ export default async function DashboardPage() {
         <div className="bg-white rounded-xl shadow-sm border border-gray-200">
           <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
             <h2 className="text-base font-semibold text-gray-900">Recent Ads</h2>
-            <Link href="/dashboard/advertisements" className="text-xs font-medium text-primary hover:text-indigo-500">View all</Link>
+            <Link href="/dashboard/advertisements" className="text-xs font-medium text-primary hover:text-primary">View all</Link>
           </div>
           <div className="divide-y divide-gray-50">
             {recentAds && recentAds.length > 0 ? (

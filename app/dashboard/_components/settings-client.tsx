@@ -59,7 +59,7 @@ export default function SettingsClient({ initialProfile, userId, userEmail }: Pr
       <div className="lg:col-span-2 space-y-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <User className="h-5 w-5 text-indigo-500" /> Personal Information
+            <User className="h-5 w-5 text-primary" /> Personal Information
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -94,7 +94,7 @@ export default function SettingsClient({ initialProfile, userId, userEmail }: Pr
 
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <Briefcase className="h-5 w-5 text-indigo-500" /> Business Information
+            <Briefcase className="h-5 w-5 text-primary" /> Business Information
           </h2>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -142,7 +142,7 @@ export default function SettingsClient({ initialProfile, userId, userEmail }: Pr
       <div className="space-y-6">
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-            <Camera className="h-5 w-5 text-indigo-500" /> Profile Photo
+            <Camera className="h-5 w-5 text-primary" /> Profile Photo
           </h2>
           <ImageUpload folder="avatars" currentImage={formData.avatar_url} onUpload={handleAvatarUpload} />
         </div>

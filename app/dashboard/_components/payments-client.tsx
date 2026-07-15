@@ -17,7 +17,7 @@ export default function PaymentsClient({ initialPayments }: Props) {
       render: (item) => (
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-            <CreditCard className="h-4 w-4 text-indigo-500" />
+            <CreditCard className="h-4 w-4 text-primary" />
           </div>
           <div>
             <p className="text-xs font-mono text-gray-500">#{item.id?.slice(0, 8)}</p>

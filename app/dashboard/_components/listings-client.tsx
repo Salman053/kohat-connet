@@ -37,7 +37,7 @@ export default function ListingsClient({ initialListings }: Props) {
       render: (item) => (
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-lg bg-indigo-50 flex items-center justify-center shrink-0">
-            <Building2 className="h-5 w-5 text-indigo-500" />
+            <Building2 className="h-5 w-5 text-primary" />
           </div>
           <div>
             <p className="font-medium text-gray-900">{item.title}</p>
